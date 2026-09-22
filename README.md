@@ -44,7 +44,55 @@ look for the `[ ... ]` placeholder text and replace it with your own words.
 - Final birthday concert ticket
 
 ## Notes on the potato mascot
-The Mingyu Corner includes an original, hand-styled potato mascot (drawn in
-SVG, inspired by the general idea of a cute potato character) rather than a
-reproduction of any official artwork, since official fan merchandise/art is
-copyrighted. It only appears in that one section, as requested.
+The Mingyu Corner uses `assets/images/potato-mingyu.png` — an original
+illustration inspired by the general idea of a cute potato character,
+rather than a reproduction of any official artwork, since official fan
+merchandise/art is copyrighted. It only appears in that one section, laid
+out in its own column so it can never overlap the text next to it, even on
+narrow screens or with longer text.
+
+## Personalizing the website
+
+| To change... | Edit... |
+|---|---|
+| Lynn's age, birthday date, dog's name | `CONFIG` at the top of `js/script.js` |
+| Songs / playlists | `CONFIG.PLAYLIST` in `js/script.js` |
+| Concert memories | `CONFIG.CONCERTS` in `js/script.js` |
+| Memories polaroid wall + captions | `CONFIG.MEMORY_PHOTOS` in `js/script.js` |
+| Birthday wish messages | `CONFIG.BIRTHDAY_MESSAGES` in `js/script.js` |
+| Lynn Wrapped statistics | `CONFIG.WRAPPED_STATISTICS` in `js/script.js` |
+| Friends-room object messages | `CONFIG.FRIENDS_ROOM_CONTENT` in `js/script.js` |
+| Secret Room text (10 reasons, inside jokes, etc.) | directly in `index.html`, inside `#secretRoomOverlay` — look for `[ ... ]` placeholders |
+| Any image path | `ASSETS` near the top of `js/script.js` for the main structural photos, or search `index.html`/the relevant `CONFIG` list for the rest |
+
+Photos go in `assets/images/` (see `assets/images/README.md` for the full
+list of expected filenames and what each one is for) and songs go in
+`assets/music/`.
+
+### Hidden Heart Hunt
+
+There are exactly **5** hidden hearts scattered across the site (About,
+Poodle, Mingyu Corner, Sewing, and Wishes). Each is a real, individually
+clickable element with a unique ID (`heart-1` through `heart-5`), and each
+can only be collected once. The counter in the top-right corner shows live
+progress (`0 / 5` up to `5 / 5 — ALL FOUND!`), and the Secret Room only
+unlocks once all 5 have been found.
+
+Progress is saved in the browser's `localStorage` under the key
+`lynnHiddenHearts`, so it survives a page refresh. **To reset progress**
+(useful while testing, or to give someone a fresh hunt), open the browser
+console (F12 → Console tab) on the live site and run:
+
+```js
+localStorage.removeItem('lynnHiddenHearts');
+```
+
+then refresh the page.
+
+### Troubleshooting
+
+If a section ever looks empty or a feature stops responding, open the
+browser console (F12 → Console tab). Every feature on this site initializes
+independently — if one has a problem, it logs a message there prefixed
+with `[Lynn's site]` instead of silently breaking every feature that comes
+after it on the page.
