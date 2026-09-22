@@ -10,9 +10,9 @@ const CONFIG = {
 
   // ---- Basic info ----
   LYNN_NAME: "Lynn",
-  AGE: 25,                         // shown in the Friends section title
-  BIRTHDAY_DATE: "June 21",        // shown on the final concert ticket
-  DOG_NAME: "the poodle",          // used in a couple of dog messages below
+  AGE: 24,                         // shown in the Friends section title
+  BIRTHDAY_DATE: "September 27",        // shown on the final concert ticket
+  DOG_NAME: "Mina",          // used in a couple of dog messages below
 
   // ---- Photos ----
   // Replace these paths with your own images. Keep the same file names,
@@ -65,7 +65,7 @@ const CONFIG = {
   // ---- Birthday wishes (revealed one by one) ----
   BIRTHDAY_MESSAGES: [
     "I hope you keep finding songs that make you want to sing.",
-    "I hope there are always concerts worth staying up late for.",
+    "I hope there are always concerts worth spending for.",
     "I hope your camera roll keeps filling with beautiful memories.",
     "I hope you keep finding people who make ordinary days feel special.",
     "I hope you always have something to look forward to.",
@@ -364,7 +364,7 @@ function initPoodle() {
   const bubble = $("#poodleBubble");
   const messages = [
     "Lynn, have you fed me?",
-    "Another concert ticket?",
+    "I want to sleep, Zzz",
     "I approve this birthday website.",
     "Can we go for a walk now?",
     "You may continue scrolling.",
