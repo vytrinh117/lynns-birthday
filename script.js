@@ -393,10 +393,10 @@ function initPotato() {
     "Okay, that's enough.",
   ];
   const randomExtras = [
-    "The potato waves at you.",
-    "It's giving visual (the potato agrees).",
-    "13 members, 1 potato, 0 regrets.",
-    "The potato has nothing left to say.",
+    "Kimja waves at you.",
+    "It's giving visual (Kimja agrees).",
+    "1 Kim Mingyu, 1 Kimja, 1 Lynn.",
+    "Kimja has nothing left to say.",
   ];
   let clicks = 0;
 
