@@ -63,6 +63,7 @@ p { margin: 0; }
 
 .handwritten { font-family: var(--font-hand); }
 .heart { color: var(--blue-mid); }
+[hidden] { display: none !important; }
 
 button:focus-visible,
 a:focus-visible,
