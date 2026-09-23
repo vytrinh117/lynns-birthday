@@ -111,21 +111,15 @@ input:focus-visible,
    HEART HUNT BADGE
    ========================================================================= */
 .heart-hunt-badge {
-  position: fixed;
-  top: 14px; right: 14px;
-  z-index: 500;
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(6px);
+  flex: none;
+  background: var(--blue-ice);
   border: 1px solid var(--blue-soft);
   border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 0.85rem;
+  padding: 6px 12px;
+  font-size: 0.78rem;
   color: var(--blue-dark);
-  display: flex; align-items: center; gap: 6px;
-  box-shadow: var(--shadow-card);
-}
-@media (max-width: 780px) {
-  .heart-hunt-badge { top: 68px; right: 10px; font-size: 0.78rem; padding: 5px 12px; }
+  display: flex; align-items: center; gap: 5px;
+  white-space: nowrap;
 }
 .heart-hunt-icon { color: var(--blue-mid); transition: transform 300ms; }
 .heart-hunt-badge.all-found { background: var(--blue-dark); color: var(--ivory); }
@@ -291,6 +285,13 @@ input:focus-visible,
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity 900ms var(--ease-dreamy), transform 900ms var(--ease-dreamy); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
+/* Stagger: children of .reveal-stagger settle in one after another instead
+   of all at once, for a more handmade "someone placed these down" feel. */
+.reveal-stagger .cluster-photo { opacity: 0; transform: translateY(22px) scale(0.97); transition: opacity 700ms var(--ease-dreamy), transform 700ms var(--ease-dreamy); }
+.reveal-stagger.is-visible .cluster-photo--back { transition-delay: 0ms; opacity: 1; transform: translateY(0) scale(1); }
+.reveal-stagger.is-visible .cluster-photo--mid { transition-delay: 150ms; opacity: 1; transform: translateY(0) scale(1); }
+.reveal-stagger.is-visible .cluster-photo--front { transition-delay: 300ms; opacity: 1; transform: translateY(0) scale(1); }
+
 /* =========================================================================
    NAVIGATION
    ========================================================================= */
@@ -299,36 +300,38 @@ input:focus-visible,
   top: 16px; left: 50%;
   transform: translateX(-50%);
   z-index: 400;
-  width: min(94%, 760px);
+  width: min(97%, 980px);
 }
 .nav-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   background: rgba(255,255,255,0.82);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(157,184,221,0.5);
   border-radius: 999px;
-  padding: 8px 10px 8px 20px;
+  padding: 8px 10px 8px 18px;
   box-shadow: var(--shadow-card);
 }
-.nav-logo { font-size: 1.3rem; color: var(--blue-dark); white-space: nowrap; }
+.nav-logo { font-size: 1.25rem; color: var(--blue-dark); white-space: nowrap; flex: none; }
 .nav-links {
   display: flex;
-  gap: 2px;
+  gap: 0;
   overflow-x: auto;
   scrollbar-width: none;
   flex-wrap: nowrap;
+  flex: 1;
+  justify-content: flex-end;
 }
 .nav-links::-webkit-scrollbar { display: none; }
 .nav-links li { flex: none; }
 .nav-links a {
   display: inline-block;
-  padding: 8px 12px;
-  font-size: 0.82rem;
+  padding: 8px 9px;
+  font-size: 0.76rem;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   color: var(--blue-dark);
   border-radius: 999px;
   transition: background 250ms, color 250ms;
@@ -420,8 +423,52 @@ input:focus-visible,
 .scrap-note--big { font-size: 1.6rem; }
 
 /* =========================================================================
-   02. ABOUT
+   CHAPTER DIVIDERS — scrapbook-style "part" banners between thematic groups
    ========================================================================= */
+.chapter-divider {
+  position: relative;
+  padding: 34px 20px;
+  display: flex;
+  justify-content: center;
+  background: var(--ivory);
+  overflow: hidden;
+  /* Entrance: settles from a slight angle into place, like a page turning
+     down flat — a one-time effect per divider, not a scroll-linked one. */
+  opacity: 0;
+  transform: rotate(-2.5deg) translateY(14px);
+  transition: opacity 700ms var(--ease-dreamy), transform 700ms var(--ease-dreamy);
+}
+.chapter-divider.is-visible { opacity: 1; transform: rotate(0deg) translateY(0); }
+.chapter-divider--light { background: var(--blue-deepest); }
+.chapter-divider-ribbon {
+  display: inline-block;
+  background: var(--blue-pale);
+  color: var(--blue-dark);
+  font-size: 1.5rem;
+  padding: 10px 32px;
+  border-radius: 999px;
+  box-shadow: var(--shadow-card);
+  transform: rotate(-1deg);
+}
+.chapter-divider--light .chapter-divider-ribbon { background: var(--blue-dark); color: var(--ivory); }
+
+/* =========================================================================
+   KUROMI CORNER — light photo-only section with a small purple accent
+   ========================================================================= */
+.section--kuromi {
+  background: linear-gradient(160deg, #2a2650 0%, var(--blue-deepest) 60%, #241f42 100%);
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+.section--kuromi .section-inner { position: relative; z-index: 2; }
+.kuromi-stars {
+  position: absolute; inset: 0; z-index: 1;
+  background-image: radial-gradient(1.5px 1.5px at 15% 30%, rgba(211,190,240,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 80% 20%, rgba(211,190,240,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 60% 70%, rgba(211,190,240,0.45), transparent),
+    radial-gradient(1.5px 1.5px at 30% 80%, rgba(211,190,240,0.35), transparent);
+}
+.kuromi-photo-row { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
 .section--about { background: var(--ivory); }
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
 .about-photo-wrap { position: relative; display: flex; justify-content: center; }
@@ -445,7 +492,25 @@ input:focus-visible,
   transition: transform 350ms var(--ease-dreamy), background 350ms, box-shadow 350ms;
 }
 .interest-card:hover { transform: translateY(-6px); background: #fff; box-shadow: var(--shadow-card); }
-.interest-emoji { font-size: 1.8rem; }
+.interest-icon {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  transition: box-shadow 400ms ease;
+}
+.interest-icon img { width: 100%; height: 100%; object-fit: contain; }
+.interest-icon--emoji { font-size: 1.8rem; background: none; }
+/* Soft glow pulse on hover/focus — a gentle radiating glow behind the
+   icon rather than any bounce or rotation, to stay calm and unhurried. */
+.interest-card:hover .interest-icon,
+.interest-card:focus-visible .interest-icon {
+  box-shadow: 0 0 0 8px rgba(157,184,221,0.35), 0 0 22px 6px rgba(157,184,221,0.45);
+  animation: iconGlowPulse 1.6s ease-in-out infinite;
+}
+@keyframes iconGlowPulse {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(157,184,221,0.3), 0 0 18px 4px rgba(157,184,221,0.35); }
+  50% { box-shadow: 0 0 0 10px rgba(157,184,221,0.45), 0 0 26px 8px rgba(157,184,221,0.55); }
+}
 .interest-title { font-weight: 700; color: var(--blue-dark); font-size: 0.95rem; }
 .interest-desc { color: var(--blue-mid); font-size: 1.15rem; }
 
@@ -558,12 +623,17 @@ input:focus-visible,
    ========================================================================= */
 .section--poodle { background: linear-gradient(180deg, var(--cream) 0%, #f6ecdd 100%); }
 .poodle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-.poodle-main-wrap { position: relative; display: flex; justify-content: center; }
+.poodle-main-wrap { position: relative; display: flex; justify-content: center; padding-top: 70px; }
 .poodle-photo-btn { display: block; }
+/* Speech bubble now anchors ABOVE the whole photo wrap (bottom: 100% + gap)
+   instead of overlapping its top-right corner, so it can never sit on top
+   of the polaroid at any screen width. */
 .speech-bubble {
   position: absolute;
-  top: -10px; right: -10px;
-  max-width: 200px;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  width: max-content;
+  max-width: min(220px, 80vw);
   background: #fff;
   border: 2px solid var(--beige);
   border-radius: 16px;
@@ -572,15 +642,17 @@ input:focus-visible,
   font-weight: 600;
   color: var(--brown-deep);
   box-shadow: var(--shadow-card);
-  transform: translateY(-14px);
+  transform: translateX(-50%) translateY(10px);
   opacity: 0;
   transition: transform 350ms var(--ease-dreamy), opacity 350ms;
+  z-index: 4;
 }
-.speech-bubble.show { opacity: 1; transform: translateY(0); }
+.speech-bubble.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .speech-bubble::after {
   content: '';
   position: absolute;
-  bottom: -10px; left: 24px;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
   border: 10px solid transparent;
   border-top-color: #fff;
 }
@@ -630,7 +702,24 @@ input:focus-visible,
   align-items: start;
 }
 .mingyu-potato-text { display: flex; flex-direction: column; align-items: center; gap: 30px; min-width: 0; }
-.mingyu-photo-wrap { display: flex; justify-content: center; }
+.mingyu-photo-wrap { display: flex; justify-content: center; padding-bottom: 20px; }
+
+/* A small fanned stack of 3 polaroids instead of one static photo — the
+   two smaller ones peek out from behind the main photo at an angle. */
+.mingyu-photo-cluster {
+  position: relative;
+  width: min(320px, 80vw);
+  padding-top: 10px;
+}
+.cluster-photo { position: absolute; }
+.cluster-photo--back { top: -18px; left: -60px; z-index: 1; }
+.cluster-photo--mid { top: 6px; right: -56px; z-index: 2; }
+.cluster-photo--front { position: relative; z-index: 3; left: 0; top: 0; }
+@media (max-width: 640px) {
+  .mingyu-photo-cluster { width: min(260px, 76vw); margin: 0 auto 30px; }
+  .cluster-photo--back { left: -34px; top: -14px; }
+  .cluster-photo--mid { right: -30px; top: 4px; }
+}
 
 .mingyu-potato-visual {
   position: relative;
@@ -847,6 +936,8 @@ input:focus-visible,
    08. MEMORIES / POLAROID WALL
    ========================================================================= */
 .section--memories { background: var(--ivory); }
+.memories-doodle-1 { position: absolute; top: 60px; left: 6%; opacity: 0.3; }
+.memories-doodle-2 { position: absolute; bottom: 40px; right: 8%; opacity: 0.3; color: var(--lavender-deep); }
 .polaroid-wall {
   position: relative;
   display: flex;

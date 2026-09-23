@@ -108,11 +108,24 @@ const ASSETS = {
   lynnMain: "assets/images/lynn-main.jpg",
   poodleMain: "assets/images/poodle-01.jpg",
   poodleSecondary: "assets/images/poodle-02.jpg",
-  mingyuMain: "assets/images/mingyu-01.jpg",
+  mingyuOne: "assets/images/mingyu-01.jpg",   // solo
+  mingyuTwo: "assets/images/mingyu-02.jpg",   // solo
+  mingyuThree: "assets/images/mingyu-03.jpg", // concert/group
   seventeenOne: "assets/images/seventeen-01.jpg",
   seventeenTwo: "assets/images/seventeen-02.jpg",
+  kuromiOne: "assets/images/kuromi-01.jpg",
+  kuromiTwo: "assets/images/kuromi-02.jpg",
+  kuromiThree: "assets/images/kuromi-03.jpg",
   sewingMachine: "assets/images/sewing-machine.jpg",
   coaster: "assets/images/coaster.jpg",
+  icons: {
+    music: "assets/images/icon-music.png",
+    poodle: "assets/images/icon-poodle.png",
+    seventeen: "assets/images/icon-seventeen.png",
+    friends: "assets/images/icon-friends.png",
+    concerts: "assets/images/icon-concerts.png",
+    sewing: "assets/images/icon-sewing.png",
+  },
   kit: {
     ticket: "assets/images/seventeen-ticket.png",
     lightstick: "assets/images/seventeen-lightstick.png",
@@ -222,7 +235,7 @@ function initNavScrollSpy() {
    SCROLL REVEAL (fade + slide, applied once per element)
    ========================================================================= */
 function initRevealObserver() {
-  const targets = $$(".section-inner, .polaroid, .interest-card, .wrapped-card, .kit-item");
+  const targets = $$(".section-inner, .polaroid, .interest-card, .wrapped-card, .kit-item, .reveal-stagger, .chapter-divider");
   targets.forEach(el => el.classList.add("reveal"));
 
   if (prefersReducedMotion) {

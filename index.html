@@ -18,12 +18,6 @@
 <!-- ================= CUSTOM CURSOR (desktop only, disabled on mobile via JS/CSS) ================= -->
 <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
-<!-- ================= HEART HUNT COUNTER (floating, appears after opening) ================= -->
-<div class="heart-hunt-badge" id="heartHuntBadge" aria-live="polite" hidden>
-  <span class="heart-hunt-icon" id="heartHuntIcon">♡</span>
-  <span id="heartHuntCount">0 / 5</span>
-</div>
-
 <!-- ================= OPENING SCREEN ================= -->
 <section id="opening" class="opening">
   <div class="opening-sky" aria-hidden="true">
@@ -59,9 +53,6 @@
   <nav class="site-nav" id="siteNav" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="#opening" class="nav-logo handwritten">Lynn's world ♡</a>
-      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
-        <span></span><span></span><span></span>
-      </button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" data-nav>Home</a></li>
         <li><a href="#about" data-nav>About</a></li>
@@ -74,10 +65,24 @@
         <li><a href="#wrapped" data-nav>Wrapped</a></li>
         <li><a href="#wishes" data-nav>Wishes</a></li>
       </ul>
+      <!-- Heart hunt counter now lives inside the nav pill itself, so it
+           can never visually collide with the last nav item or the
+           hamburger button at any screen width. -->
+      <div class="heart-hunt-badge" id="heartHuntBadge" aria-live="polite" hidden>
+        <span class="heart-hunt-icon" id="heartHuntIcon">♡</span>
+        <span id="heartHuntCount">0 / 5</span>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
   <div id="home"></div>
+
+  <div class="chapter-divider" data-divider="1">
+    <span class="chapter-divider-ribbon handwritten">part one — her little world</span>
+  </div>
 
   <!-- ================= 02. ABOUT LYNN ================= -->
   <section id="about" class="section section--about">
@@ -118,38 +123,42 @@
 
       <div class="interest-cards">
         <button class="interest-card" data-scroll="music">
-          <span class="interest-emoji">🎧</span>
+          <span class="interest-icon"><img src="assets/images/icon-music.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🎧'; this.parentElement.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Music</span>
           <span class="interest-desc handwritten">Her natural habitat.</span>
         </button>
         <button class="interest-card" data-scroll="poodle">
-          <span class="interest-emoji">🐩</span>
+          <span class="interest-icon"><img src="assets/images/icon-poodle.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🐩'; this.parentElement.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Poodle</span>
           <span class="interest-desc handwritten">Her tiny fluffy boss.</span>
         </button>
         <button class="interest-card" data-scroll="seventeen">
-          <span class="interest-emoji">💎</span>
+          <span class="interest-icon"><img src="assets/images/icon-seventeen.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='💎'; this.parentElement.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Seventeen</span>
           <span class="interest-desc handwritten">No explanation needed.</span>
         </button>
         <button class="interest-card" data-scroll="friends">
-          <span class="interest-emoji">📺</span>
+          <span class="interest-icon"><img src="assets/images/icon-friends.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📺'; this.parentElement.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Friends</span>
           <span class="interest-desc handwritten">Could she BE any more obsessed?</span>
         </button>
         <button class="interest-card" data-scroll="concerts">
-          <span class="interest-emoji">🎟️</span>
+          <span class="interest-icon"><img src="assets/images/icon-concerts.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🎟️'; this.parentElement.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Concerts</span>
           <span class="interest-desc handwritten">Another concert? Obviously.</span>
         </button>
         <button class="interest-card" data-scroll="sewing">
-          <span class="interest-emoji">🧵</span>
+          <span class="interest-icon"><img src="assets/images/icon-sewing.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🧵'; this.parentElement.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Sewing</span>
           <span class="interest-desc handwritten">Made with her own two hands.</span>
         </button>
       </div>
     </div>
   </section>
+
+  <div class="chapter-divider" data-divider="2">
+    <span class="chapter-divider-ribbon handwritten">part two — hobbies &amp; passions</span>
+  </div>
 
   <!-- ================= 03. MUSIC ROOM ================= -->
   <section id="music" class="section section--music">
@@ -253,6 +262,10 @@
     </div>
   </section>
 
+  <div class="chapter-divider chapter-divider--light" data-divider="3">
+    <span class="chapter-divider-ribbon handwritten">part three — fandoms</span>
+  </div>
+
   <!-- ================= 05. SEVENTEEN / MINGYU SECTION ================= -->
   <section id="seventeen" class="section section--seventeen">
     <div class="diamond-bg" aria-hidden="true"></div>
@@ -291,12 +304,28 @@
         <div class="mingyu-potato-area">
           <div class="mingyu-potato-text">
             <div class="mingyu-photo-wrap">
-              <div class="polaroid polaroid--large tilt-c">
-                <div class="photo-frame">
-                  <img src="assets/images/mingyu-01.jpg" alt="Mingyu" loading="lazy"
-                       onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+              <div class="mingyu-photo-cluster reveal-stagger">
+                <div class="polaroid polaroid--small tilt-b cluster-photo cluster-photo--back">
+                  <div class="photo-frame">
+                    <img src="assets/images/mingyu-03.jpg" alt="Mingyu at a concert" loading="lazy"
+                         onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                  </div>
+                  <p class="polaroid-caption handwritten">stage presence unmatched</p>
                 </div>
-                <p class="polaroid-caption handwritten">her bias, obviously</p>
+                <div class="polaroid polaroid--small tilt-a cluster-photo cluster-photo--mid">
+                  <div class="photo-frame">
+                    <img src="assets/images/mingyu-02.jpg" alt="Mingyu" loading="lazy"
+                         onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                  </div>
+                  <p class="polaroid-caption handwritten">also her bias</p>
+                </div>
+                <div class="polaroid polaroid--large tilt-c cluster-photo cluster-photo--front">
+                  <div class="photo-frame">
+                    <img src="assets/images/mingyu-01.jpg" alt="Mingyu" loading="lazy"
+                         onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                  </div>
+                  <p class="polaroid-caption handwritten">her bias, obviously</p>
+                </div>
               </div>
             </div>
 
@@ -364,6 +393,46 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= KUROMI CORNER (light treatment — photos only) ================= -->
+  <section id="kuromi" class="section section--kuromi">
+    <div class="kuromi-stars" aria-hidden="true"></div>
+    <div class="section-inner">
+      <header class="section-head section-head--light">
+        <p class="section-kicker handwritten">also in her world</p>
+        <h2 class="section-title section-title--light">The Kuromi Corner <span class="heart">♡</span></h2>
+        <p class="section-subtitle section-subtitle--light">A little chaotic, a little cute — just like Lynn.</p>
+      </header>
+
+      <div class="kuromi-photo-row">
+        <div class="polaroid polaroid--strip tilt-a">
+          <div class="photo-frame">
+            <img src="assets/images/kuromi-01.jpg" alt="Kuromi" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+          </div>
+          <p class="polaroid-caption handwritten">certified menace</p>
+        </div>
+        <div class="polaroid polaroid--strip tilt-b">
+          <div class="photo-frame">
+            <img src="assets/images/kuromi-02.jpg" alt="Kuromi" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+          </div>
+          <p class="polaroid-caption handwritten">soft on the inside</p>
+        </div>
+        <div class="polaroid polaroid--strip tilt-c">
+          <div class="photo-frame">
+            <img src="assets/images/kuromi-03.jpg" alt="Kuromi" loading="lazy"
+                 onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+          </div>
+          <p class="polaroid-caption handwritten">her other favorite</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="chapter-divider" data-divider="4">
+    <span class="chapter-divider-ribbon handwritten">part four — friendship</span>
+  </div>
 
   <!-- ================= 06. FRIENDS SECTION ================= -->
   <section id="friends" class="section section--friends">
@@ -480,6 +549,8 @@
 
   <!-- ================= 08. OUR MEMORIES ================= -->
   <section id="memories" class="section section--memories">
+    <span class="doodle memories-doodle-1" aria-hidden="true">♡</span>
+    <span class="doodle memories-doodle-2" aria-hidden="true">✿</span>
     <div class="section-inner">
       <header class="section-head">
         <p class="section-kicker handwritten">chapter seven</p>
@@ -490,6 +561,10 @@
       <div class="polaroid-wall" id="polaroidWall"></div>
     </div>
   </section>
+
+  <div class="chapter-divider" data-divider="5">
+    <span class="chapter-divider-ribbon handwritten">part five — the celebration</span>
+  </div>
 
   <!-- ================= 09. LYNN WRAPPED ================= -->
   <section id="wrapped" class="section section--wrapped">

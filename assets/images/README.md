@@ -10,7 +10,18 @@ instead (see "General fallback behavior" below).
 | `lynn-main.jpg` | Main Lynn photo | About section |
 | `poodle-01.jpg` | Lynn's poodle (main photo) | Poodle section |
 | `poodle-02.jpg` | Lynn's poodle (second photo) | Poodle section |
-| `mingyu-01.jpg` | Mingyu photo | Mingyu Corner |
+| `mingyu-01.jpg` | Mingyu photo (solo) | Mingyu Corner photo cluster |
+| `mingyu-02.jpg` | Mingyu photo (solo) | Mingyu Corner photo cluster |
+| `mingyu-03.jpg` | Mingyu photo (concert/group) | Mingyu Corner photo cluster |
+| `kuromi-01.jpg` | Kuromi photo | Kuromi Corner |
+| `kuromi-02.jpg` | Kuromi photo | Kuromi Corner |
+| `kuromi-03.jpg` | Kuromi photo | Kuromi Corner |
+| `icon-music.png` | About section interest-card icon | About section |
+| `icon-poodle.png` | About section interest-card icon | About section |
+| `icon-seventeen.png` | About section interest-card icon | About section |
+| `icon-friends.png` | About section interest-card icon | About section |
+| `icon-concerts.png` | About section interest-card icon | About section |
+| `icon-sewing.png` | About section interest-card icon | About section |
 | `seventeen-01.jpg` | SEVENTEEN photo | SEVENTEEN section, photo strip |
 | `seventeen-02.jpg` | SEVENTEEN photo | SEVENTEEN section, photo strip |
 | `sewing-machine.jpg` | Lynn's sewing machine | Sewing Corner |
@@ -61,7 +72,22 @@ placeholder for tiny icons). This means you can deploy the site today with
 zero photos added, and add them one at a time later without ever breaking
 anything.
 
-## About the potato
+## About the Kuromi Corner
+
+Kuromi is an official Sanrio character, so — unlike the original potato
+mascot — these images are expected to be **your own photos** (merch,
+stickers, screenshots you own the rights to use personally), not anything
+generated for this site. The section is intentionally simple: just a small
+photo row, no games or collectible cards, sitting as its own "corner" next
+to the SEVENTEEN section.
+
+## About the About-section icons
+
+`icon-music.png` through `icon-sewing.png` are optional. Until you add
+them, each interest card falls back to its original emoji automatically —
+nothing looks broken either way.
+
+
 
 `potato-mingyu.png` is an **original illustration** inspired by the general
 idea of a cute potato mascot — not a reproduction of any official artwork —
