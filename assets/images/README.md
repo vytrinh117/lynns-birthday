@@ -13,9 +13,7 @@ instead (see "General fallback behavior" below).
 | `mingyu-01.jpg` | Mingyu photo (solo) | Mingyu Corner photo cluster |
 | `mingyu-02.jpg` | Mingyu photo (solo) | Mingyu Corner photo cluster |
 | `mingyu-03.jpg` | Mingyu photo (concert/group) | Mingyu Corner photo cluster |
-| `kuromi-01.jpg` | Kuromi photo | Kuromi Corner |
-| `kuromi-02.jpg` | Kuromi photo | Kuromi Corner |
-| `kuromi-03.jpg` | Kuromi photo | Kuromi Corner |
+| `kuromi-sticker.png` | Kuromi decoration — reused as a small floating sticker | Scattered across About, Music, Sewing, and Wishes sections |
 | `icon-music.png` | About section interest-card icon | About section |
 | `icon-poodle.png` | About section interest-card icon | About section |
 | `icon-seventeen.png` | About section interest-card icon | About section |
@@ -72,14 +70,16 @@ placeholder for tiny icons). This means you can deploy the site today with
 zero photos added, and add them one at a time later without ever breaking
 anything.
 
-## About the Kuromi Corner
+## About the Kuromi sticker
 
 Kuromi is an official Sanrio character, so — unlike the original potato
-mascot — these images are expected to be **your own photos** (merch,
-stickers, screenshots you own the rights to use personally), not anything
-generated for this site. The section is intentionally simple: just a small
-photo row, no games or collectible cards, sitting as its own "corner" next
-to the SEVENTEEN section.
+mascot — this image is expected to be **your own photo/sticker** (merch,
+official art you own the rights to use personally, a screenshot of a
+sticker sheet, etc.), not anything generated for this site. Rather than a
+dedicated section, Kuromi appears as a small recurring decorative sticker
+that gently floats/drifts in the corner of four different sections (About,
+Music, Sewing, Wishes) — the same single image file is just reused and
+repositioned each time, so you only need to provide one file.
 
 ## About the About-section icons
 

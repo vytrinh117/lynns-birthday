@@ -86,9 +86,10 @@
 
   <!-- ================= 02. ABOUT LYNN ================= -->
   <section id="about" class="section section--about">
+    <img class="kuromi-sticker kuromi-sticker--about" src="assets/images/kuromi-sticker.png" alt=""
+         onerror="this.style.display='none'" aria-hidden="true">
     <div class="section-inner">
       <header class="section-head">
-        <p class="section-kicker handwritten">chapter one</p>
         <h2 class="section-title">This is Lynn <span class="heart">♡</span></h2>
         <p class="section-subtitle">A very incomplete guide to a very specific person.</p>
       </header>
@@ -162,9 +163,10 @@
 
   <!-- ================= 03. MUSIC ROOM ================= -->
   <section id="music" class="section section--music">
+    <img class="kuromi-sticker kuromi-sticker--music" src="assets/images/kuromi-sticker.png" alt=""
+         onerror="this.style.display='none'" aria-hidden="true">
     <div class="section-inner">
       <header class="section-head section-head--light">
-        <p class="section-kicker handwritten">chapter two</p>
         <h2 class="section-title section-title--light">Lynn's Music Room <span class="heart">♫</span></h2>
         <p class="section-subtitle section-subtitle--light">Good music + better mood.</p>
       </header>
@@ -223,7 +225,6 @@
   <section id="poodle" class="section section--poodle">
     <div class="section-inner">
       <header class="section-head">
-        <p class="section-kicker handwritten">chapter three</p>
         <h2 class="section-title">Meet the Real Owner of This Website</h2>
         <p class="section-subtitle">Lynn's tiny fluffy boss <span class="heart">♡</span></p>
       </header>
@@ -262,7 +263,7 @@
     </div>
   </section>
 
-  <div class="chapter-divider chapter-divider--light" data-divider="3">
+  <div class="chapter-divider" data-divider="3">
     <span class="chapter-divider-ribbon handwritten">part three — fandoms</span>
   </div>
 
@@ -271,7 +272,6 @@
     <div class="diamond-bg" aria-hidden="true"></div>
     <div class="section-inner">
       <header class="section-head section-head--light">
-        <p class="section-kicker handwritten">chapter four</p>
         <h2 class="section-title section-title--light">Lynn's SEVENTEEN Era <span class="heart">♡</span></h2>
         <p class="section-subtitle section-subtitle--light">Mingyu &amp; the boys, always.</p>
       </header>
@@ -303,44 +303,49 @@
              long the text gets or how narrow the screen is. -->
         <div class="mingyu-potato-area">
           <div class="mingyu-potato-text">
-            <div class="mingyu-photo-wrap">
-              <div class="mingyu-photo-cluster reveal-stagger">
-                <div class="polaroid polaroid--small tilt-b cluster-photo cluster-photo--back">
-                  <div class="photo-frame">
-                    <img src="assets/images/mingyu-03.jpg" alt="Mingyu at a concert" loading="lazy"
-                         onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+            <!-- Manual carousel (prev/next + dots) with gentle auto-advance
+                 when idle. Auto-advance pauses on hover/focus and whenever
+                 the person interacts manually, and is skipped entirely for
+                 anyone with reduced-motion enabled. -->
+            <div class="mingyu-carousel" id="mingyuCarousel">
+              <div class="carousel-viewport">
+                <div class="carousel-track" id="mingyuCarouselTrack">
+                <div class="carousel-slide">
+                  <div class="polaroid polaroid--large">
+                    <div class="photo-frame">
+                      <img src="assets/images/mingyu-01.jpg" alt="Mingyu" loading="lazy"
+                           onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                    </div>
+                    <p class="polaroid-caption handwritten">her bias, obviously</p>
                   </div>
-                  <p class="polaroid-caption handwritten">stage presence unmatched</p>
                 </div>
-                <div class="polaroid polaroid--small tilt-a cluster-photo cluster-photo--mid">
-                  <div class="photo-frame">
-                    <img src="assets/images/mingyu-02.jpg" alt="Mingyu" loading="lazy"
-                         onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                <div class="carousel-slide">
+                  <div class="polaroid polaroid--large">
+                    <div class="photo-frame">
+                      <img src="assets/images/mingyu-02.jpg" alt="Mingyu" loading="lazy"
+                           onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                    </div>
+                    <p class="polaroid-caption handwritten">also her bias</p>
                   </div>
-                  <p class="polaroid-caption handwritten">also her bias</p>
                 </div>
-                <div class="polaroid polaroid--large tilt-c cluster-photo cluster-photo--front">
-                  <div class="photo-frame">
-                    <img src="assets/images/mingyu-01.jpg" alt="Mingyu" loading="lazy"
-                         onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                <div class="carousel-slide">
+                  <div class="polaroid polaroid--large">
+                    <div class="photo-frame">
+                      <img src="assets/images/mingyu-03.jpg" alt="Mingyu at a concert" loading="lazy"
+                           onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+                    </div>
+                    <p class="polaroid-caption handwritten">stage presence unmatched</p>
                   </div>
-                  <p class="polaroid-caption handwritten">her bias, obviously</p>
+                </div>
                 </div>
               </div>
-            </div>
-
-            <div class="mingyu-cards">
-              <div class="fan-card">
-                <p class="fan-card-eyebrow">Mingyu Fan Club</p>
-                <p class="fan-card-row"><strong>Status:</strong> Emotionally invested</p>
-                <p class="fan-card-row"><strong>Member:</strong> Kim Mingyu</p>
-                <p class="fan-card-row"><strong>Fan Level:</strong> Certified &amp; unwell</p>
-                <span class="fan-card-diamond">◆</span>
+              <button class="carousel-arrow carousel-arrow--prev" id="mingyuPrev" aria-label="Previous photo">‹</button>
+              <button class="carousel-arrow carousel-arrow--next" id="mingyuNext" aria-label="Next photo">›</button>
+              <div class="carousel-dots" id="mingyuDots" role="tablist" aria-label="Mingyu photos">
+                <button class="carousel-dot" data-index="0" role="tab" aria-label="Photo 1 of 3"></button>
+                <button class="carousel-dot" data-index="1" role="tab" aria-label="Photo 2 of 3"></button>
+                <button class="carousel-dot" data-index="2" role="tab" aria-label="Photo 3 of 3"></button>
               </div>
-
-              <!-- HEART HUNT TARGET #3 disguised as a tiny diamond/heart sticker on the card -->
-              <span class="hidden-heart hidden-heart--light" data-heart-id="heart-3" role="button" tabindex="0"
-                    aria-label="Hidden heart 3" aria-pressed="false">♡</span>
             </div>
           </div>
 
@@ -354,6 +359,23 @@
             </button>
             <p class="potato-hint handwritten">psst... click the potato</p>
             <p class="potato-message" id="potatoMessage" role="status" aria-live="polite"></p>
+
+            <!-- Fan card lives in the potato column now, so both columns
+                 fill their height evenly instead of the right side sitting
+                 mostly empty beneath the potato. -->
+            <div class="mingyu-cards">
+              <div class="fan-card fan-card--wide">
+                <p class="fan-card-eyebrow">Mingyu Fan Club</p>
+                <p class="fan-card-row"><strong>Status:</strong> Emotionally invested</p>
+                <p class="fan-card-row"><strong>Member:</strong> Kim Mingyu</p>
+                <p class="fan-card-row"><strong>Fan Level:</strong> Certified &amp; unwell</p>
+                <span class="fan-card-diamond">◆</span>
+              </div>
+
+              <!-- HEART HUNT TARGET #3 disguised as a tiny diamond/heart sticker on the card -->
+              <span class="hidden-heart hidden-heart--light" data-heart-id="heart-3" role="button" tabindex="0"
+                    aria-label="Hidden heart 3" aria-pressed="false">♡</span>
+            </div>
           </div>
         </div>
 
@@ -394,42 +416,6 @@
     </div>
   </section>
 
-  <!-- ================= KUROMI CORNER (light treatment — photos only) ================= -->
-  <section id="kuromi" class="section section--kuromi">
-    <div class="kuromi-stars" aria-hidden="true"></div>
-    <div class="section-inner">
-      <header class="section-head section-head--light">
-        <p class="section-kicker handwritten">also in her world</p>
-        <h2 class="section-title section-title--light">The Kuromi Corner <span class="heart">♡</span></h2>
-        <p class="section-subtitle section-subtitle--light">A little chaotic, a little cute — just like Lynn.</p>
-      </header>
-
-      <div class="kuromi-photo-row">
-        <div class="polaroid polaroid--strip tilt-a">
-          <div class="photo-frame">
-            <img src="assets/images/kuromi-01.jpg" alt="Kuromi" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
-          </div>
-          <p class="polaroid-caption handwritten">certified menace</p>
-        </div>
-        <div class="polaroid polaroid--strip tilt-b">
-          <div class="photo-frame">
-            <img src="assets/images/kuromi-02.jpg" alt="Kuromi" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
-          </div>
-          <p class="polaroid-caption handwritten">soft on the inside</p>
-        </div>
-        <div class="polaroid polaroid--strip tilt-c">
-          <div class="photo-frame">
-            <img src="assets/images/kuromi-03.jpg" alt="Kuromi" loading="lazy"
-                 onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
-          </div>
-          <p class="polaroid-caption handwritten">her other favorite</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <div class="chapter-divider" data-divider="4">
     <span class="chapter-divider-ribbon handwritten">part four — friendship</span>
   </div>
@@ -438,7 +424,6 @@
   <section id="friends" class="section section--friends">
     <div class="section-inner">
       <header class="section-head">
-        <p class="section-kicker handwritten">chapter five</p>
         <h2 class="section-title" id="friendsTitle">The One Where Lynn Turns <span id="friendsAge">25</span></h2>
         <p class="section-subtitle handwritten">"Could this birthday BE any cuter?"</p>
       </header>
@@ -492,9 +477,10 @@
 
   <!-- ================= 07. SEWING CORNER ================= -->
   <section id="sewing" class="section section--sewing">
+    <img class="kuromi-sticker kuromi-sticker--sewing" src="assets/images/kuromi-sticker.png" alt=""
+         onerror="this.style.display='none'" aria-hidden="true">
     <div class="section-inner">
       <header class="section-head">
-        <p class="section-kicker handwritten">chapter six</p>
         <h2 class="section-title">The Little Sewing Corner <span class="heart">♡</span></h2>
         <p class="section-subtitle">Things made with her own two hands.</p>
       </header>
@@ -553,7 +539,6 @@
     <span class="doodle memories-doodle-2" aria-hidden="true">✿</span>
     <div class="section-inner">
       <header class="section-head">
-        <p class="section-kicker handwritten">chapter seven</p>
         <h2 class="section-title">Our Memories</h2>
         <p class="section-subtitle">Same chaos, different years <span class="heart">♡</span></p>
       </header>
@@ -570,7 +555,6 @@
   <section id="wrapped" class="section section--wrapped">
     <div class="section-inner">
       <header class="section-head section-head--light">
-        <p class="section-kicker handwritten">chapter eight</p>
         <h2 class="section-title section-title--light">Lynn Wrapped</h2>
         <p class="section-subtitle section-subtitle--light">Your year according to extremely scientific research.</p>
       </header>
@@ -581,6 +565,8 @@
 
   <!-- ================= 10. BIRTHDAY WISHES ================= -->
   <section id="wishes" class="section section--wishes">
+    <img class="kuromi-sticker kuromi-sticker--wishes" src="assets/images/kuromi-sticker.png" alt=""
+         onerror="this.style.display='none'" aria-hidden="true">
     <div class="wishes-sky" aria-hidden="true">
       <div class="cloud cloud-4"></div>
       <div class="cloud cloud-5"></div>
@@ -588,7 +574,6 @@
     </div>
     <div class="section-inner">
       <header class="section-head">
-        <p class="section-kicker handwritten">chapter nine</p>
         <h2 class="section-title">A Little Wish for You <span class="heart">♡</span></h2>
       </header>
 

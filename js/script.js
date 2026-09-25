@@ -426,8 +426,64 @@ function initPoodle() {
     do { msg = messages[Math.floor(Math.random() * messages.length)]; } while (msg === lastMsg && messages.length > 1);
     lastMsg = msg;
     bubble.textContent = msg;
+
+    // Re-trigger the pop+bounce animation every click, even for repeat
+    // clicks in a row: remove the class, force a reflow, then re-add it.
+    bubble.classList.remove("show");
+    void bubble.offsetWidth;
     bubble.classList.add("show");
   });
+}
+
+/* =========================================================================
+   MINGYU PHOTO CAROUSEL — manual (prev/next/dots) + gentle auto-advance
+   when idle. Pauses on hover/focus and after any manual interaction
+   resets the idle timer, so it never fights the person using it.
+   ========================================================================= */
+function initMingyuCarousel() {
+  const carousel = $("#mingyuCarousel");
+  const track = $("#mingyuCarouselTrack");
+  const slides = $$(".carousel-slide", track);
+  const dots = $$(".carousel-dot", carousel);
+  const prevBtn = $("#mingyuPrev");
+  const nextBtn = $("#mingyuNext");
+  const total = slides.length;
+  let index = 0;
+  let autoTimer = null;
+
+  function goTo(i) {
+    index = (i + total) % total;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, d) => {
+      dot.classList.toggle("active", d === index);
+      dot.setAttribute("aria-selected", d === index ? "true" : "false");
+    });
+  }
+
+  function startAuto() {
+    if (prefersReducedMotion) return; // no auto-advance for reduced motion
+    stopAuto();
+    autoTimer = setInterval(() => goTo(index + 1), 4500);
+  }
+  function stopAuto() {
+    if (autoTimer) clearInterval(autoTimer);
+    autoTimer = null;
+  }
+  function restartAuto() { stopAuto(); startAuto(); }
+
+  prevBtn.addEventListener("click", () => { goTo(index - 1); restartAuto(); });
+  nextBtn.addEventListener("click", () => { goTo(index + 1); restartAuto(); });
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => { goTo(Number(dot.dataset.index)); restartAuto(); });
+  });
+
+  carousel.addEventListener("mouseenter", stopAuto);
+  carousel.addEventListener("mouseleave", startAuto);
+  carousel.addEventListener("focusin", stopAuto);
+  carousel.addEventListener("focusout", startAuto);
+
+  goTo(0);
+  startAuto();
 }
 
 /* =========================================================================
@@ -796,6 +852,7 @@ document.addEventListener("DOMContentLoaded", () => {
   safeInit("music player", initMusicPlayer);
   safeInit("concert tickets", renderConcertTickets);
   safeInit("poodle", initPoodle);
+  safeInit("mingyu carousel", initMingyuCarousel);
   safeInit("potato", initPotato);
   safeInit("friends room", initFriendsRoom);
   safeInit("sewing to-do", initSewingTodo);
