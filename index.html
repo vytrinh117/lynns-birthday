@@ -12,8 +12,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/style.css">
+<noscript><style>.reveal, .chapter-divider { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
 <body>
+
+<!-- Fixed color layer behind everything. Sections keep their own opaque
+     backgrounds (so the page still looks correct with JS off or with
+     reduced motion), but each section's top/bottom edge is CSS-masked to
+     fade to transparent, revealing this layer underneath. script.js
+     continuously updates its color based on scroll position using the
+     color-bridge values on each .chapter-divider below, so adjacent
+     sections cross-dissolve into each other instead of cutting hard. -->
+<div id="scrollBackdrop" aria-hidden="true"></div>
+
 
 <!-- ================= CUSTOM CURSOR (desktop only, disabled on mobile via JS/CSS) ================= -->
 <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
@@ -80,7 +91,7 @@
 
   <div id="home"></div>
 
-  <div class="chapter-divider" data-divider="1">
+  <div class="chapter-divider" data-divider="1" data-color-from="#cfe0f4" data-color-to="#fffdf8">
     <span class="chapter-divider-ribbon handwritten">part one — her little world</span>
   </div>
 
@@ -95,7 +106,7 @@
       </header>
 
       <div class="about-grid">
-        <div class="about-photo-wrap">
+        <div class="about-photo-wrap" data-parallax="0.06">
           <div class="polaroid polaroid--large tilt-a">
             <div class="photo-frame">
               <img src="assets/images/lynn-main.jpg" alt="Lynn" loading="lazy"
@@ -109,7 +120,7 @@
         </div>
 
         <div class="about-profile">
-          <ul class="profile-list">
+          <ul class="profile-list" data-parallax="-0.04">
             <li><span class="profile-mark">♡</span> Professional singer (in the shower)</li>
             <li><span class="profile-mark">♡</span> Part-time concert attendee</li>
             <li><span class="profile-mark">♡</span> Full-time SEVENTEEN enjoyer</li>
@@ -124,32 +135,32 @@
 
       <div class="interest-cards">
         <button class="interest-card" data-scroll="music">
-          <span class="interest-icon"><img src="assets/images/icon-music.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🎧'; this.parentElement.classList.add('interest-icon--emoji');"></span>
+          <span class="interest-icon"><img src="assets/images/icon-music.png" alt="" loading="lazy" onerror="var p=this.parentElement; p.innerHTML='🎧'; p.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Music</span>
           <span class="interest-desc handwritten">Her natural habitat.</span>
         </button>
         <button class="interest-card" data-scroll="poodle">
-          <span class="interest-icon"><img src="assets/images/icon-poodle.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🐩'; this.parentElement.classList.add('interest-icon--emoji');"></span>
+          <span class="interest-icon"><img src="assets/images/icon-poodle.png" alt="" loading="lazy" onerror="var p=this.parentElement; p.innerHTML='🐩'; p.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Poodle</span>
           <span class="interest-desc handwritten">Her tiny fluffy boss.</span>
         </button>
         <button class="interest-card" data-scroll="seventeen">
-          <span class="interest-icon"><img src="assets/images/icon-seventeen.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='💎'; this.parentElement.classList.add('interest-icon--emoji');"></span>
+          <span class="interest-icon"><img src="assets/images/icon-seventeen.png" alt="" loading="lazy" onerror="var p=this.parentElement; p.innerHTML='💎'; p.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Seventeen</span>
           <span class="interest-desc handwritten">No explanation needed.</span>
         </button>
         <button class="interest-card" data-scroll="friends">
-          <span class="interest-icon"><img src="assets/images/icon-friends.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📺'; this.parentElement.classList.add('interest-icon--emoji');"></span>
+          <span class="interest-icon"><img src="assets/images/icon-friends.png" alt="" loading="lazy" onerror="var p=this.parentElement; p.innerHTML='📺'; p.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Friends</span>
           <span class="interest-desc handwritten">Could she BE any more obsessed?</span>
         </button>
         <button class="interest-card" data-scroll="concerts">
-          <span class="interest-icon"><img src="assets/images/icon-concerts.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🎟️'; this.parentElement.classList.add('interest-icon--emoji');"></span>
+          <span class="interest-icon"><img src="assets/images/icon-concerts.png" alt="" loading="lazy" onerror="var p=this.parentElement; p.innerHTML='🎟️'; p.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Concerts</span>
           <span class="interest-desc handwritten">Another concert? Obviously.</span>
         </button>
         <button class="interest-card" data-scroll="sewing">
-          <span class="interest-icon"><img src="assets/images/icon-sewing.png" alt="" loading="lazy" onerror="this.parentElement.innerHTML='🧵'; this.parentElement.classList.add('interest-icon--emoji');"></span>
+          <span class="interest-icon"><img src="assets/images/icon-sewing.png" alt="" loading="lazy" onerror="var p=this.parentElement; p.innerHTML='🧵'; p.classList.add('interest-icon--emoji');"></span>
           <span class="interest-title">Sewing</span>
           <span class="interest-desc handwritten">Made with her own two hands.</span>
         </button>
@@ -157,7 +168,7 @@
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="2">
+  <div class="chapter-divider" data-divider="2" data-color-from="#fffdf8" data-color-to="#2c3f66">
     <span class="chapter-divider-ribbon handwritten">part two — hobbies &amp; passions</span>
   </div>
 
@@ -178,7 +189,7 @@
         <span class="floating-note handwritten note-c">one more song...</span>
 
         <div class="music-player" id="musicPlayer">
-          <div class="player-art-wrap">
+          <div class="player-art-wrap" data-parallax="0.07">
             <div class="player-art" id="playerArt">
               <img id="playerArtImg" src="assets/images/album-placeholder.jpg" alt="" loading="lazy"
                    onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
@@ -207,7 +218,7 @@
           </div>
         </div>
 
-        <div class="playlist-panel">
+        <div class="playlist-panel" data-parallax="-0.05">
           <h3 class="playlist-heading handwritten">playlists</h3>
           <ul class="playlist-list" id="playlistList"></ul>
         </div>
@@ -230,7 +241,7 @@
       </header>
 
       <div class="poodle-grid">
-        <div class="poodle-main-wrap">
+        <div class="poodle-main-wrap" data-parallax="0.05">
           <button class="poodle-photo-btn" id="poodlePhotoBtn" aria-describedby="poodleBubble">
             <div class="polaroid polaroid--large tilt-b">
               <div class="photo-frame photo-frame--round">
@@ -247,7 +258,7 @@
           <span class="paw-print paw-2">🐾</span>
         </div>
 
-        <div class="poodle-side">
+        <div class="poodle-side" data-parallax="-0.05">
           <div class="polaroid polaroid--small tilt-c">
             <div class="photo-frame">
               <img src="assets/images/poodle-02.jpg" alt="Lynn's poodle" loading="lazy"
@@ -263,13 +274,13 @@
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="3">
+  <div class="chapter-divider" data-divider="3" data-color-from="#f6ecdd" data-color-to="#223a5e">
     <span class="chapter-divider-ribbon handwritten">part three — fandoms</span>
   </div>
 
   <!-- ================= 05. SEVENTEEN / MINGYU SECTION ================= -->
   <section id="seventeen" class="section section--seventeen">
-    <div class="diamond-bg" aria-hidden="true"></div>
+    <div class="diamond-bg" data-parallax-bg="0.3" aria-hidden="true"></div>
     <div class="section-inner">
       <header class="section-head section-head--light">
         <h2 class="section-title section-title--light">Lynn's SEVENTEEN Era <span class="heart">♡</span></h2>
@@ -416,7 +427,7 @@
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="4">
+  <div class="chapter-divider" data-divider="4" data-color-from="#172947" data-color-to="#efe8f5">
     <span class="chapter-divider-ribbon handwritten">part four — friendship</span>
   </div>
 
@@ -434,7 +445,7 @@
            Expects: assets/images/friends-room.jpg — until it's added, a
            scrapbook-style placeholder fills the space instead of a broken
            image, and the hotspots still work perfectly fine on top of it. -->
-      <div class="friends-room" id="friendsRoom">
+      <div class="friends-room" id="friendsRoom" data-parallax="0.05">
         <div class="friends-room-photo">
           <img src="assets/images/friends-room.jpg" alt="A cozy 90s-sitcom-inspired living room" loading="lazy"
                onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
@@ -509,7 +520,7 @@
             Proof that Lynn doesn't just make things cute.<br>She actually makes things.
           </p>
 
-          <div class="sewing-props" aria-hidden="true">
+          <div class="sewing-props" aria-hidden="true" data-parallax="0.08">
             <span class="prop prop-spool">🧵</span>
             <span class="prop prop-scissors">✂️</span>
             <span class="prop prop-pin">📌</span>
@@ -543,11 +554,11 @@
         <p class="section-subtitle">Same chaos, different years <span class="heart">♡</span></p>
       </header>
 
-      <div class="polaroid-wall" id="polaroidWall"></div>
+      <div class="polaroid-wall" id="polaroidWall" data-parallax="0.04"></div>
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="5">
+  <div class="chapter-divider" data-divider="5" data-color-from="#fffdf8" data-color-to="#172947">
     <span class="chapter-divider-ribbon handwritten">part five — the celebration</span>
   </div>
 
@@ -559,7 +570,7 @@
         <p class="section-subtitle section-subtitle--light">Your year according to extremely scientific research.</p>
       </header>
 
-      <div class="wrapped-grid" id="wrappedGrid"></div>
+      <div class="wrapped-grid" id="wrappedGrid" data-parallax="-0.04"></div>
     </div>
   </section>
 
@@ -577,7 +588,7 @@
         <h2 class="section-title">A Little Wish for You <span class="heart">♡</span></h2>
       </header>
 
-      <div class="wish-clouds" id="wishClouds"></div>
+      <div class="wish-clouds" id="wishClouds" data-parallax="0.05"></div>
       <!-- HEART HUNT TARGET #5 disguised as a small decorative heart in the sky -->
       <span class="hidden-heart" data-heart-id="heart-5" role="button" tabindex="0" aria-label="Hidden heart 5" aria-pressed="false" style="position:absolute; top:60px; left:12%;">♡</span>
     </div>
@@ -629,9 +640,9 @@
   <section id="finale" class="section section--finale">
     <div class="finale-sky" aria-hidden="true">
       <div class="stars stars--finale"></div>
-      <div class="moon"></div>
-      <div class="city-lights"></div>
-      <div class="concert-lights" aria-hidden="true"></div>
+      <div class="moon" data-parallax="0.14"></div>
+      <div class="city-lights" data-parallax="0.05"></div>
+      <div class="concert-lights" data-parallax="0.02" aria-hidden="true"></div>
     </div>
 
     <div class="section-inner finale-inner">

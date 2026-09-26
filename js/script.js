@@ -151,6 +151,144 @@ function formatTime(seconds) {
 }
 
 /* =========================================================================
+   SCROLL ENGINE — continuous, scroll-position-driven motion
+   ---------------------------------------------------------------------
+   Everything here reads the CURRENT scroll position every animation
+   frame and sets styles directly from it — nothing is a one-shot
+   triggered animation, and nothing uses a CSS transition to "catch up."
+   That's deliberate: it's what makes scrolling back up instantly and
+   smoothly reverse every effect, exactly in step with the scrollbar,
+   rather than replaying a canned animation.
+
+   Three things are driven this way, all from one rAF loop for
+   efficiency:
+   1. Reveal progress for every `.reveal` element (fade + rise + slight
+      scale as it crosses a "reveal band" near the bottom of the
+      viewport), instead of a binary IntersectionObserver on/off.
+   2. Parallax offsets for elements marked [data-parallax] (translateY)
+      or [data-parallax-bg] (background-position) — different speeds per
+      element create layered depth, reusing existing decorative assets.
+   3. The #scrollBackdrop color, interpolated between each chapter
+      divider's data-color-from/data-color-to based on how far that
+      divider has scrolled through the viewport. Sections themselves stay
+      opaque; only their masked top/bottom edges (see CSS) reveal this
+      color, so adjacent sections cross-dissolve at the seam instead of
+      cutting hard.
+
+   Entirely skipped under prefers-reduced-motion — see the CSS reduced-
+   motion block, which forces everything to its settled, visible state
+   with hard section edges instead.
+   ========================================================================= */
+function initScrollEngine() {
+  // Give every target its base "reveal" treatment; under reduced motion,
+  // the CSS reduced-motion block already forces these fully visible, so
+  // the JS engine simply never needs to run at all.
+  const revealTargets = $$(".section-inner, .polaroid, .interest-card, .wrapped-card, .kit-item, .chapter-divider");
+  revealTargets.forEach(el => el.classList.add("reveal"));
+
+  if (prefersReducedMotion) return;
+
+  const dividers = $$(".chapter-divider[data-color-from]").map(el => ({
+    el,
+    colorFrom: hexToRgb(el.dataset.colorFrom),
+    colorTo: hexToRgb(el.dataset.colorTo),
+  }));
+  const backdrop = $("#scrollBackdrop");
+  const parallaxEls = $$("[data-parallax]");
+  const parallaxBgEls = $$("[data-parallax-bg]");
+
+  function hexToRgb(hex) {
+    const n = parseInt(hex.replace("#", ""), 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp01(n) { return Math.min(1, Math.max(0, n)); }
+  function rgbToCss(c) { return `rgb(${c.r | 0}, ${c.g | 0}, ${c.b | 0})`; }
+
+  // --- 1. Reveal progress: 0 while an element is still below the "reveal
+  // band," rising to 1 as it crosses up through it. Fully reversible.
+  function updateReveals(vh) {
+    const startLine = vh * 0.92;  // element still below this = progress 0
+    const endLine = vh * 0.55;    // element above this = progress 1 (settled)
+    revealTargets.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -200 || rect.top > vh + 200) return; // skip far-offscreen work
+      const progress = clamp01((startLine - rect.top) / (startLine - endLine));
+      el.style.opacity = String(progress);
+      if (el.classList.contains("chapter-divider")) {
+        el.style.transform = `rotate(${(1 - progress) * -2.5}deg) translateY(${(1 - progress) * 14}px)`;
+      } else {
+        el.style.transform = `translateY(${(1 - progress) * 42}px) scale(${0.98 + 0.02 * progress})`;
+      }
+    });
+  }
+
+  // --- 2. Parallax: offset each element from its natural position based
+  // on how far its center sits from the viewport's vertical center.
+  function updateParallax(vh) {
+    parallaxEls.forEach(el => {
+      const speed = parseFloat(el.dataset.parallax);
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -300 || rect.top > vh + 300) return;
+      const centerOffset = (rect.top + rect.height / 2) - vh / 2;
+      el.style.transform = `translateY(${(-centerOffset * speed).toFixed(1)}px)`;
+    });
+    parallaxBgEls.forEach(el => {
+      const speed = parseFloat(el.dataset.parallaxBg);
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -300 || rect.top > vh + 300) return;
+      const centerOffset = (rect.top + rect.height / 2) - vh / 2;
+      el.style.backgroundPosition = `center ${(-centerOffset * speed).toFixed(1)}px`;
+    });
+  }
+
+  // --- 3. Backdrop color: find whichever divider is closest to the
+  // viewport's center and interpolate along its declared color bridge,
+  // extended a generous one viewport-height above/below it so the color
+  // is already correct by the time a section's masked edge scrolls into
+  // view next to that divider.
+  function updateBackdrop(vh, scrollY) {
+    const centerY = scrollY + vh * 0.5;
+    let best = null;
+    let bestDist = Infinity;
+    dividers.forEach(d => {
+      const top = d.el.offsetTop;
+      const bottom = top + d.el.offsetHeight;
+      const mid = (top + bottom) / 2;
+      const dist = Math.abs(centerY - mid);
+      if (dist < bestDist) { bestDist = dist; best = { ...d, top, bottom }; }
+    });
+    if (!best) return;
+    const rangeStart = best.top - vh;
+    const rangeEnd = best.bottom + vh;
+    const t = clamp01((centerY - rangeStart) / (rangeEnd - rangeStart));
+    const color = {
+      r: lerp(best.colorFrom.r, best.colorTo.r, t),
+      g: lerp(best.colorFrom.g, best.colorTo.g, t),
+      b: lerp(best.colorFrom.b, best.colorTo.b, t),
+    };
+    backdrop.style.backgroundColor = rgbToCss(color);
+  }
+
+  let ticking = false;
+  function onFrame() {
+    const vh = window.innerHeight;
+    const scrollY = window.scrollY;
+    updateReveals(vh);
+    updateParallax(vh);
+    updateBackdrop(vh, scrollY);
+    ticking = false;
+  }
+  function requestUpdate() {
+    if (!ticking) { requestAnimationFrame(onFrame); ticking = true; }
+  }
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  onFrame(); // paint the correct state immediately, before any scrolling
+}
+
+/* =========================================================================
    OPENING SCREEN → ENTER SITE
    ========================================================================= */
 function initOpening() {
@@ -169,7 +307,7 @@ function initOpening() {
       mainSite.hidden = false;
       heartBadge.hidden = false;
       document.body.style.overflow = "";
-      initRevealObserver();
+      initScrollEngine();
       initNavScrollSpy();
     }, prefersReducedMotion ? 0 : 900);
   }, { once: true });
@@ -229,30 +367,6 @@ function initNavScrollSpy() {
   }, { rootMargin: "-45% 0px -45% 0px" });
 
   sections.forEach(sec => observer.observe(sec));
-}
-
-/* =========================================================================
-   SCROLL REVEAL (fade + slide, applied once per element)
-   ========================================================================= */
-function initRevealObserver() {
-  const targets = $$(".section-inner, .polaroid, .interest-card, .wrapped-card, .kit-item, .reveal-stagger, .chapter-divider");
-  targets.forEach(el => el.classList.add("reveal"));
-
-  if (prefersReducedMotion) {
-    targets.forEach(el => el.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  targets.forEach(el => observer.observe(el));
 }
 
 /* =========================================================================

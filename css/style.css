@@ -45,7 +45,7 @@
    RESET & BASE
    ========================================================================= */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -86,6 +86,12 @@ input:focus-visible,
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+  /* The scroll engine (continuous reveal/parallax/backdrop-color motion)
+     never runs under reduced motion — see initScrollEngine() in
+     script.js — so anything it would otherwise animate into view must be
+     forced visible here instead, or it would stay stuck at its 0%% state. */
+  .reveal, .chapter-divider { opacity: 1 !important; transform: none !important; }
+  [data-parallax], [data-parallax-bg] { transform: none !important; background-position: initial !important; }
 }
 
 /* =========================================================================
@@ -272,7 +278,36 @@ input:focus-visible,
    ========================================================================= */
 .main-site { position: relative; }
 
-.section { position: relative; padding: 110px 20px 100px; overflow: hidden; }
+/* Fixed color layer behind the whole page. Its background-color is
+   continuously updated by script.js from live scroll position — see
+   #scrollBackdrop comment in index.html. Sits behind everything (z-index
+   below .main-site's own stacking) and is invisible except through the
+   masked edges of each .section below. */
+#scrollBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--blue-pale);
+  pointer-events: none;
+}
+.opening, .main-site { position: relative; z-index: 1; }
+
+.section {
+  position: relative;
+  padding: 110px 20px 100px;
+  overflow: hidden;
+  /* Top and bottom edges fade to transparent, revealing #scrollBackdrop's
+     live-interpolated color underneath — this is what makes the boundary
+     between two sections a soft cross-dissolve instead of a hard cut.
+     Disabled entirely under reduced motion (see the media query below),
+     which restores plain opaque sections with hard edges. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 90px, black calc(100% - 90px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, black 90px, black calc(100% - 90px), transparent 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .section { -webkit-mask-image: none; mask-image: none; }
+  #scrollBackdrop { display: none; }
+}
 .section-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 2; }
 
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
@@ -284,12 +319,12 @@ input:focus-visible,
 .section-subtitle { margin-top: 10px; font-size: 1.05rem; color: var(--blue-mid); }
 .section-subtitle--light { color: var(--blue-pale); }
 
-.reveal { opacity: 0; transform: translateY(42px) scale(0.98); transition: opacity 800ms var(--ease-dreamy), transform 800ms var(--ease-dreamy); }
-.reveal.is-visible { opacity: 1; transform: translateY(0) scale(1); }
-
-/* Stagger: children of .reveal-stagger settle in one after another instead
-   of all at once, for a more handmade "someone placed these down" feel. */
-/* Stagger utility retained for any future multi-item reveal group. */
+/* Base (pre-JS) state only. Once script.js's scroll engine runs, opacity
+   and transform are set directly per animation frame from live scroll
+   position instead of via a CSS transition, so the motion is exactly
+   1:1 with scroll (including reversing instantly when scrolling back up)
+   rather than a transition trailing behind it. */
+.reveal { opacity: 0; transform: translateY(42px) scale(0.98); }
 
 /* =========================================================================
    NAVIGATION
@@ -430,22 +465,21 @@ input:focus-visible,
   display: flex;
   justify-content: center;
   overflow: hidden;
-  /* Entrance: settles from a slight angle into place, like a page turning
-     down flat — a one-time effect per divider, not a scroll-linked one. */
+  /* No background of its own anymore: #scrollBackdrop (fixed, behind
+     everything) shows through here, continuously color-interpolated by
+     script.js using this element's data-color-from/data-color-to, so the
+     seam between sections is a live cross-dissolve rather than a static
+     gradient block. */
+  background: transparent;
+  /* Base (pre-JS / reduced-motion) state; script.js takes over opacity and
+     transform every frame once running, tied directly to scroll position
+     rather than a one-time transition, so it can reverse smoothly if the
+     person scrolls back up. */
   opacity: 0;
   transform: rotate(-2.5deg) translateY(14px);
-  transition: opacity 700ms var(--ease-dreamy), transform 700ms var(--ease-dreamy);
 }
-.chapter-divider.is-visible { opacity: 1; transform: rotate(0deg) translateY(0); }
-/* Each divider blends the color of the section just above it into the
-   color of the section just below it, so the seam feels like a soft
-   ombre rather than a hard cut. The top padding above guarantees the
-   ribbon itself always clears the fixed nav bar, at any scroll position. */
-.chapter-divider[data-divider="1"] { background: linear-gradient(180deg, var(--blue-pale) 0%, var(--ivory) 100%); }
-.chapter-divider[data-divider="2"] { background: linear-gradient(180deg, var(--ivory) 0%, var(--blue-dark) 100%); }
-.chapter-divider[data-divider="3"] { background: linear-gradient(180deg, #f6ecdd 0%, #223a5e 100%); }
-.chapter-divider[data-divider="4"] { background: linear-gradient(180deg, var(--blue-deepest) 0%, #efe8f5 100%); }
-.chapter-divider[data-divider="5"] { background: linear-gradient(180deg, var(--ivory) 0%, var(--blue-deepest) 100%); }
+/* Ribbon color always stays legible regardless of what's happening behind
+   it in the backdrop, since it has its own solid background. */
 .chapter-divider-ribbon {
   display: inline-block;
   background: var(--blue-pale);
