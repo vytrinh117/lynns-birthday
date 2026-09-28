@@ -79,11 +79,11 @@ const CONFIG = {
   // Mix real and playful numbers — this section is meant to be funny.
   WRAPPED_STATISTICS: [
     { emoji: "🎧", number: "412", label: "Hours of music listened to" },
-    { emoji: "🎤", number: "9,004", label: "Songs sung (mostly in the shower)" },
+    { emoji: "🎤", number: "9,004", label: "Songs sung" },
     { emoji: "🎟️", number: "6", label: "Concerts attended" },
     { emoji: "💎", number: "928", label: "Times Mingyu was mentioned" },
-    { emoji: "🐩", number: "37", label: "Dog-related activities" },
-    { emoji: "🧵", number: "14", label: "Things sewn by hand" },
+    { emoji: "🐩", number: "37", label: "Mina-related activities" },
+    { emoji: "🧵", number: "Can't count", label: "Things sewn by hand" },
     { emoji: "☕", number: "∞", label: "Friends episodes rewatched" },
     { emoji: "🫠", number: "404", label: "Emotional stability: Not Found" },
   ],
