@@ -10,9 +10,9 @@ const CONFIG = {
 
   // ---- Basic info ----
   LYNN_NAME: "Lynn",
-  AGE: 25,                         // shown in the Friends section title
-  BIRTHDAY_DATE: "June 21",        // shown on the final concert ticket
-  DOG_NAME: "the poodle",          // used in a couple of dog messages below
+  AGE: 24,                         // shown in the Friends section title
+  BIRTHDAY_DATE: "September 27",        // shown on the final concert ticket
+  DOG_NAME: "Mina",          // used in a couple of dog messages below
 
   // ---- Photos ----
   // Replace these paths with your own images. Keep the same file names,
@@ -39,18 +39,20 @@ const CONFIG = {
   PLAYLIST: {
     "Main Character Energy": [
       { title: "Finesse (Remix)", artist: "Bruno Mars feat. Cardi B", cover: "assets/images/album-placeholder1.jpg", audio: "assets/music/song1.mp3" },
+    ],
+       "Current State": [
       { title: "Happy Now", artist: "Kali Uchis", cover: "assets/images/album-placeholder2.jpg", audio: "assets/music/song2.mp3" },
     ],
     "Concert Night": [
-      { title: "Concert anthem", artist: "Artist name", cover: "assets/images/album-placeholder3.jpg", audio: "assets/music/song3.mp3" },
+      { title: "After Hours", artist: "The Weeknd", cover: "assets/images/album-placeholder3.jpg", audio: "assets/music/song3.mp3" },
     ],
-    "Singing Alone at 2AM": [
+    "Singing All Day": [
       { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder4.jpg", audio: "assets/music/song4.mp3" },
     ],
     "SEVENTEEN Hours": [
       { title: "SOS (Pro. Marshmello)", artist: "SEVENTEEN", cover: "assets/images/album-placeholder5.jpg", audio: "assets/music/song5.mp3" },
     ],
-    "Soft Girl Sunday": [
+    "Lover Girl": [
       { title: "Ai Ngoài Anh", artist: "VSTRA", cover: "assets/images/album-placeholder6.jpg", audio: "assets/music/song6.mp3" },
     ],
   },
