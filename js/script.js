@@ -818,15 +818,15 @@ function initPotato() {
   const potato = $("#potatoMascot");
   const msgEl = $("#potatoMessage");
   const sequence = [
-    "Mingyu has entered the chat.",
-    "You have been Mingyu-approved.",
+    "Kimja has entered the chat.",
+    "You have been Kimja-approved.",
     "Okay, that's enough.",
   ];
   const randomExtras = [
-    "The potato waves at you.",
-    "It's giving visual (the potato agrees).",
-    "13 members, 1 potato, 0 regrets.",
-    "The potato has nothing left to say.",
+    "Kimja waves at you.",
+    "You are giving visual (Mingyu agrees).",
+    "13 members, 1 Lynn, 0 regrets.",
+    "Kimja has nothing left to say.",
   ];
   let clicks = 0;
 
