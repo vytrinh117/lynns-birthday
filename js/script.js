@@ -122,7 +122,7 @@ const ASSETS = {
   coaster: "assets/images/coaster.jpg",
   icons: {
     music: "assets/images/icon-music.png",
-    poodle: "assets/images/icon-poodle.png",
+    mina: "assets/images/icon-poodle.png",
     seventeen: "assets/images/icon-seventeen.png",
     friends: "assets/images/icon-friends.png",
     concerts: "assets/images/icon-concerts.png",
