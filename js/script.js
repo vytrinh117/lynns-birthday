@@ -39,7 +39,7 @@ const CONFIG = {
   PLAYLIST: {
     "Main Character Energy": [
       { title: "Finesse (Remix)", artist: "Bruno Mars feat. Cardi B", cover: "assets/images/album-placeholder1.jpg", audio: "assets/music/song1.mp3" },
-      { title: "Another song", artist: "Artist name", cover: "assets/images/album-placeholder2.jpg", audio: "assets/music/song2.mp3" },
+      { title: "Happy Now", artist: "Kali Uchis", cover: "assets/images/album-placeholder2.jpg", audio: "assets/music/song2.mp3" },
     ],
     "Concert Night": [
       { title: "Concert anthem", artist: "Artist name", cover: "assets/images/album-placeholder3.jpg", audio: "assets/music/song3.mp3" },
@@ -48,10 +48,10 @@ const CONFIG = {
       { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder4.jpg", audio: "assets/music/song4.mp3" },
     ],
     "SEVENTEEN Hours": [
-      { title: "Bias wrecker", artist: "SEVENTEEN", cover: "assets/images/album-placeholder5.jpg", audio: "assets/music/song5.mp3" },
+      { title: "SOS (Pro. Marshmello)", artist: "SEVENTEEN", cover: "assets/images/album-placeholder5.jpg", audio: "assets/music/song5.mp3" },
     ],
     "Soft Girl Sunday": [
-      { title: "Cozy morning", artist: "Artist name", cover: "assets/images/album-placeholder6.jpg", audio: "assets/music/song6.mp3" },
+      { title: "Ai Ngoài Anh", artist: "VSTRA", cover: "assets/images/album-placeholder6.jpg", audio: "assets/music/song6.mp3" },
     ],
   },
 
