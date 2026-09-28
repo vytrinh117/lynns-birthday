@@ -297,20 +297,122 @@ function initOpening() {
   const mainSite = $("#mainSite");
   const heartBadge = $("#heartHuntBadge");
 
-  enterBtn.addEventListener("click", () => {
-    // Start background music only after this user interaction.
-    tryStartAmbientMusic();
+  initOpeningPhotoCycler();
 
-    opening.classList.add("opening--leaving");
-    setTimeout(() => {
+  enterBtn.addEventListener("click", () => {
+    tryStartAmbientMusic();
+    runEnterTransition(() => {
       opening.style.display = "none";
       mainSite.hidden = false;
       heartBadge.hidden = false;
       document.body.style.overflow = "";
       initScrollEngine();
       initNavScrollSpy();
-    }, prefersReducedMotion ? 0 : 900);
+    });
   }, { once: true });
+}
+
+/* =========================================================================
+   OPENING — LIVING PHOTO FRAME
+   ---------------------------------------------------------------------
+   Cross-fades between whichever .opening-photo images actually loaded
+   (broken/missing ones remove themselves via onerror) every ~11 seconds
+   of visitor idle time. Any interaction — mouse move, click, touch,
+   scroll, keypress — resets the idle timer, exactly as requested: the
+   visitor is never interrupted mid-interaction by a photo change.
+   ========================================================================= */
+let openingPhotoIndex = 0;
+function initOpeningPhotoCycler() {
+  const caption = $("#openingPhotoCaption");
+  const IDLE_MS = 11000;
+  let idleTimer = null;
+
+  function currentPhotos() {
+    return $$(".opening-photo"); // re-queried each time: broken ones self-remove via onerror
+  }
+
+  function showNextPhoto() {
+    const photos = currentPhotos();
+    if (photos.length < 2 || prefersReducedMotion) { scheduleIdle(); return; }
+    photos[openingPhotoIndex]?.classList.remove("is-active");
+    openingPhotoIndex = (openingPhotoIndex + 1) % photos.length;
+    const next = photos[openingPhotoIndex];
+    next.classList.add("is-active");
+    if (caption) {
+      caption.style.opacity = 0;
+      setTimeout(() => {
+        caption.textContent = next.dataset.caption || "";
+        caption.style.opacity = 1;
+      }, 300);
+    }
+    scheduleIdle();
+  }
+
+  function scheduleIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(showNextPhoto, IDLE_MS);
+  }
+
+  ["mousemove", "click", "touchstart", "scroll", "keydown"].forEach(evt => {
+    document.addEventListener(evt, scheduleIdle, { passive: true });
+  });
+  scheduleIdle();
+}
+
+/* =========================================================================
+   OPENING — CINEMATIC ENTER TRANSITION
+   ---------------------------------------------------------------------
+   The visitor's current photo grows to fill the screen, then dissolves
+   into the main site — "stepping through the photograph." Falls back to
+   the simple fade used before if reduced motion is on.
+   ========================================================================= */
+function runEnterTransition(onDone) {
+  const enterBtn = $("#enterBtn");
+  const opening = $("#opening");
+  enterBtn.classList.add("pressed");
+
+  if (prefersReducedMotion) {
+    opening.classList.add("opening--leaving");
+    setTimeout(onDone, 0);
+    return;
+  }
+
+  const activePhoto = $(".opening-photo.is-active");
+  const overlay = $("#enterTransition");
+  overlay.innerHTML = "";
+
+  if (activePhoto && !activePhoto.classList.contains("img-missing")) {
+    const clone = document.createElement("img");
+    clone.src = activePhoto.src;
+    clone.alt = "";
+    overlay.appendChild(clone);
+  }
+
+  // Beat 1: thin line expands from the button (pure CSS, triggered by .pressed)
+  setTimeout(() => {
+    // Beat 2: photo clone fades in over the opening screen
+    overlay.classList.add("is-active");
+    requestAnimationFrame(() => {
+      // Beat 3: photo clone expands to fill the viewport
+      overlay.classList.add("is-expanding");
+    });
+  }, 150);
+
+  setTimeout(() => {
+    // Beat 4: dissolve into the main site's blue environment
+    overlay.classList.add("is-dissolving");
+    opening.classList.add("opening--leaving");
+  }, 950);
+
+  setTimeout(() => {
+    overlay.classList.add("is-done");
+    onDone();
+  }, 1550);
+
+  setTimeout(() => {
+    overlay.classList.remove("is-active", "is-expanding", "is-dissolving", "is-done");
+    overlay.innerHTML = "";
+  }, 2100);
 }
 
 function tryStartAmbientMusic() {
@@ -372,106 +474,215 @@ function initNavScrollSpy() {
 /* =========================================================================
    MUSIC PLAYER
    ========================================================================= */
+/* =========================================================================
+   VINYL MUSIC PLAYER — signature interaction
+   ---------------------------------------------------------------------
+   Records live on a shelf as clickable sleeves. Clicking one sends a
+   flying vinyl clone from the sleeve to the turntable (FLIP-animated),
+   the tonearm lowers, and it starts playing. Clicking a different
+   record while one is already loaded first sends the old vinyl flying
+   back to its own sleeve before bringing the new one out. Clicking the
+   tonearm itself toggles play/pause on whatever's already loaded, with
+   the platter audibly/visually "decelerating" to a stop rather than
+   snapping off instantly.
+   ========================================================================= */
 function initMusicPlayer() {
   const audio = new Audio();
   audio.volume = 0.7;
 
-  const playlistList = $("#playlistList");
-  const playBtn = $("#playerPlay");
-  const prevBtn = $("#playerPrev");
-  const nextBtn = $("#playerNext");
-  const progress = $("#playerProgress");
-  const volume = $("#playerVolume");
-  const artEl = $("#playerArt");
-  const artImg = $("#playerArtImg");
-  const songEl = $("#playerSong");
-  const artistEl = $("#playerArtist");
-  const timeCurrent = $("#playerTimeCurrent");
-  const timeTotal = $("#playerTimeTotal");
+  const turntable = $("#turntable");
+  const tonearm = $("#tonearm");
+  const shelf = $("#vinylShelf");
+  const vinylDisc = $("#vinylDisc");
+  const vinylLabelArt = $("#vinylLabelArt");
+  const flying = $("#flyingVinyl");
+  const titleEl = $("#vpSongTitle");
+  const artistEl = $("#vpSongArtist");
+  const captionEl = $("#vpSongCaption");
+  const progress = $("#vpProgress");
+  const volume = $("#vpVolume");
+  const timeCurrent = $("#vpTimeCurrent");
+  const timeTotal = $("#vpTimeTotal");
 
-  // Flatten playlist into a single ordered queue while remembering
-  // which named playlist each song belongs to, for the sidebar UI.
-  const queue = [];
+  // Flatten the named playlists into one shelf of individual records —
+  // easier to browse as a physical collection than nested playlist names.
+  const records = [];
   Object.entries(CONFIG.PLAYLIST).forEach(([name, songs]) => {
-    songs.forEach(song => queue.push({ ...song, playlist: name }));
+    songs.forEach(song => records.push({ ...song, mood: name }));
   });
 
-  let currentIndex = queue.length ? 0 : -1;
+  let currentIndex = -1;
+  let isPlaying = false;
+  let isAnimating = false;
+  let sleeveEls = [];
 
-  function renderPlaylistSidebar() {
-    playlistList.innerHTML = "";
-    Object.keys(CONFIG.PLAYLIST).forEach((name, i) => {
-      const li = document.createElement("li");
-      li.textContent = `${String(i + 1).padStart(2, "0")} — ${name}`;
-      li.dataset.playlist = name;
-      li.addEventListener("click", () => {
-        const firstIndex = queue.findIndex(s => s.playlist === name);
-        if (firstIndex !== -1) loadSong(firstIndex, true);
+  function renderShelf() {
+    shelf.innerHTML = "";
+    sleeveEls = records.map((rec, i) => {
+      const sleeve = document.createElement("button");
+      sleeve.type = "button";
+      sleeve.className = "vinyl-sleeve";
+      sleeve.setAttribute("aria-label", `Play ${rec.title} by ${rec.artist}`);
+      sleeve.innerHTML = `
+        <div class="vinyl-sleeve-art">
+          <img src="${rec.cover || ""}" alt="" loading="lazy"
+               onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+        </div>
+        <p class="vinyl-sleeve-track">${String(i + 1).padStart(2, "0")} — ${rec.mood}</p>
+        <p class="vinyl-sleeve-title">${rec.title}</p>
+        <p class="vinyl-sleeve-now">now playing</p>
+      `;
+      sleeve.addEventListener("click", () => selectRecord(i));
+      shelf.appendChild(sleeve);
+      return sleeve;
+    });
+  }
+
+  function highlightActiveSleeve() {
+    sleeveEls.forEach((el, i) => el.classList.toggle("is-active", i === currentIndex));
+  }
+
+  // FLIP-animate a flying vinyl clone from one element's rect to another's.
+  function flyVinyl(fromEl, toEl, coverSrc, duration = 650) {
+    return new Promise(resolve => {
+      if (prefersReducedMotion || !fromEl || !toEl) { resolve(); return; }
+      const fromRect = fromEl.getBoundingClientRect();
+      const toRect = toEl.getBoundingClientRect();
+      flying.innerHTML = coverSrc ? `<img src="${coverSrc}" alt="" onerror="this.remove()">` : "";
+      flying.style.transition = "none";
+      flying.style.width = `${fromRect.width}px`;
+      flying.style.height = `${fromRect.height}px`;
+      flying.style.transform = `translate(${fromRect.left}px, ${fromRect.top}px)`;
+      flying.classList.add("is-flying");
+      void flying.offsetWidth; // force reflow so the transition below actually animates
+      requestAnimationFrame(() => {
+        flying.style.transition = `transform ${duration}ms cubic-bezier(0.22,1,0.36,1), width ${duration}ms, height ${duration}ms, border-radius 400ms`;
+        flying.style.width = `${toRect.width}px`;
+        flying.style.height = `${toRect.height}px`;
+        flying.style.transform = `translate(${toRect.left}px, ${toRect.top}px)`;
       });
-      playlistList.appendChild(li);
+      setTimeout(() => { flying.classList.remove("is-flying"); resolve(); }, duration + 30);
     });
   }
 
-  function highlightActivePlaylist() {
-    const current = queue[currentIndex];
-    $$(".playlist-list li").forEach(li => {
-      li.classList.toggle("active", current && li.dataset.playlist === current.playlist);
-    });
+  function wait(ms) { return new Promise(r => setTimeout(r, prefersReducedMotion ? 0 : ms)); }
+
+  function liftTonearm() { turntable.classList.remove("is-playing"); }
+  function lowerTonearm() { turntable.classList.add("is-playing"); }
+
+  // Decelerate the spinning disc to a natural-looking stop instead of an
+  // instant snap, then hand back to the (paused) CSS animation state.
+  function decelerateDisc() {
+    const spin = $(".vinyl-disc-spin", vinylDisc);
+    if (!spin || prefersReducedMotion) return;
+    const computed = getComputedStyle(spin).transform;
+    let angle = 0;
+    if (computed && computed !== "none") {
+      const m = computed.match(/matrix\(([^)]+)\)/);
+      if (m) {
+        const [a, b] = m[1].split(",").map(Number);
+        angle = Math.atan2(b, a) * (180 / Math.PI);
+      }
+    }
+    spin.style.animation = "none";
+    spin.style.transform = `rotate(${angle}deg)`;
+    void spin.offsetWidth;
+    spin.style.transition = "transform 1.3s cubic-bezier(0.15, 0.7, 0.3, 1)";
+    spin.style.transform = `rotate(${angle + 220}deg)`;
+    setTimeout(() => {
+      spin.style.transition = "";
+      spin.style.animation = "";
+      spin.style.transform = "";
+    }, 1350);
   }
 
-  function loadSong(index, autoplay = false) {
-    if (!queue.length) return;
-    currentIndex = (index + queue.length) % queue.length;
-    const song = queue[currentIndex];
+  async function stopPlayback({ keepDiscVisible = true } = {}) {
+    if (!isPlaying) return;
+    isPlaying = false;
+    liftTonearm();
+    audio.pause();
+    decelerateDisc();
+    await wait(500);
+  }
 
-    songEl.textContent = song.title || "Untitled";
-    artistEl.textContent = song.artist || "Unknown artist";
-    artImg.src = song.cover || "";
-    artImg.style.display = "";
-    artEl.classList.remove("img-missing");
-    artImg.onerror = () => { artImg.style.display = "none"; artEl.classList.add("img-missing"); };
+  async function ejectCurrentRecord() {
+    if (currentIndex === -1) return;
+    const fromEl = vinylDisc;
+    const toEl = sleeveEls[currentIndex]?.querySelector(".vinyl-sleeve-art");
+    turntable.classList.remove("has-vinyl");
+    await flyVinyl(fromEl, toEl || fromEl, records[currentIndex]?.cover);
+  }
 
-    audio.src = song.audio || "";
+  async function bringInRecord(index) {
+    const sleeveArt = sleeveEls[index]?.querySelector(".vinyl-sleeve-art");
+    const rec = records[index];
+    vinylLabelArt.src = rec.cover || "";
+    vinylLabelArt.onerror = () => { vinylLabelArt.style.display = "none"; };
+    await flyVinyl(sleeveArt, $(".turntable-plate"), rec.cover);
+    turntable.classList.add("has-vinyl");
+
+    titleEl.textContent = rec.title || "Untitled";
+    artistEl.textContent = rec.artist || "Unknown artist";
+    captionEl.textContent = rec.caption || `one of her "${rec.mood}" songs`;
+    audio.src = rec.audio || "";
     progress.value = 0;
     timeCurrent.textContent = "0:00";
     timeTotal.textContent = "0:00";
+    highlightActiveSleeve();
+  }
 
-    highlightActivePlaylist();
+  async function startPlayback() {
+    lowerTonearm();
+    await wait(350); // let the tonearm visually land before sound starts
+    try { await audio.play(); isPlaying = true; }
+    catch (e) { liftTonearm(); isPlaying = false; }
+  }
 
-    if (autoplay) {
-      audio.play().catch(() => {
-        // Autoplay blocked or file missing — that's fine, just stay paused.
-        setPlayingState(false);
-      });
+  async function selectRecord(index) {
+    if (isAnimating || index === currentIndex) {
+      // Clicking the record already on the turntable is equivalent to
+      // toggling the tonearm — handled by the tonearm's own listener.
+      return;
+    }
+    isAnimating = true;
+    try {
+      await stopPlayback();
+      await ejectCurrentRecord();
+      currentIndex = index;
+      await bringInRecord(index);
+      await startPlayback();
+    } finally {
+      isAnimating = false;
     }
   }
 
-  function setPlayingState(isPlaying) {
-    playBtn.textContent = isPlaying ? "⏸" : "▶";
-    playBtn.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
-    artEl.classList.toggle("is-playing", isPlaying);
-  }
-
-  playBtn.addEventListener("click", () => {
-    if (!queue.length || !audio.src) return;
-    if (audio.paused) {
-      audio.play().then(() => setPlayingState(true)).catch(() => setPlayingState(false));
-    } else {
-      audio.pause();
-      setPlayingState(false);
+  tonearm.addEventListener("click", async () => {
+    if (isAnimating) return;
+    if (currentIndex === -1) {
+      // No record loaded yet — nudge toward the shelf instead of doing nothing.
+      const hint = $("#tonearmHint");
+      hint.animate([{ transform: "translateX(0)" }, { transform: "translateX(-4px)" }, { transform: "translateX(4px)" }, { transform: "translateX(0)" }], { duration: 300 });
+      return;
+    }
+    isAnimating = true;
+    try {
+      if (isPlaying) {
+        await stopPlayback();
+      } else {
+        await startPlayback();
+      }
+    } finally {
+      isAnimating = false;
     }
   });
 
-  prevBtn.addEventListener("click", () => loadSong(currentIndex - 1, !audio.paused));
-  nextBtn.addEventListener("click", () => loadSong(currentIndex + 1, !audio.paused));
-
-  audio.addEventListener("ended", () => loadSong(currentIndex + 1, true));
-  audio.addEventListener("play", () => setPlayingState(true));
-  audio.addEventListener("pause", () => setPlayingState(false));
-
-  audio.addEventListener("loadedmetadata", () => {
-    timeTotal.textContent = formatTime(audio.duration);
+  audio.addEventListener("ended", () => {
+    isPlaying = false;
+    liftTonearm();
+    decelerateDisc();
+    if (records.length > 1) selectRecord((currentIndex + 1) % records.length);
   });
+  audio.addEventListener("loadedmetadata", () => { timeTotal.textContent = formatTime(audio.duration); });
   audio.addEventListener("timeupdate", () => {
     if (audio.duration) {
       progress.value = (audio.currentTime / audio.duration) * 100;
@@ -483,11 +694,9 @@ function initMusicPlayer() {
   });
   volume.addEventListener("input", () => { audio.volume = Number(volume.value); });
 
-  renderPlaylistSidebar();
-  if (queue.length) {
-    loadSong(0, false);
-  } else {
-    songEl.textContent = "No songs added yet";
+  renderShelf();
+  if (!records.length) {
+    titleEl.textContent = "No records added yet";
     artistEl.textContent = "Add your MP3s in script.js ✦";
   }
 }
@@ -819,6 +1028,324 @@ function initFinale() {
 }
 
 /* =========================================================================
+   BIRTHDAY FINALE OVERLAY
+   ---------------------------------------------------------------------
+   Triggered exactly once, only when #finaleSentinel (placed at the very
+   end of the page) actually scrolls into view — never earlier. Runs the
+   full sequence: overlay fade-in → cake reveal → drag/tap "002" away →
+   "4" arrives → blow out (button or mic) → fireworks → balloons →
+   replay, which resets every bit of state and plays it again.
+   ========================================================================= */
+function initFinaleOverlay() {
+  const sentinel = $("#finaleSentinel");
+  const overlay = $("#finaleOverlay");
+  if (!sentinel || !overlay) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        obs.disconnect();
+        showFinaleOverlay();
+      }
+    });
+  }, { threshold: 0.15 });
+  observer.observe(sentinel);
+}
+
+let finaleBonusFireworksTimer = null;
+
+function showFinaleOverlay() {
+  const overlay = $("#finaleOverlay");
+  overlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  requestAnimationFrame(() => overlay.classList.add("is-visible"));
+
+  startAmbientFireworks(); // a few gentle bursts as the scene settles in
+  startBalloons();
+
+  // Delayed surprise: a bigger burst if the visitor lingers on the final
+  // screen. Not required for "completing" the experience — just a treat.
+  clearTimeout(finaleBonusFireworksTimer);
+  finaleBonusFireworksTimer = setTimeout(() => {
+    if (!overlay.hidden) burstFireworks(9);
+  }, prefersReducedMotion ? 0 : 2.5 * 60 * 1000);
+
+  initCandleInteraction();
+  initBlowInteraction();
+  initFinaleReplay();
+}
+
+/* ---- Candles: drag OR tap "002" away, "4" arrives, "2002" → "24" ---- */
+function initCandleInteraction() {
+  const group = $("#candleDragGroup");
+  const four = $("#candleFour");
+  const hint = $("#candleDragHint");
+  const message = $("#candleMessage");
+  const cakeCandles = $("#cakeCandles");
+  if (!group || group.dataset.bound) return; // never double-bind across replays
+  group.dataset.bound = "1";
+
+  let startX = 0, currentX = 0, dragging = false, resolved = false;
+
+  function resolveSwap() {
+    if (resolved) return;
+    resolved = true;
+    group.classList.add("is-leaving");
+    hint.classList.add("is-hidden");
+    setTimeout(() => {
+      cakeCandles.classList.add("is-swapped");
+      four.classList.add("is-entering");
+      message.textContent = "24 looks good on you. ♡";
+      message.classList.add("is-shown");
+      sparkleBurst($(".finale-cake"));
+      // Blow controls only appear once there's something to blow out.
+      $("#finaleBlowControls").classList.add("is-shown");
+      $("#finaleBlowControls").hidden = false;
+    }, 520);
+  }
+
+  group.addEventListener("pointerdown", e => {
+    dragging = true; startX = e.clientX; currentX = 0;
+    group.setPointerCapture(e.pointerId);
+  });
+  group.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    currentX = e.clientX - startX;
+    group.style.transform = `translateX(${Math.max(0, currentX)}px)`;
+  });
+  group.addEventListener("pointerup", () => {
+    dragging = false;
+    group.style.transform = "";
+    if (currentX > 40) resolveSwap(); // dragged far enough
+  });
+  // A plain tap/click (no meaningful drag) also works — this is the
+  // reliable path on mobile, and a nice shortcut on desktop too.
+  group.addEventListener("click", () => { if (Math.abs(currentX) < 5) resolveSwap(); });
+  group.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); resolveSwap(); } });
+}
+
+function sparkleBurst(anchorEl) {
+  if (prefersReducedMotion || !anchorEl) return;
+  const rect = anchorEl.getBoundingClientRect();
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement("span");
+    const angle = (Math.PI * 2 * i) / 8;
+    s.textContent = "✦";
+    s.style.cssText = `position:fixed; left:${rect.left + rect.width / 2}px; top:${rect.top + rect.height / 2}px;
+      color:#cfe0f4; font-size:14px; pointer-events:none; z-index:1002;
+      transition: transform 700ms ease-out, opacity 700ms ease-out; opacity:1;`;
+    document.body.appendChild(s);
+    requestAnimationFrame(() => {
+      s.style.transform = `translate(${Math.cos(angle) * 60}px, ${Math.sin(angle) * 60}px)`;
+      s.style.opacity = "0";
+    });
+    setTimeout(() => s.remove(), 750);
+  }
+}
+
+/* ---- Blow out the candles: button (always works) or microphone (opt-in) ---- */
+function initBlowInteraction() {
+  const blowBtn = $("#finaleBlowBtn");
+  const micBtn = $("#finaleMicBtn");
+  if (blowBtn.dataset.bound) return;
+  blowBtn.dataset.bound = "1";
+
+  let holdTimer = null;
+  function startHold() {
+    blowBtn.classList.add("is-holding");
+    holdTimer = setTimeout(extinguishCandles, 500);
+  }
+  function cancelHold() {
+    blowBtn.classList.remove("is-holding");
+    clearTimeout(holdTimer);
+  }
+  blowBtn.addEventListener("pointerdown", startHold);
+  blowBtn.addEventListener("pointerup", cancelHold);
+  blowBtn.addEventListener("pointerleave", cancelHold);
+  blowBtn.addEventListener("click", extinguishCandles); // simple click also just works
+
+  micBtn.addEventListener("click", async () => {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      micBtn.textContent = "mic not available here — use the button ♡";
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      micBtn.textContent = "listening... blow now ♡";
+      micBtn.classList.add("is-listening");
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const source = ctx.createMediaStreamSource(stream);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 512;
+      source.connect(analyser);
+      const data = new Uint8Array(analyser.frequencyBinCount);
+      let stopped = false;
+
+      function checkVolume() {
+        if (stopped) return;
+        analyser.getByteFrequencyData(data);
+        const avg = data.reduce((a, b) => a + b, 0) / data.length;
+        if (avg > 55) { // sustained loud/breathy input reads as a "blow"
+          stopped = true;
+          stream.getTracks().forEach(t => t.stop());
+          ctx.close();
+          extinguishCandles();
+          return;
+        }
+        requestAnimationFrame(checkVolume);
+      }
+      checkVolume();
+    } catch (e) {
+      micBtn.textContent = "mic permission declined — use the button ♡";
+    }
+  });
+}
+
+let candlesExtinguished = false;
+function extinguishCandles() {
+  if (candlesExtinguished) return;
+  candlesExtinguished = true;
+
+  $$(".candle").forEach((candle, i) => {
+    setTimeout(() => {
+      candle.classList.add("is-out");
+      const smoke = document.createElement("span");
+      smoke.className = "candle-smoke";
+      candle.style.position = "relative";
+      candle.appendChild(smoke);
+      requestAnimationFrame(() => smoke.classList.add("is-rising"));
+      setTimeout(() => smoke.remove(), 1500);
+    }, i * 120);
+  });
+
+  setTimeout(() => {
+    burstFireworks(5);
+    revealReplay();
+  }, prefersReducedMotion ? 200 : 1600);
+}
+
+/* ---- Fireworks: small CSS-particle bursts, not a full canvas engine ---- */
+const FIREWORK_COLORS = ["#cfe0f4", "#9db8dd", "#eef5fc", "#d9d7ee", "#ffffff"];
+function burstFireworks(count = 3) {
+  if (prefersReducedMotion) return;
+  const layer = $("#finaleFireworks");
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => spawnSingleFirework(layer), i * 420);
+  }
+}
+function spawnSingleFirework(layer) {
+  const x = 15 + Math.random() * 70; // vw
+  const y = 20 + Math.random() * 40; // vh
+  const color = FIREWORK_COLORS[Math.floor(Math.random() * FIREWORK_COLORS.length)];
+  const particleCount = 14;
+  for (let i = 0; i < particleCount; i++) {
+    const p = document.createElement("span");
+    p.className = "firework-particle";
+    const angle = (Math.PI * 2 * i) / particleCount;
+    const dist = 40 + Math.random() * 40;
+    p.style.left = `${x}vw`;
+    p.style.top = `${y}vh`;
+    p.style.setProperty("--particle-color", color);
+    p.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+    p.style.setProperty("--dy", `${Math.sin(angle) * dist}px`);
+    layer.appendChild(p);
+    setTimeout(() => p.remove(), 1200);
+  }
+}
+function startAmbientFireworks() {
+  if (prefersReducedMotion) return;
+  burstFireworks(4);
+}
+
+/* ---- Balloons: gentle ambient drift, blue/white/silver only ---- */
+const BALLOON_COLORS = ["#9db8dd", "#cfe0f4", "#eef5fc", "#d9d7ee"];
+let balloonInterval = null;
+function startBalloons() {
+  if (prefersReducedMotion) return;
+  const layer = $("#finaleBalloons");
+  stopBalloons();
+  function spawn() {
+    const b = document.createElement("span");
+    b.className = "balloon";
+    const left = 5 + Math.random() * 90;
+    const duration = 9 + Math.random() * 6;
+    const drift = (Math.random() - 0.5) * 120;
+    b.style.left = `${left}vw`;
+    b.style.setProperty("--balloon-color", BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)]);
+    b.style.setProperty("--drift", `${drift}px`);
+    b.style.animationDuration = `${duration}s`;
+    layer.appendChild(b);
+    setTimeout(() => b.remove(), duration * 1000 + 200);
+  }
+  for (let i = 0; i < 3; i++) setTimeout(spawn, i * 600);
+  balloonInterval = setInterval(spawn, 2600);
+}
+function stopBalloons() {
+  clearInterval(balloonInterval);
+  balloonInterval = null;
+}
+
+/* ---- Replay: fully resets and plays the whole sequence again ---- */
+function revealReplay() {
+  const btn = $("#finaleReplayBtn");
+  btn.hidden = false;
+  requestAnimationFrame(() => btn.classList.add("is-shown"));
+}
+function initFinaleReplay() {
+  const btn = $("#finaleReplayBtn");
+  if (btn.dataset.bound) return;
+  btn.dataset.bound = "1";
+  btn.addEventListener("click", () => {
+    btn.classList.remove("is-shown");
+    const overlayStage = $(".finale-stage");
+    overlayStage.style.transition = "opacity 400ms";
+    overlayStage.style.opacity = "0";
+    setTimeout(() => {
+      resetFinaleState();
+      overlayStage.style.opacity = "1";
+    }, 420);
+  });
+}
+function resetFinaleState() {
+  candlesExtinguished = false;
+  const group = $("#candleDragGroup");
+  const four = $("#candleFour");
+  const cakeCandles = $("#cakeCandles");
+  const hint = $("#candleDragHint");
+  const message = $("#candleMessage");
+  const blowControls = $("#finaleBlowControls");
+  const micBtn = $("#finaleMicBtn");
+  const replayBtn = $("#finaleReplayBtn");
+
+  cakeCandles.classList.remove("is-swapped");
+  group.classList.remove("is-leaving");
+  group.style.transform = "";
+  four.classList.remove("is-entering");
+  hint.classList.remove("is-hidden");
+  message.classList.remove("is-shown");
+  message.textContent = "";
+  blowControls.classList.remove("is-shown");
+  blowControls.hidden = true;
+  micBtn.textContent = "🎤 or actually blow, using your mic";
+  micBtn.classList.remove("is-listening");
+  replayBtn.hidden = true;
+  replayBtn.classList.remove("is-shown");
+
+  $$(".candle").forEach(c => {
+    c.classList.remove("is-out");
+    $$(".candle-smoke", c).forEach(s => s.remove());
+  });
+
+  // Re-bind the drag/tap group since its internal closure state
+  // (dragging/resolved flags) needs a clean slate, not just CSS resets.
+  delete group.dataset.bound;
+  initCandleInteraction();
+
+  startAmbientFireworks();
+  startBalloons();
+}
+
+/* =========================================================================
    HIDDEN HEART HUNT — real, verifiable, persistent state
    ---------------------------------------------------------------------
    There are exactly 5 hearts in the DOM, each with a unique
@@ -975,6 +1502,7 @@ document.addEventListener("DOMContentLoaded", () => {
   safeInit("wrapped", renderWrapped);
   safeInit("wishes", renderWishes);
   safeInit("finale", initFinale);
+  safeInit("finale overlay", initFinaleOverlay);
   safeInit("heart hunt", initHeartHunt);
   safeInit("secret room", initSecretRoom);
   safeInit("cursor", initCursor);

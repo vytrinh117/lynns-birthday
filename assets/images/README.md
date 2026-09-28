@@ -7,7 +7,10 @@ instead (see "General fallback behavior" below).
 | File | Purpose | Used in |
 |------|---------|---------|
 | `potato-mingyu.png` | Mingyu's potato mascot (original illustration) | SEVENTEEN → Mingyu Corner **only** |
-| `lynn-main.jpg` | Main Lynn photo | About section |
+| `lynn-main.jpg` | Main Lynn photo | About section, opening living photo frame |
+| `opening-02.jpg` | Second opening photo | Opening living photo frame (cycles in after ~11s idle) |
+| `opening-03.jpg` | Third opening photo | Opening living photo frame |
+| `opening-04.jpg` | Fourth opening photo | Opening living photo frame |
 | `poodle-01.jpg` | Lynn's poodle (main photo) | Poodle section |
 | `poodle-02.jpg` | Lynn's poodle (second photo) | Poodle section |
 | `mingyu-01.jpg` | Mingyu photo (solo) | Mingyu Corner photo cluster |
