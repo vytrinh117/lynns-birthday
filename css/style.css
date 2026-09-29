@@ -90,7 +90,7 @@ input:focus-visible,
      never runs under reduced motion — see initScrollEngine() in
      script.js — so anything it would otherwise animate into view must be
      forced visible here instead, or it would stay stuck at its 0%% state. */
-  .reveal, .chapter-divider { opacity: 1 !important; transform: none !important; }
+  .reveal, .chapter-divider { opacity: 1 !important; transform: none !important; translate: none !important; scale: none !important; }
   [data-parallax], [data-parallax-bg] { transform: none !important; background-position: initial !important; }
 }
 
@@ -443,7 +443,11 @@ input:focus-visible,
    position instead of via a CSS transition, so the motion is exactly
    1:1 with scroll (including reversing instantly when scrolling back up)
    rather than a transition trailing behind it. */
-.reveal { opacity: 0; transform: translateY(42px) scale(0.98); }
+.reveal { opacity: 0; translate: 0 42px; scale: 0.98; }
+/* NOTE: scroll reveal drives the independent `translate` and `scale`
+   properties (not `transform`), and tilt uses `rotate`, so scroll motion,
+   scrapbook tilt, and hover lift can all coexist instead of overwriting
+   each other. */
 
 /* =========================================================================
    NAVIGATION
@@ -525,16 +529,17 @@ input:focus-visible,
   box-shadow: var(--shadow-card);
   display: inline-block;
   position: relative;
-  transition: transform 400ms var(--ease-dreamy), box-shadow 400ms;
+  /* transition only the hover-driven properties, never translate/scale
+     (those are driven per-frame by scroll and must not lag behind it) */
+  transition: transform 400ms var(--ease-dreamy), rotate 400ms var(--ease-dreamy), box-shadow 400ms;
 }
-.polaroid:hover { transform: rotate(0deg) translateY(-6px) scale(1.02); box-shadow: 0 26px 40px -18px rgba(44,63,102,0.4); z-index: 3; }
+.polaroid:hover { transform: translateY(-6px) scale(1.02); rotate: 0deg; box-shadow: 0 26px 40px -18px rgba(44,63,102,0.4); z-index: 3; }
 .polaroid--large { width: min(320px, 80vw); }
 .polaroid--small { width: min(200px, 60vw); }
 .polaroid--strip { width: min(180px, 46vw); }
-.tilt-a { transform: rotate(-3.5deg); }
-.tilt-b { transform: rotate(2.5deg); }
-.tilt-c { transform: rotate(-1.5deg); }
-.tilt-a:hover, .tilt-b:hover, .tilt-c:hover { transform: translateY(-6px) scale(1.02); }
+.tilt-a { rotate: -3.5deg; }
+.tilt-b { rotate: 2.5deg; }
+.tilt-c { rotate: -1.5deg; }
 
 .photo-frame {
   width: 100%;
@@ -1279,7 +1284,14 @@ input:focus-visible,
    07. SEWING CORNER
    ========================================================================= */
 .section--sewing { background: linear-gradient(180deg, #f6ecdd 0%, var(--cream) 100%); }
-.sewing-desk { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
+.sewing-desk { position: relative; display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; }
+.sewing-thread { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: visible; }
+.sewing-desk > *:not(.sewing-thread) { position: relative; z-index: 1; }
+.sewing-thread path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.sewing-thread-guide { stroke: rgba(92,125,173,0.25); stroke-width: 2px; stroke-dasharray: 3 7; }
+.sewing-thread-line { stroke: var(--blue-mid); stroke-width: 2.5px; stroke-dasharray: 1; stroke-dashoffset: 1; }
+@media (max-width: 980px) { .sewing-thread { display: none; } }
+@media (prefers-reduced-motion: reduce) { .sewing-thread-line { stroke-dashoffset: 0 !important; } }
 .sewing-photo-col { display: flex; flex-direction: column; align-items: center; gap: 30px; position: relative; }
 .coaster-polaroid { align-self: flex-end; margin-right: 10%; }
 .sewing-props { display: flex; gap: 18px; margin: 20px 0 30px; font-size: 1.8rem; }
@@ -1309,15 +1321,44 @@ input:focus-visible,
 .section--memories { background: var(--ivory); }
 .memories-doodle-1 { position: absolute; top: 60px; left: 6%; opacity: 0.3; }
 .memories-doodle-2 { position: absolute; bottom: 40px; right: 8%; opacity: 0.3; color: var(--lavender-deep); }
-.polaroid-wall {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px 30px;
-  justify-content: center;
-  padding: 20px 0 40px;
+.polaroid-wall { position: relative; padding: 20px 0 40px; }
+/* Vertical year timeline: a center line that fills as you scroll, with
+   polaroids alternating sides. Single-column on small screens. */
+.memory-timeline { --tl: 0; display: flex; flex-direction: column; gap: 56px; }
+.memory-timeline::before, .memory-timeline::after {
+  content: ''; position: absolute; left: 50%; top: 0; width: 2px; transform: translateX(-50%);
 }
-.memory-item { cursor: pointer; }
+.memory-timeline::before { bottom: 0; background: rgba(92,125,173,0.2); }
+.memory-timeline::after { height: calc(var(--tl) * 100%); background: var(--blue-mid); }
+.timeline-entry { position: relative; display: flex; align-items: center; width: 50%; }
+.timeline-entry--left { justify-content: flex-end; padding-right: 54px; align-self: flex-start; }
+.timeline-entry--right { justify-content: flex-start; padding-left: 54px; align-self: flex-end; }
+.timeline-dot {
+  position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--ivory); border: 3px solid var(--blue-mid); transform: translateY(-50%); z-index: 2;
+}
+.timeline-entry--left .timeline-dot { right: -8px; }
+.timeline-entry--right .timeline-dot { left: -8px; }
+.timeline-year {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-serif); font-size: 1.6rem; color: var(--blue-mid);
+}
+.timeline-year { display: none; }
+@media (min-width: 981px) {
+  /* year label sits on the opposite side of the center line from its photo */
+  .timeline-year { display: block; }
+  .timeline-entry--left .timeline-year { left: calc(100% + 34px); }
+  .timeline-entry--right .timeline-year { right: calc(100% + 34px); }
+}
+@media (max-width: 980px) {
+  .memory-timeline::before, .memory-timeline::after { left: 14px; }
+  .timeline-entry { width: 100%; padding-left: 48px !important; padding-right: 0 !important; justify-content: flex-start !important; align-self: stretch !important; }
+  .timeline-dot { left: 6px !important; right: auto !important; }
+  .timeline-year { position: static; transform: none; display: block !important; order: -1; width: 100%; font-size: 1.2rem; margin-bottom: 6px; }
+  .timeline-entry { flex-wrap: wrap; align-items: flex-start; }
+  .timeline-dot { top: 12px; }
+}
+.memory-item { cursor: pointer; rotate: var(--tilt, 0deg); width: min(280px, 72vw); }
 .memory-item .polaroid-caption { font-size: 1rem; }
 .memory-date { display: block; font-size: 0.75rem; color: var(--blue-mid); font-family: var(--font-sans); font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
 
@@ -1787,3 +1828,39 @@ input:focus-visible,
   .candle-flame { animation: none; }
   .firework-particle, .balloon { animation: none; opacity: 0; }
 }
+
+/* ---- Chapter progress line (bottom of nav pill) ---- */
+.nav-inner { position: relative; }
+.nav-progress { position: absolute; left: 24px; right: 24px; bottom: 3px; height: 2px; border-radius: 2px; background: rgba(157,184,221,0.25); overflow: hidden; pointer-events: none; }
+.nav-progress::after { content: ''; position: absolute; inset: 0; background: var(--blue-mid); transform-origin: left center; transform: scaleX(var(--sp, 0)); }
+
+/* ---- Ticket: SOLD OUT stamp lands as you scroll (see updateDrawn) ---- */
+.final-ticket { position: relative; }
+.ticket-stamp {
+  position: absolute; top: 46%; left: 24%; z-index: 3;
+  rotate: -13deg; opacity: 0; scale: 1.7;
+  padding: 4px 16px; border: 3px solid var(--blue-mid); border-radius: 6px;
+  color: var(--blue-mid); font-family: var(--font-serif); font-weight: 600;
+  font-size: 1.5rem; letter-spacing: 4px; text-transform: uppercase;
+  background: rgba(255,253,248,0.55); pointer-events: none;
+}
+@media (max-width: 640px) { .ticket-stamp { font-size: 1.1rem; left: 14%; } }
+@media (prefers-reduced-motion: reduce) { .ticket-stamp { opacity: 1 !important; scale: none !important; } }
+
+/* ---- Photocard tilt + shine on the Mingyu fan card ---- */
+.fan-card { transition: transform 250ms ease-out; will-change: transform; }
+.fan-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,0.6), transparent 55%);
+  transition: opacity 250ms;
+}
+.fan-card:hover::after { opacity: 1; }
+
+/* ---- Way back out of the finale ---- */
+.finale-close-btn {
+  position: absolute; top: 18px; right: 20px; z-index: 5;
+  color: var(--blue-pale); font-size: 0.85rem; letter-spacing: 0.5px;
+  padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(207,224,244,0.35);
+  opacity: 0.75; transition: opacity 250ms, background 250ms;
+}
+.finale-close-btn:hover { opacity: 1; background: rgba(255,255,255,0.08); }

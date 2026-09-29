@@ -10,9 +10,9 @@ const CONFIG = {
 
   // ---- Basic info ----
   LYNN_NAME: "Lynn",
-  AGE: 24,                         // shown in the Friends section title
-  BIRTHDAY_DATE: "September 27",        // shown on the final concert ticket
-  DOG_NAME: "Mina",          // used in a couple of dog messages below
+  AGE: 25,                         // shown in the Friends section title
+  BIRTHDAY_DATE: "June 21",        // shown on the final concert ticket
+  DOG_NAME: "the poodle",          // used in a couple of dog messages below
 
   // ---- Photos ----
   // Replace these paths with your own images. Keep the same file names,
@@ -38,22 +38,20 @@ const CONFIG = {
   // state instead of breaking.
   PLAYLIST: {
     "Main Character Energy": [
-      { title: "Finesse (Remix)", artist: "Bruno Mars feat. Cardi B", cover: "assets/images/album-placeholder1.jpg", audio: "assets/music/song1.mp3" },
-    ],
-       "Current State": [
-      { title: "Happy Now", artist: "Kali Uchis", cover: "assets/images/album-placeholder2.jpg", audio: "assets/music/song2.mp3" },
+      { title: "Song title here", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song1.mp3" },
+      { title: "Another song", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song2.mp3" },
     ],
     "Concert Night": [
-      { title: "After Hours", artist: "The Weeknd", cover: "assets/images/album-placeholder3.jpg", audio: "assets/music/song3.mp3" },
+      { title: "Concert anthem", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song3.mp3" },
     ],
-    "Singing All Day": [
-      { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder4.jpg", audio: "assets/music/song4.mp3" },
+    "Singing Alone at 2AM": [
+      { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song4.mp3" },
     ],
     "SEVENTEEN Hours": [
-      { title: "SOS (Pro. Marshmello)", artist: "SEVENTEEN", cover: "assets/images/album-placeholder5.jpg", audio: "assets/music/song5.mp3" },
+      { title: "Bias wrecker", artist: "SEVENTEEN", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song5.mp3" },
     ],
-    "Lover Girl": [
-      { title: "Ai Ngoài Anh", artist: "VSTRA", cover: "assets/images/album-placeholder6.jpg", audio: "assets/music/song6.mp3" },
+    "Soft Girl Sunday": [
+      { title: "Cozy morning", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song6.mp3" },
     ],
   },
 
@@ -79,11 +77,11 @@ const CONFIG = {
   // Mix real and playful numbers — this section is meant to be funny.
   WRAPPED_STATISTICS: [
     { emoji: "🎧", number: "412", label: "Hours of music listened to" },
-    { emoji: "🎤", number: "9,004", label: "Songs sung" },
+    { emoji: "🎤", number: "9,004", label: "Songs sung (mostly in the shower)" },
     { emoji: "🎟️", number: "6", label: "Concerts attended" },
     { emoji: "💎", number: "928", label: "Times Mingyu was mentioned" },
-    { emoji: "🐩", number: "37", label: "Mina-related activities" },
-    { emoji: "🧵", number: "Can't count", label: "Things sewn by hand" },
+    { emoji: "🐩", number: "37", label: "Dog-related activities" },
+    { emoji: "🧵", number: "14", label: "Things sewn by hand" },
     { emoji: "☕", number: "∞", label: "Friends episodes rewatched" },
     { emoji: "🫠", number: "404", label: "Emotional stability: Not Found" },
   ],
@@ -122,7 +120,7 @@ const ASSETS = {
   coaster: "assets/images/coaster.jpg",
   icons: {
     music: "assets/images/icon-music.png",
-    mina: "assets/images/icon-poodle.png",
+    poodle: "assets/images/icon-poodle.png",
     seventeen: "assets/images/icon-seventeen.png",
     friends: "assets/images/icon-friends.png",
     concerts: "assets/images/icon-concerts.png",
@@ -185,7 +183,7 @@ function initScrollEngine() {
   // Give every target its base "reveal" treatment; under reduced motion,
   // the CSS reduced-motion block already forces these fully visible, so
   // the JS engine simply never needs to run at all.
-  const revealTargets = $$(".section-inner, .polaroid, .interest-card, .wrapped-card, .kit-item, .chapter-divider");
+  const revealTargets = $$(".section-inner, .polaroid, .interest-card, .wrapped-card, .kit-item, .chapter-divider, .profile-list li, .todo-list li");
   revealTargets.forEach(el => el.classList.add("reveal"));
 
   if (prefersReducedMotion) return;
@@ -220,7 +218,10 @@ function initScrollEngine() {
       if (el.classList.contains("chapter-divider")) {
         el.style.transform = `rotate(${(1 - progress) * -2.5}deg) translateY(${(1 - progress) * 14}px)`;
       } else {
-        el.style.transform = `translateY(${(1 - progress) * 42}px) scale(${0.98 + 0.02 * progress})`;
+        // Independent `translate`/`scale` properties (not `transform`) so
+        // scrapbook tilt (`rotate`) and hover lift (`transform`) survive.
+        el.style.translate = `0 ${((1 - progress) * 42).toFixed(1)}px`;
+        el.style.scale = String((0.98 + 0.02 * progress).toFixed(4));
       }
     });
   }
@@ -272,12 +273,39 @@ function initScrollEngine() {
     backdrop.style.backgroundColor = rgbToCss(color);
   }
 
+  // --- 4. Scroll-drawn extras: the sewing thread ("sewn" as you scroll
+  // through the desk) and the memories timeline line filling downward.
+  const threadPaths = $$("[data-thread-path]");
+  const timelines = $$("[data-timeline]");
+  const stamps = $$("[data-stamp]");
+  function updateDrawn(vh) {
+    threadPaths.forEach(path => {
+      const host = path.closest("[data-thread]") || path;
+      const rect = host.getBoundingClientRect();
+      const progress = clamp01((vh * 0.75 - rect.top) / (rect.height * 0.85));
+      path.style.strokeDashoffset = String((1 - progress).toFixed(4));
+    });
+    stamps.forEach(st => {
+      const rect = st.parentElement.getBoundingClientRect();
+      const p = clamp01((vh * 0.72 - rect.top) / (rect.height * 0.7));
+      const k = clamp01((p - 0.45) / 0.4);            // stamp lands over the last half
+      st.style.opacity = k.toFixed(3);
+      st.style.scale = (1.7 - 0.7 * k).toFixed(3);   // big → pressed flat
+    });
+    timelines.forEach(tl => {
+      const rect = tl.getBoundingClientRect();
+      const progress = clamp01((vh * 0.7 - rect.top) / rect.height);
+      tl.style.setProperty("--tl", progress.toFixed(4));
+    });
+  }
+
   let ticking = false;
   function onFrame() {
     const vh = window.innerHeight;
     const scrollY = window.scrollY;
     updateReveals(vh);
     updateParallax(vh);
+    updateDrawn(vh);
     updateBackdrop(vh, scrollY);
     ticking = false;
   }
@@ -310,6 +338,7 @@ function initOpening() {
       document.body.style.overflow = "";
       initScrollEngine();
       initNavScrollSpy();
+      initScrollProgress();
     });
   }, { once: true });
 }
@@ -452,6 +481,37 @@ function initNav() {
       const target = document.getElementById(btn.dataset.scroll);
       if (target) target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
     });
+  });
+}
+
+/* Thin chapter progress line along the bottom of the nav pill. A plain
+   indicator (not decorative motion), so it runs even with reduced motion. */
+function initScrollProgress() {
+  const nav = $("#siteNav");
+  let ticking = false;
+  function update() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    nav.style.setProperty("--sp", max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : 0);
+    ticking = false;
+  }
+  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+}
+
+/* Subtle photocard tilt + shine that follows the cursor (mouse only). */
+function initFanCardTilt() {
+  if (prefersReducedMotion) return;
+  $$(".fan-card").forEach(card => {
+    card.addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse") return;
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      card.style.transform = `perspective(700px) rotateX(${((0.5 - py) * 10).toFixed(2)}deg) rotateY(${((px - 0.5) * 12).toFixed(2)}deg)`;
+      card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+      card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+    });
+    card.addEventListener("pointerleave", () => { card.style.transform = ""; });
   });
 }
 
@@ -818,15 +878,15 @@ function initPotato() {
   const potato = $("#potatoMascot");
   const msgEl = $("#potatoMessage");
   const sequence = [
-    "Kimja has entered the chat.",
-    "You have been Kimja-approved.",
+    "Mingyu has entered the chat.",
+    "You have been Mingyu-approved.",
     "Okay, that's enough.",
   ];
   const randomExtras = [
-    "Kimja waves at you.",
-    "You are giving visual (Mingyu agrees).",
-    "13 members, 1 Lynn, 0 regrets.",
-    "Kimja has nothing left to say.",
+    "The potato waves at you.",
+    "It's giving visual (the potato agrees).",
+    "13 members, 1 potato, 0 regrets.",
+    "The potato has nothing left to say.",
   ];
   let clicks = 0;
 
@@ -930,11 +990,17 @@ function initSewingTodo() {
 function renderMemories() {
   const wall = $("#polaroidWall");
   wall.innerHTML = "";
+  wall.classList.add("memory-timeline");
+  wall.setAttribute("data-timeline", "");
 
   CONFIG.MEMORY_PHOTOS.forEach((m, i) => {
+    const entry = document.createElement("div");
+    entry.className = `timeline-entry timeline-entry--${i % 2 === 0 ? "left" : "right"}`;
+    entry.innerHTML = `<span class="timeline-year">${m.date}</span><span class="timeline-dot" aria-hidden="true"></span>`;
+
     const item = document.createElement("div");
     item.className = "polaroid memory-item";
-    item.style.transform = `rotate(${m.rotate || 0}deg)`;
+    item.style.setProperty("--tilt", `${m.rotate || 0}deg`);
     item.setAttribute("role", "button");
     item.setAttribute("tabindex", "0");
     item.setAttribute("aria-label", `Memory from ${m.date}: ${m.caption}`);
@@ -943,15 +1009,13 @@ function renderMemories() {
         <img src="${m.src}" alt="Memory from ${m.date}" loading="lazy"
              onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
       </div>
-      <p class="polaroid-caption handwritten">
-        <span class="memory-date">${m.date}</span>
-        "${m.caption}"
-      </p>
+      <p class="polaroid-caption handwritten">"${m.caption}"</p>
     `;
     const openLightbox = () => showLightbox(m);
     item.addEventListener("click", openLightbox);
     item.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(); } });
-    wall.appendChild(item);
+    entry.appendChild(item);
+    wall.appendChild(entry);
   });
 }
 
@@ -985,11 +1049,34 @@ function renderWrapped() {
     card.className = "wrapped-card";
     card.innerHTML = `
       <div class="wrapped-emoji">${stat.emoji}</div>
-      <div class="wrapped-number">${stat.number}</div>
+      <div class="wrapped-number" data-final="${stat.number}">${stat.number}</div>
       <div class="wrapped-label">${stat.label}</div>
     `;
     grid.appendChild(card);
   });
+
+  // Count-up: purely numeric stats tick up from 0 the first time the grid
+  // scrolls into view. Non-numeric ones (∞, "404 Not Found") just stay as
+  // written. Reduced motion: final values shown immediately, no ticking.
+  if (prefersReducedMotion) return;
+  const numEls = $$(".wrapped-number", grid).filter(el => /^[\d,]+$/.test(el.dataset.final));
+  numEls.forEach(el => { el.textContent = "0"; });
+  const obs = new IntersectionObserver((entries, o) => {
+    if (!entries.some(e => e.isIntersecting)) return;
+    o.disconnect();
+    numEls.forEach((el, idx) => {
+      const target = parseInt(el.dataset.final.replace(/,/g, ""), 10);
+      const start = performance.now() + idx * 120;
+      const dur = 1600;
+      (function tick(now) {
+        const t = Math.min(1, Math.max(0, (now - start) / dur));
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(target * eased).toLocaleString("en-US");
+        if (t < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    });
+  }, { threshold: 0.35 });
+  obs.observe(grid);
 }
 
 /* =========================================================================
@@ -1039,19 +1126,51 @@ function initFinale() {
    replay, which resets every bit of state and plays it again.
    ========================================================================= */
 function initFinaleOverlay() {
-  const sentinel = $("#finaleSentinel");
-  const overlay = $("#finaleOverlay");
-  if (!sentinel || !overlay) return;
+  if (!$("#finaleSentinel") || !$("#finaleOverlay")) return;
+  armFinaleSentinel();
+  $("#finaleCloseBtn")?.addEventListener("click", closeFinaleOverlay);
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !$("#finaleOverlay").hidden) closeFinaleOverlay();
+  });
+}
 
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        obs.disconnect();
-        showFinaleOverlay();
+// Watches for the visitor genuinely reaching the END of the page (not
+// merely seeing the last section), then waits a short beat — long enough
+// for the ticket stamp to land — before opening the finale. Fires once per
+// arming; only counts once the main site is actually showing (otherwise the
+// short opening screen would count as "at the bottom").
+let finaleWatchStop = null;
+function armFinaleSentinel() {
+  if (finaleWatchStop) finaleWatchStop();
+  const mainSite = $("#mainSite");
+  let dwell = null, ticking = false;
+
+  const atBottom = () =>
+    !mainSite.hidden &&
+    window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 24;
+
+  function stop() {
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onScroll);
+    clearTimeout(dwell);
+    finaleWatchStop = null;
+  }
+  function check() {
+    ticking = false;
+    if (atBottom()) {
+      if (!dwell) {
+        dwell = setTimeout(() => {
+          if (atBottom()) { stop(); showFinaleOverlay(); } else dwell = null;
+        }, prefersReducedMotion ? 0 : 900);
       }
-    });
-  }, { threshold: 0.15 });
-  observer.observe(sentinel);
+    } else if (dwell) { clearTimeout(dwell); dwell = null; }
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(check); } }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  finaleWatchStop = stop;
+  check();
 }
 
 let finaleBonusFireworksTimer = null;
@@ -1077,52 +1196,50 @@ function showFinaleOverlay() {
   initFinaleReplay();
 }
 
-/* ---- Candles: drag OR tap "002" away, "4" arrives, "2002" → "24" ---- */
+/* ---- Candles: drag OR tap "002" away, "4" arrives, "2002" → "24" ----
+   Bound exactly once; replay/close just reset candleState (no re-binding,
+   so listeners never stack up). */
+const candleState = { resolved: false, dragging: false, startX: 0, currentX: 0 };
 function initCandleInteraction() {
   const group = $("#candleDragGroup");
-  const four = $("#candleFour");
-  const hint = $("#candleDragHint");
-  const message = $("#candleMessage");
-  const cakeCandles = $("#cakeCandles");
-  if (!group || group.dataset.bound) return; // never double-bind across replays
+  if (!group || group.dataset.bound) return;
   group.dataset.bound = "1";
 
-  let startX = 0, currentX = 0, dragging = false, resolved = false;
-
   function resolveSwap() {
-    if (resolved) return;
-    resolved = true;
+    if (candleState.resolved) return;
+    candleState.resolved = true;
     group.classList.add("is-leaving");
-    hint.classList.add("is-hidden");
+    $("#candleDragHint").classList.add("is-hidden");
     setTimeout(() => {
-      cakeCandles.classList.add("is-swapped");
-      four.classList.add("is-entering");
+      if (!candleState.resolved) return; // finale was reset/closed mid-animation
+      $("#cakeCandles").classList.add("is-swapped");
+      $("#candleFour").classList.add("is-entering");
+      const message = $("#candleMessage");
       message.textContent = "24 looks good on you. ♡";
       message.classList.add("is-shown");
       sparkleBurst($(".finale-cake"));
-      // Blow controls only appear once there's something to blow out.
-      $("#finaleBlowControls").classList.add("is-shown");
-      $("#finaleBlowControls").hidden = false;
+      const controls = $("#finaleBlowControls");
+      controls.hidden = false;
+      requestAnimationFrame(() => controls.classList.add("is-shown"));
     }, 520);
   }
 
   group.addEventListener("pointerdown", e => {
-    dragging = true; startX = e.clientX; currentX = 0;
+    candleState.dragging = true; candleState.startX = e.clientX; candleState.currentX = 0;
     group.setPointerCapture(e.pointerId);
   });
   group.addEventListener("pointermove", e => {
-    if (!dragging) return;
-    currentX = e.clientX - startX;
-    group.style.transform = `translateX(${Math.max(0, currentX)}px)`;
+    if (!candleState.dragging) return;
+    candleState.currentX = e.clientX - candleState.startX;
+    group.style.transform = `translateX(${Math.max(0, candleState.currentX)}px)`;
   });
   group.addEventListener("pointerup", () => {
-    dragging = false;
+    candleState.dragging = false;
     group.style.transform = "";
-    if (currentX > 40) resolveSwap(); // dragged far enough
+    if (candleState.currentX > 40) resolveSwap(); // dragged far enough
   });
-  // A plain tap/click (no meaningful drag) also works — this is the
-  // reliable path on mobile, and a nice shortcut on desktop too.
-  group.addEventListener("click", () => { if (Math.abs(currentX) < 5) resolveSwap(); });
+  // A plain tap/click also works — the reliable path on mobile.
+  group.addEventListener("click", () => { if (Math.abs(candleState.currentX) < 5) resolveSwap(); });
   group.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); resolveSwap(); } });
 }
 
@@ -1173,6 +1290,7 @@ function initBlowInteraction() {
     }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stopFinaleMic();
       micBtn.textContent = "listening... blow now ♡";
       micBtn.classList.add("is-listening");
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1182,15 +1300,14 @@ function initBlowInteraction() {
       source.connect(analyser);
       const data = new Uint8Array(analyser.frequencyBinCount);
       let stopped = false;
+      finaleMic = { stream, ctx, stop() { stopped = true; stream.getTracks().forEach(t => t.stop()); ctx.close().catch(() => {}); } };
 
       function checkVolume() {
         if (stopped) return;
         analyser.getByteFrequencyData(data);
         const avg = data.reduce((a, b) => a + b, 0) / data.length;
         if (avg > 55) { // sustained loud/breathy input reads as a "blow"
-          stopped = true;
-          stream.getTracks().forEach(t => t.stop());
-          ctx.close();
+          stopFinaleMic();
           extinguishCandles();
           return;
         }
@@ -1202,6 +1319,9 @@ function initBlowInteraction() {
     }
   });
 }
+
+let finaleMic = null;
+function stopFinaleMic() { if (finaleMic) { finaleMic.stop(); finaleMic = null; } }
 
 let candlesExtinguished = false;
 function extinguishCandles() {
@@ -1305,6 +1425,8 @@ function initFinaleReplay() {
     setTimeout(() => {
       resetFinaleState();
       overlayStage.style.opacity = "1";
+      startAmbientFireworks();
+      startBalloons();
     }, 420);
   });
 }
@@ -1338,13 +1460,28 @@ function resetFinaleState() {
     $$(".candle-smoke", c).forEach(s => s.remove());
   });
 
-  // Re-bind the drag/tap group since its internal closure state
-  // (dragging/resolved flags) needs a clean slate, not just CSS resets.
-  delete group.dataset.bound;
-  initCandleInteraction();
+  // Reset the (single, already-bound) interaction state — no re-binding.
+  candleState.resolved = false; candleState.dragging = false; candleState.currentX = 0;
+  stopFinaleMic();
+}
 
-  startAmbientFireworks();
-  startBalloons();
+function closeFinaleOverlay() {
+  const overlay = $("#finaleOverlay");
+  if (overlay.hidden) return;
+  overlay.classList.remove("is-visible");
+  stopBalloons();
+  stopFinaleMic();
+  clearTimeout(finaleBonusFireworksTimer);
+  setTimeout(() => {
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+    $("#finaleFireworks").innerHTML = "";
+    $("#finaleBalloons").innerHTML = "";
+    resetFinaleState();
+    // step back up so the sentinel isn't still in view, then re-arm it
+    window.scrollTo({ top: Math.max(0, document.body.scrollHeight - window.innerHeight * 2), behavior: "instant" });
+    armFinaleSentinel();
+  }, prefersReducedMotion ? 0 : 1100);
 }
 
 /* =========================================================================
@@ -1497,6 +1634,7 @@ document.addEventListener("DOMContentLoaded", () => {
   safeInit("poodle", initPoodle);
   safeInit("mingyu carousel", initMingyuCarousel);
   safeInit("potato", initPotato);
+  safeInit("fan card tilt", initFanCardTilt);
   safeInit("friends room", initFriendsRoom);
   safeInit("sewing to-do", initSewingTodo);
   safeInit("memories", renderMemories);

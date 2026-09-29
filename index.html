@@ -115,6 +115,7 @@
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
         <span></span><span></span><span></span>
       </button>
+      <span class="nav-progress" aria-hidden="true"></span>
     </div>
   </nav>
 
@@ -542,7 +543,14 @@
         <p class="section-subtitle">Things made with her own two hands.</p>
       </header>
 
-      <div class="sewing-desk">
+      <div class="sewing-desk" data-thread>
+        <!-- Blue thread that gets "sewn" as you scroll: machine → coaster →
+             to-do list. A faint dashed guide shows the route; the solid
+             thread draws over it. Desktop only (single-column on mobile). -->
+        <svg class="sewing-thread" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path class="sewing-thread-guide" d="M26 8 C 14 24, 42 28, 34 46 C 28 60, 30 70, 38 76 C 50 84, 46 60, 55 50" />
+          <path class="sewing-thread-line" data-thread-path pathLength="1" d="M26 8 C 14 24, 42 28, 34 46 C 28 60, 30 70, 38 76 C 50 84, 46 60, 55 50" />
+        </svg>
         <div class="sewing-photo-col">
           <div class="polaroid polaroid--large tilt-a">
             <div class="photo-frame">
@@ -698,6 +706,7 @@
       <p class="finale-line">And hopefully many, many more concerts together.</p>
 
       <div class="final-ticket">
+        <span class="ticket-stamp" data-stamp aria-hidden="true">Sold out</span>
         <div class="final-ticket-main">
           <p class="final-ticket-eyebrow">Lynn's Birthday</p>
           <p class="final-ticket-admit">Admit One <span class="heart">♡</span></p>
@@ -732,6 +741,7 @@
   <div class="finale-fireworks" id="finaleFireworks" aria-hidden="true"></div>
   <div class="finale-balloons" id="finaleBalloons" aria-hidden="true"></div>
 
+  <button class="finale-close-btn" id="finaleCloseBtn" type="button" aria-label="Back to the site">back to the site ↑</button>
   <div class="finale-stage">
     <h2 class="finale-banner" id="finaleBanner">
       <span class="finale-banner-line finale-banner-line--left" aria-hidden="true"></span>
