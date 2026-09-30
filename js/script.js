@@ -25,33 +25,58 @@ const CONFIG = {
   // ---- Memories (Our Memories polaroid wall) ----
   // Add or remove objects freely. "rotate" is in degrees, "date" and
   // "caption" show up under each photo.
+  // The full friendship timeline. Two entry shapes:
+  //  - a normal photo year:  { date, src, caption, rotate }
+  //  - a "gap" year with no photo (type: "gap"), for stretches where you
+  //    genuinely don't have — or don't want — a photo (different schools,
+  //    a quiet year apart, etc.). It renders as a small text-only card
+  //    instead of an empty/fake polaroid. Add, remove, or edit freely —
+  //    nothing here is invented; fill in real captions for your own story.
   MEMORY_PHOTOS: [
-    { src: "assets/images/memory-01.jpg", date: "2023", caption: "The beginning of this chapter.", rotate: -4 },
-    { src: "assets/images/memory-02.jpg", date: "2024", caption: "Apparently we thought we had everything figured out.", rotate: 3 },
-    { src: "assets/images/memory-03.jpg", date: "2025", caption: "Still here. Still annoying each other.", rotate: -2 },
-    { src: "assets/images/memory-04.jpg", date: "2026", caption: "Still making memories.", rotate: 4 },
+    { src: "assets/images/memory-2013.jpg", date: "2013", caption: "The beginning of this chapter.", rotate: -4 },
+    { src: "assets/images/memory-2014.jpg", date: "2014", caption: "[ add a caption for this year ]", rotate: 3 },
+    { src: "assets/images/memory-2015.jpg", date: "2015", caption: "[ add a caption for this year ]", rotate: -3 },
+    { src: "assets/images/memory-2016.jpg", date: "2016", caption: "[ add a caption for this year ]", rotate: 2 },
+    { date: "2017 – 2019", type: "gap", icon: "🎒", caption: "different schools, different chapters." },
+    { src: "assets/images/memory-2020.jpg", date: "2020", caption: "[ add a caption for this year ]", rotate: -2 },
+    { src: "assets/images/memory-2021.jpg", date: "2021", caption: "[ add a caption for this year ]", rotate: 4 },
+    { src: "assets/images/memory-2022.jpg", date: "2022", caption: "Apparently we thought we had everything figured out.", rotate: -3 },
+    { date: "2023", type: "gap", icon: "✈", caption: "a quieter chapter ♡ different places, different routines." },
+    { src: "assets/images/memory-2024.jpg", date: "2024", caption: "Still here. Still annoying each other.", rotate: 3 },
+    { src: "assets/images/memory-2025.jpg", date: "2025", caption: "[ add a caption for this year ]", rotate: -2 },
+    { src: "assets/images/memory-2026.jpg", date: "2026", caption: "Still making memories.", rotate: 4 },
   ],
 
   // ---- Music player ----
   // Add as many songs as you want. If "audio" points to a file that
   // doesn't exist yet, the player just shows a friendly placeholder
   // state instead of breaking.
+  // Each record gets its own vinyl/label colors so the shelf reads as a
+  // real personal collection, not six copies of the same black disc.
+  // vinylColor: the disc itself. labelColor/labelTextColor: the center
+  // label. Pick colors that suit each song's cover art once you add one.
   PLAYLIST: {
     "Main Character Energy": [
-      { title: "Song title here", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song1.mp3" },
-      { title: "Another song", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song2.mp3" },
+      { title: "Song title here", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song1.mp3",
+        vinylColor: "#17294a", labelColor: "#cfe0f4", labelTextColor: "#17294a" },
+      { title: "Another song", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song2.mp3",
+        vinylColor: "#2c3f66", labelColor: "#eef5fc", labelTextColor: "#2c3f66" },
     ],
     "Concert Night": [
-      { title: "Concert anthem", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song3.mp3" },
+      { title: "Concert anthem", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song3.mp3",
+        vinylColor: "#3a2f5c", labelColor: "#d9d7ee", labelTextColor: "#3a2f5c" },
     ],
     "Singing Alone at 2AM": [
-      { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song4.mp3" },
+      { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song4.mp3",
+        vinylColor: "#0d1729", labelColor: "#9db8dd", labelTextColor: "#0d1729" },
     ],
     "SEVENTEEN Hours": [
-      { title: "Bias wrecker", artist: "SEVENTEEN", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song5.mp3" },
+      { title: "Bias wrecker", artist: "SEVENTEEN", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song5.mp3",
+        vinylColor: "#5c7dad", labelColor: "#ffffff", labelTextColor: "#2c3f66" },
     ],
     "Soft Girl Sunday": [
-      { title: "Cozy morning", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song6.mp3" },
+      { title: "Cozy morning", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song6.mp3",
+        vinylColor: "#7d93b8", labelColor: "#fdf6ea", labelTextColor: "#5a4126" },
     ],
   },
 
@@ -585,10 +610,12 @@ function initMusicPlayer() {
       sleeve.type = "button";
       sleeve.className = "vinyl-sleeve";
       sleeve.setAttribute("aria-label", `Play ${rec.title} by ${rec.artist}`);
+      sleeve.style.setProperty("--sleeve-accent", rec.vinylColor || "var(--blue-mid)");
       sleeve.innerHTML = `
         <div class="vinyl-sleeve-art">
           <img src="${rec.cover || ""}" alt="" loading="lazy"
                onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+          <span class="vinyl-sleeve-accent" aria-hidden="true"></span>
         </div>
         <p class="vinyl-sleeve-track">${String(i + 1).padStart(2, "0")} — ${rec.mood}</p>
         <p class="vinyl-sleeve-title">${rec.title}</p>
@@ -605,12 +632,13 @@ function initMusicPlayer() {
   }
 
   // FLIP-animate a flying vinyl clone from one element's rect to another's.
-  function flyVinyl(fromEl, toEl, coverSrc, duration = 650) {
+  function flyVinyl(fromEl, toEl, coverSrc, duration = 650, vinylColor) {
     return new Promise(resolve => {
       if (prefersReducedMotion || !fromEl || !toEl) { resolve(); return; }
       const fromRect = fromEl.getBoundingClientRect();
       const toRect = toEl.getBoundingClientRect();
       flying.innerHTML = coverSrc ? `<img src="${coverSrc}" alt="" onerror="this.remove()">` : "";
+      flying.style.background = vinylColor ? `radial-gradient(circle, ${vinylColor} 0%, #0d1729 72%)` : "";
       flying.style.transition = "none";
       flying.style.width = `${fromRect.width}px`;
       flying.style.height = `${fromRect.height}px`;
@@ -672,7 +700,7 @@ function initMusicPlayer() {
     const fromEl = vinylDisc;
     const toEl = sleeveEls[currentIndex]?.querySelector(".vinyl-sleeve-art");
     turntable.classList.remove("has-vinyl");
-    await flyVinyl(fromEl, toEl || fromEl, records[currentIndex]?.cover);
+    await flyVinyl(fromEl, toEl || fromEl, records[currentIndex]?.cover, 650, records[currentIndex]?.vinylColor);
   }
 
   async function bringInRecord(index) {
@@ -680,7 +708,14 @@ function initMusicPlayer() {
     const rec = records[index];
     vinylLabelArt.src = rec.cover || "";
     vinylLabelArt.onerror = () => { vinylLabelArt.style.display = "none"; };
-    await flyVinyl(sleeveArt, $(".turntable-plate"), rec.cover);
+
+    // Give this record its own disc/label colors, so the shelf reads as a
+    // real personal collection rather than six identical black discs.
+    vinylDisc.style.setProperty("--vinyl-color", rec.vinylColor || "#172947");
+    vinylDisc.style.setProperty("--label-color", rec.labelColor || "#5c7dad");
+    vinylDisc.style.setProperty("--label-text", rec.labelTextColor || "#ffffff");
+
+    await flyVinyl(sleeveArt, $(".turntable-plate"), rec.cover, 650, rec.vinylColor);
     turntable.classList.add("has-vinyl");
 
     titleEl.textContent = rec.title || "Untitled";
@@ -998,6 +1033,20 @@ function renderMemories() {
     entry.className = `timeline-entry timeline-entry--${i % 2 === 0 ? "left" : "right"}`;
     entry.innerHTML = `<span class="timeline-year">${m.date}</span><span class="timeline-dot" aria-hidden="true"></span>`;
 
+    if (m.type === "gap") {
+      // An intentional gap year: no photo, just a small honest note —
+      // never a fabricated memory or a placeholder polaroid.
+      const card = document.createElement("div");
+      card.className = "timeline-gap-card";
+      card.innerHTML = `
+        <span class="timeline-gap-icon" aria-hidden="true">${m.icon || "♡"}</span>
+        <p class="timeline-gap-text handwritten">${m.caption}</p>
+      `;
+      entry.appendChild(card);
+      wall.appendChild(entry);
+      return;
+    }
+
     const item = document.createElement("div");
     item.className = "polaroid memory-item";
     item.style.setProperty("--tilt", `${m.rotate || 0}deg`);
@@ -1126,56 +1175,22 @@ function initFinale() {
    replay, which resets every bit of state and plays it again.
    ========================================================================= */
 function initFinaleOverlay() {
-  if (!$("#finaleSentinel") || !$("#finaleOverlay")) return;
-  armFinaleSentinel();
+  const cta = $("#finaleCtaBtn");
+  if (!cta || !$("#finaleOverlay")) return;
+  // The finale is a deliberate choice, never an automatic consequence of
+  // scrolling — it opens only when this button is clicked.
+  cta.addEventListener("click", showFinaleOverlay);
   $("#finaleCloseBtn")?.addEventListener("click", closeFinaleOverlay);
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && !$("#finaleOverlay").hidden) closeFinaleOverlay();
   });
 }
 
-// Watches for the visitor genuinely reaching the END of the page (not
-// merely seeing the last section), then waits a short beat — long enough
-// for the ticket stamp to land — before opening the finale. Fires once per
-// arming; only counts once the main site is actually showing (otherwise the
-// short opening screen would count as "at the bottom").
-let finaleWatchStop = null;
-function armFinaleSentinel() {
-  if (finaleWatchStop) finaleWatchStop();
-  const mainSite = $("#mainSite");
-  let dwell = null, ticking = false;
-
-  const atBottom = () =>
-    !mainSite.hidden &&
-    window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 24;
-
-  function stop() {
-    window.removeEventListener("scroll", onScroll);
-    window.removeEventListener("resize", onScroll);
-    clearTimeout(dwell);
-    finaleWatchStop = null;
-  }
-  function check() {
-    ticking = false;
-    if (atBottom()) {
-      if (!dwell) {
-        dwell = setTimeout(() => {
-          if (atBottom()) { stop(); showFinaleOverlay(); } else dwell = null;
-        }, prefersReducedMotion ? 0 : 900);
-      }
-    } else if (dwell) { clearTimeout(dwell); dwell = null; }
-  }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(check); } }
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  finaleWatchStop = stop;
-  check();
-}
-
+let finaleReturnScrollY = 0;
 let finaleBonusFireworksTimer = null;
 
 function showFinaleOverlay() {
+  finaleReturnScrollY = window.scrollY;
   const overlay = $("#finaleOverlay");
   overlay.hidden = false;
   document.body.style.overflow = "hidden";
@@ -1342,6 +1357,7 @@ function extinguishCandles() {
 
   setTimeout(() => {
     burstFireworks(5);
+    burstConfetti();
     revealReplay();
   }, prefersReducedMotion ? 200 : 1600);
 }
@@ -1405,6 +1421,29 @@ function startBalloons() {
 function stopBalloons() {
   clearInterval(balloonInterval);
   balloonInterval = null;
+}
+
+/* ---- Confetti: a restrained burst, not a constant screen-filling storm ---- */
+const CONFETTI_COLORS = ["#9db8dd", "#cfe0f4", "#eef5fc", "#d9d7ee", "#ffffff"];
+function burstConfetti(count = 26) {
+  if (prefersReducedMotion) return;
+  const layer = $("#finaleConfetti");
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    const left = Math.random() * 100;
+    const duration = 2.6 + Math.random() * 1.6;
+    const drift = (Math.random() - 0.5) * 140;
+    const spin = 180 + Math.random() * 360;
+    piece.style.left = `${left}vw`;
+    piece.style.animationDelay = `${Math.random() * 0.4}s`;
+    piece.style.animationDuration = `${duration}s`;
+    piece.style.setProperty("--confetti-color", CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]);
+    piece.style.setProperty("--drift", `${drift}px`);
+    piece.style.setProperty("--spin", `${spin}deg`);
+    layer.appendChild(piece);
+    setTimeout(() => piece.remove(), (duration + 0.4) * 1000 + 100);
+  }
 }
 
 /* ---- Replay: fully resets and plays the whole sequence again ---- */
@@ -1477,10 +1516,10 @@ function closeFinaleOverlay() {
     document.body.style.overflow = "";
     $("#finaleFireworks").innerHTML = "";
     $("#finaleBalloons").innerHTML = "";
+    $("#finaleConfetti").innerHTML = "";
     resetFinaleState();
-    // step back up so the sentinel isn't still in view, then re-arm it
-    window.scrollTo({ top: Math.max(0, document.body.scrollHeight - window.innerHeight * 2), behavior: "instant" });
-    armFinaleSentinel();
+    // Return exactly to where they were reading before opening the surprise.
+    window.scrollTo({ top: finaleReturnScrollY, behavior: "instant" });
   }, prefersReducedMotion ? 0 : 1100);
 }
 
