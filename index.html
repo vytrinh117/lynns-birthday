@@ -52,7 +52,6 @@
 
     <div class="opening-date">
       <span class="opening-date-num">27<span class="opening-date-slash">/</span>09</span>
-      <span class="opening-date-year handwritten">September 2026</span>
     </div>
 
     <!-- Living photo frame: cycles through photos automatically after a
@@ -122,6 +121,7 @@
   <div id="home"></div>
 
   <div class="chapter-divider" data-divider="1" data-color-from="#cfe0f4" data-color-to="#fffdf8">
+    <span class="chapter-divider-motif" aria-hidden="true">♡</span>
     <span class="chapter-divider-ribbon handwritten">part one — her little world</span>
   </div>
 
@@ -199,6 +199,7 @@
   </section>
 
   <div class="chapter-divider" data-divider="2" data-color-from="#fffdf8" data-color-to="#2c3f66">
+    <span class="chapter-divider-motif" aria-hidden="true">♪</span>
     <span class="chapter-divider-ribbon handwritten">part two — hobbies &amp; passions</span>
   </div>
 
@@ -223,9 +224,11 @@
           <div class="turntable" id="turntable">
             <div class="turntable-plate">
               <div class="vinyl-disc" id="vinylDisc" aria-hidden="true">
-                <div class="vinyl-grooves"></div>
-                <div class="vinyl-label" id="vinylLabel">
-                  <img id="vinylLabelArt" src="" alt="" loading="lazy">
+                <div class="vinyl-disc-spin">
+                  <div class="vinyl-grooves"></div>
+                  <div class="vinyl-label" id="vinylLabel">
+                    <img id="vinylLabelArt" src="" alt="" loading="lazy">
+                  </div>
                 </div>
               </div>
               <div class="spindle" aria-hidden="true"></div>
@@ -322,6 +325,7 @@
   </section>
 
   <div class="chapter-divider" data-divider="3" data-color-from="#f6ecdd" data-color-to="#223a5e">
+    <span class="chapter-divider-motif" aria-hidden="true">✦</span>
     <span class="chapter-divider-ribbon handwritten">part three — fandoms</span>
   </div>
 
@@ -475,6 +479,7 @@
   </section>
 
   <div class="chapter-divider" data-divider="4" data-color-from="#172947" data-color-to="#efe8f5">
+    <span class="chapter-divider-motif" aria-hidden="true">📷</span>
     <span class="chapter-divider-ribbon handwritten">part four — friendship</span>
   </div>
 
@@ -613,6 +618,7 @@
   </section>
 
   <div class="chapter-divider" data-divider="5" data-color-from="#fffdf8" data-color-to="#172947">
+    <span class="chapter-divider-motif" aria-hidden="true">🎟</span>
     <span class="chapter-divider-ribbon handwritten">part five — the celebration</span>
   </div>
 
@@ -728,10 +734,11 @@
 
       <h3 class="finale-happy">Happy Birthday, Lynn <span class="heart">♡</span></h3>
       <p class="finale-ps handwritten">P.S. This little corner of the internet is yours now.</p>
+
+      <!-- One last, deliberate invitation — the finale never opens on its
+           own, only when this is clicked. -->
+      <button class="finale-cta" id="finaleCtaBtn" type="button">✦ Open Birthday Surprise ♡ ✦</button>
     </div>
-    <!-- Reaching this exact spot (the true bottom of the page) is what
-         triggers the birthday finale overlay below — never before. -->
-    <div id="finaleSentinel" aria-hidden="true"></div>
   </section>
 
 </div><!-- /#mainSite -->
@@ -740,6 +747,7 @@
 <div class="finale-overlay" id="finaleOverlay" hidden role="dialog" aria-modal="true" aria-label="Birthday celebration">
   <div class="finale-fireworks" id="finaleFireworks" aria-hidden="true"></div>
   <div class="finale-balloons" id="finaleBalloons" aria-hidden="true"></div>
+  <div class="finale-confetti" id="finaleConfetti" aria-hidden="true"></div>
 
   <button class="finale-close-btn" id="finaleCloseBtn" type="button" aria-label="Back to the site">back to the site ↑</button>
   <div class="finale-stage">

@@ -27,7 +27,20 @@ instead (see "General fallback behavior" below).
 | `seventeen-02.jpg` | SEVENTEEN photo | SEVENTEEN section, photo strip |
 | `sewing-machine.jpg` | Lynn's sewing machine | Sewing Corner |
 | `coaster.jpg` | The coaster Lynn sewed by hand | Sewing Corner |
-| `memory-01.jpg` – `memory-04.jpg` | Friendship memories | Our Memories polaroid wall |
+| `memory-2013.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2014.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2015.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2016.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2020.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2021.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2022.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2024.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2025.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2026.jpg` | Friendship memory | Our Memories timeline |
+
+Note: 2017–2019 and 2023 are intentional text-only "gap" entries in the
+timeline (different schools, then a quieter year apart) — no photo needed
+for those; edit their wording directly in `CONFIG.MEMORY_PHOTOS`.
 | `album-placeholder.jpg` | Default album art | Music Room player |
 | `concert-01.jpg` – `concert-03.jpg` | Concert photos | Concert Nights tickets |
 | `friends-room.jpg` | The Friends-inspired room photo/illustration | Friends section (hotspots sit on top of this image) |

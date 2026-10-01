@@ -587,7 +587,9 @@ input:focus-visible,
   position: relative;
   padding: 100px 20px 60px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   overflow: hidden;
   /* No background of its own anymore: #scrollBackdrop (fixed, behind
      everything) shows through here, continuously color-interpolated by
@@ -737,7 +739,7 @@ input:focus-visible,
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, #172947 0%, #0d1729 72%);
+  background: radial-gradient(circle, var(--vinyl-color, #172947) 0%, #0d1729 72%);
   box-shadow: 0 0 0 1px rgba(157,184,221,0.2);
 }
 #turntable.is-playing .vinyl-disc-spin { animation: vinylSpin 2.6s linear infinite; }
@@ -752,7 +754,8 @@ input:focus-visible,
   inset: 34%;
   border-radius: 50%;
   overflow: hidden;
-  background: var(--blue-mid);
+  background: var(--label-color, var(--blue-mid));
+  color: var(--label-text, #fff);
   box-shadow: 0 0 0 2px rgba(255,255,255,0.45);
 }
 .vinyl-label img { width: 100%; height: 100%; object-fit: cover; }
@@ -1864,3 +1867,58 @@ input:focus-visible,
   opacity: 0.75; transition: opacity 250ms, background 250ms;
 }
 .finale-close-btn:hover { opacity: 1; background: rgba(255,255,255,0.08); }
+
+/* ---- Final CTA: the only thing that opens the birthday finale ---- */
+.finale-cta {
+  margin-top: 34px;
+  padding: 16px 32px;
+  background: var(--blue-dark);
+  color: var(--ivory);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 300ms var(--ease-dreamy), box-shadow 300ms;
+}
+.finale-cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 24px 50px -20px rgba(23,41,71,0.5); }
+.finale-cta:active { transform: scale(0.98); }
+
+.vinyl-sleeve-accent { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: var(--sleeve-accent, var(--blue-mid)); }
+
+/* ---- Timeline gap years: an honest text-only note, never a fake photo ---- */
+.timeline-gap-card {
+  width: min(240px, 70vw);
+  padding: 22px 20px;
+  background: rgba(157,184,221,0.08);
+  border: 1px dashed var(--blue-soft);
+  border-radius: 14px;
+  text-align: center;
+}
+.timeline-gap-icon { font-size: 1.4rem; opacity: 0.7; }
+.timeline-gap-text { color: var(--blue-mid); font-size: 1.25rem; margin-top: 8px; line-height: 1.4; }
+
+/* ---- Confetti: falls from the top, restrained, self-cleaning ---- */
+.finale-confetti { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 7px; height: 12px;
+  background: var(--confetti-color, #cfe0f4);
+  opacity: 0.9;
+  animation: confettiFall ease-in forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0.9; }
+  100% { transform: translate(var(--drift, 0px), 100vh) rotate(var(--spin, 360deg)); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .confetti-piece { animation: none; opacity: 0; } }
+
+/* ---- Chapter motif: a small decorative symbol unique to each transition
+   (music note, concert star, photo, ticket...), settling in above the
+   ribbon as the divider fades into view. ---- */
+.chapter-divider-motif {
+  font-size: 1.5rem;
+  color: var(--blue-mid);
+  opacity: 0.75;
+}
+.chapter-divider--light .chapter-divider-motif { color: var(--blue-pale); }
