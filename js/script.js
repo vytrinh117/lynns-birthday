@@ -33,7 +33,7 @@ const CONFIG = {
   //    instead of an empty/fake polaroid. Add, remove, or edit freely —
   //    nothing here is invented; fill in real captions for your own story.
   MEMORY_PHOTOS: [
-    { src: "assets/images/memory-2013.jpg", date: "2013", caption: "The beginning of this chapter.", rotate: -4 },
+    { src: "assets/images/memory-2015.jpg", date: "2015", caption: "Lúc này bắt đầu dùng điện thoại chụp choẹt.", rotate: -4 },
     { src: "assets/images/memory-2014.jpg", date: "2014", caption: "[ add a caption for this year ]", rotate: 3 },
     { src: "assets/images/memory-2015.jpg", date: "2015", caption: "[ add a caption for this year ]", rotate: -3 },
     { src: "assets/images/memory-2016.jpg", date: "2016", caption: "[ add a caption for this year ]", rotate: 2 },
