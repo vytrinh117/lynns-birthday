@@ -16,14 +16,6 @@
 </head>
 <body>
 
-<!-- Fixed color layer behind everything. Sections keep their own opaque
-     backgrounds (so the page still looks correct with JS off or with
-     reduced motion), but each section's top/bottom edge is CSS-masked to
-     fade to transparent, revealing this layer underneath. script.js
-     continuously updates its color based on scroll position using the
-     color-bridge values on each .chapter-divider below, so adjacent
-     sections cross-dissolve into each other instead of cutting hard. -->
-<div id="scrollBackdrop" aria-hidden="true"></div>
 
 
 <!-- ================= CUSTOM CURSOR (desktop only, disabled on mobile via JS/CSS) ================= -->
@@ -120,9 +112,14 @@
 
   <div id="home"></div>
 
-  <div class="chapter-divider" data-divider="1" data-color-from="#cfe0f4" data-color-to="#fffdf8">
-    <span class="chapter-divider-motif" aria-hidden="true">♡</span>
-    <span class="chapter-divider-ribbon handwritten">part one — her little world</span>
+    <div class="chapter-divider" data-divider="1">
+    <span class="chapter-divider-line chapter-divider-line--left" aria-hidden="true"></span>
+    <div class="chapter-divider-center">
+      <span class="chapter-divider-motif" aria-hidden="true">♡</span>
+      <span class="chapter-divider-label">PART ONE</span>
+      <span class="chapter-divider-title handwritten">her little world</span>
+    </div>
+    <span class="chapter-divider-line chapter-divider-line--right" aria-hidden="true"></span>
   </div>
 
   <!-- ================= 02. ABOUT LYNN ================= -->
@@ -198,9 +195,14 @@
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="2" data-color-from="#fffdf8" data-color-to="#2c3f66">
-    <span class="chapter-divider-motif" aria-hidden="true">♪</span>
-    <span class="chapter-divider-ribbon handwritten">part two — hobbies &amp; passions</span>
+    <div class="chapter-divider" data-divider="2">
+    <span class="chapter-divider-line chapter-divider-line--left" aria-hidden="true"></span>
+    <div class="chapter-divider-center">
+      <span class="chapter-divider-motif" aria-hidden="true">♪</span>
+      <span class="chapter-divider-label">PART TWO</span>
+      <span class="chapter-divider-title handwritten">hobbies &amp; passions</span>
+    </div>
+    <span class="chapter-divider-line chapter-divider-line--right" aria-hidden="true"></span>
   </div>
 
   <!-- ================= 03. MUSIC ROOM ================= -->
@@ -298,7 +300,7 @@
                 <img src="assets/images/poodle-01.jpg" alt="Lynn's poodle" loading="lazy"
                      onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
               </div>
-              <p class="polaroid-caption handwritten">click me ♡</p>
+              <p class="polaroid-caption handwritten" data-motion="float">click me ♡</p>
             </div>
           </button>
           <div class="speech-bubble" id="poodleBubble" role="status" aria-live="polite">
@@ -316,7 +318,7 @@
             </div>
             <p class="polaroid-caption handwritten">tiny and fluffy</p>
           </div>
-          <p class="scrap-note handwritten">she runs this household, actually</p>
+          <p class="scrap-note handwritten" data-motion="settle">she runs this household, actually</p>
           <!-- HEART HUNT TARGET #2 disguised as a heart sticker near the paw prints -->
           <span class="hidden-heart" data-heart-id="heart-2" role="button" tabindex="0" aria-label="Hidden heart 2" aria-pressed="false">♡</span>
         </div>
@@ -324,9 +326,14 @@
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="3" data-color-from="#f6ecdd" data-color-to="#223a5e">
-    <span class="chapter-divider-motif" aria-hidden="true">✦</span>
-    <span class="chapter-divider-ribbon handwritten">part three — fandoms</span>
+    <div class="chapter-divider" data-divider="3">
+    <span class="chapter-divider-line chapter-divider-line--left" aria-hidden="true"></span>
+    <div class="chapter-divider-center">
+      <span class="chapter-divider-motif" aria-hidden="true">✦</span>
+      <span class="chapter-divider-label">PART THREE</span>
+      <span class="chapter-divider-title handwritten">fandoms</span>
+    </div>
+    <span class="chapter-divider-line chapter-divider-line--right" aria-hidden="true"></span>
   </div>
 
   <!-- ================= 05. SEVENTEEN / MINGYU SECTION ================= -->
@@ -419,7 +426,7 @@
                    onerror="this.style.display='none'; this.parentElement.classList.add('potato-mascot--fallback')">
               <span class="potato-sign handwritten">Mingyu ♡</span>
             </button>
-            <p class="potato-hint handwritten">psst... click the potato</p>
+            <p class="potato-hint handwritten" data-motion="drift">psst... click the potato</p>
             <p class="potato-message" id="potatoMessage" role="status" aria-live="polite"></p>
 
             <!-- Fan card lives in the potato column now, so both columns
@@ -478,9 +485,14 @@
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="4" data-color-from="#172947" data-color-to="#efe8f5">
-    <span class="chapter-divider-motif" aria-hidden="true">📷</span>
-    <span class="chapter-divider-ribbon handwritten">part four — friendship</span>
+    <div class="chapter-divider" data-divider="4">
+    <span class="chapter-divider-line chapter-divider-line--left" aria-hidden="true"></span>
+    <div class="chapter-divider-center">
+      <span class="chapter-divider-motif" aria-hidden="true">📷</span>
+      <span class="chapter-divider-label">PART FOUR</span>
+      <span class="chapter-divider-title handwritten">friendship</span>
+    </div>
+    <span class="chapter-divider-line chapter-divider-line--right" aria-hidden="true"></span>
   </div>
 
   <!-- ================= 06. FRIENDS SECTION ================= -->
@@ -575,7 +587,7 @@
         </div>
 
         <div class="sewing-notes-col">
-          <p class="scrap-note handwritten scrap-note--big">
+          <p class="scrap-note handwritten scrap-note--big" data-motion="drift">
             Proof that Lynn doesn't just make things cute.<br>She actually makes things.
           </p>
 
@@ -610,16 +622,21 @@
     <div class="section-inner">
       <header class="section-head">
         <h2 class="section-title">Our Memories</h2>
-        <p class="section-subtitle">Same chaos, different years <span class="heart">♡</span></p>
+        <p class="section-subtitle" data-motion="settle">Same chaos, different years <span class="heart">♡</span></p>
       </header>
 
       <div class="polaroid-wall" id="polaroidWall" data-parallax="0.04"></div>
     </div>
   </section>
 
-  <div class="chapter-divider" data-divider="5" data-color-from="#fffdf8" data-color-to="#172947">
-    <span class="chapter-divider-motif" aria-hidden="true">🎟</span>
-    <span class="chapter-divider-ribbon handwritten">part five — the celebration</span>
+    <div class="chapter-divider" data-divider="5">
+    <span class="chapter-divider-line chapter-divider-line--left" aria-hidden="true"></span>
+    <div class="chapter-divider-center">
+      <span class="chapter-divider-motif" aria-hidden="true">🎟</span>
+      <span class="chapter-divider-label">PART FIVE</span>
+      <span class="chapter-divider-title handwritten">the celebration</span>
+    </div>
+    <span class="chapter-divider-line chapter-divider-line--right" aria-hidden="true"></span>
   </div>
 
   <!-- ================= 09. LYNN WRAPPED ================= -->
