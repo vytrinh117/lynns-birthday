@@ -851,10 +851,11 @@ function renderConcertTickets() {
     ticket.className = "concert-ticket";
     ticket.innerHTML = `
       <p class="ct-admit">Admit One ♡</p>
-      <div class="ct-photo img-missing">
-        <img src="${c.photo}" alt="${c.artist} concert" loading="lazy"
-             onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
-      </div>
+      <div class="ct-photo">
+  <img src="${c.photo}" alt="${c.artist} concert" loading="lazy"
+       onload="this.parentElement.classList.remove('img-missing')"
+       onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
+</div>
       <dl>
         <dt>Artist</dt><dd>${c.artist}</dd>
         <dt>Date</dt><dd>${c.date}</dd>
