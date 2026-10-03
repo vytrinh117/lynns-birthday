@@ -57,34 +57,36 @@ const CONFIG = {
   // label. Pick colors that suit each song's cover art once you add one.
   PLAYLIST: {
     "Main Character Energy": [
-      { title: "Song title here", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song1.mp3",
+      { title: "Finesse (Remix)", artist: "Bruno Mars, Cardi B", cover: "assets/images/album-placeholder-1.jpg", audio: "assets/music/song1.mp3",
         vinylColor: "#17294a", labelColor: "#cfe0f4", labelTextColor: "#17294a" },
-      { title: "Another song", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song2.mp3",
+    ],
+   "Your Mood": [
+      { title: "Happy Now", artist: "Kali Uchis", cover: "assets/images/album-placeholder-2.jpg", audio: "assets/music/song2.mp3",
         vinylColor: "#2c3f66", labelColor: "#eef5fc", labelTextColor: "#2c3f66" },
     ],
-    "Concert Night": [
-      { title: "Concert anthem", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song3.mp3",
+    "Concert Night in October 2026": [
+      { title: "After Hours", artist: "The Weeknd", cover: "assets/images/album-placeholder-3.jpg", audio: "assets/music/song3.mp3",
         vinylColor: "#3a2f5c", labelColor: "#d9d7ee", labelTextColor: "#3a2f5c" },
     ],
-    "Singing Alone at 2AM": [
-      { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song4.mp3",
+    "Singing Alone at Night": [
+      { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder-4.jpg", audio: "assets/music/song4.mp3",
         vinylColor: "#0d1729", labelColor: "#9db8dd", labelTextColor: "#0d1729" },
     ],
     "SEVENTEEN Hours": [
-      { title: "Bias wrecker", artist: "SEVENTEEN", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song5.mp3",
+      { title: "SOS", artist: "SEVENTEEN", cover: "assets/images/album-placeholder-5.jpg", audio: "assets/music/song5.mp3",
         vinylColor: "#5c7dad", labelColor: "#ffffff", labelTextColor: "#2c3f66" },
     ],
-    "Soft Girl Sunday": [
-      { title: "Cozy morning", artist: "Artist name", cover: "assets/images/album-placeholder.jpg", audio: "assets/music/song6.mp3",
+    "Lover Girl": [
+      { title: "Ai Ngoài Anh", artist: "VSTRA", cover: "assets/images/album-placeholder-6.jpg", audio: "assets/music/song6.mp3",
         vinylColor: "#7d93b8", labelColor: "#fdf6ea", labelTextColor: "#5a4126" },
     ],
   },
 
   // ---- Concert memories (small tickets under Music Room) ----
   CONCERTS: [
-    { artist: "[ Artist ]", date: "[ Date ]", venue: "[ Venue ]", photo: "assets/images/concert-01.jpg", memory: "core memory unlocked" },
-    { artist: "[ Artist ]", date: "[ Date ]", venue: "[ Venue ]", photo: "assets/images/concert-02.jpg", memory: "we screamed the whole time" },
-    { artist: "[ Artist ]", date: "[ Date ]", venue: "[ Venue ]", photo: "assets/images/concert-03.jpg", memory: "worth every penny" },
+    { artist: "Tùm lum ca sĩ", date: "08 Dec 2024", venue: "Có vẻ là Q.10", photo: "assets/images/concert-01.jpg", memory: "1st concert going together memory unlocked" },
+    { artist: "TBD", date: "TBD", venue: "Future unknown", photo: "assets/images/concert-02.jpg", memory: "Khi nào đi thì add hình hihi" },
+    { artist: "TBD", date: "TBD", venue: "Đi sẽ bíc", photo: "assets/images/concert-03.jpg", memory: Khi nào đi thì add hình hihi" },
   ],
 
   // ---- Birthday wishes (revealed one by one) ----
