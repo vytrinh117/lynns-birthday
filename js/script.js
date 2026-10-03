@@ -68,8 +68,8 @@ const CONFIG = {
       { title: "After Hours", artist: "The Weeknd", cover: "assets/images/album-placeholder3.jpg", audio: "assets/music/song3.mp3",
         vinylColor: "#3a2f5c", labelColor: "#d9d7ee", labelTextColor: "#3a2f5c" },
     ],
-    "Singing Alone at Night": [
-      { title: "3am vocal run", artist: "Artist name", cover: "assets/images/album-placeholder4.jpg", audio: "assets/music/song4.mp3",
+    "Singer Mode: ON": [
+      { title: "Snooze", artist: "SZA", cover: "assets/images/album-placeholder4.jpg", audio: "assets/music/song4.mp3",
         vinylColor: "#0d1729", labelColor: "#9db8dd", labelTextColor: "#0d1729" },
     ],
     "SEVENTEEN Hours": [
