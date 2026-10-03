@@ -397,35 +397,17 @@ input:focus-visible,
    ========================================================================= */
 .main-site { position: relative; }
 
-/* Fixed color layer behind the whole page. Its background-color is
-   continuously updated by script.js from live scroll position — see
-   #scrollBackdrop comment in index.html. Sits behind everything (z-index
-   below .main-site's own stacking) and is invisible except through the
-   masked edges of each .section below. */
-#scrollBackdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background-color: var(--blue-pale);
-  pointer-events: none;
-}
 .opening, .main-site { position: relative; z-index: 1; }
 
+/* Sections are plain, opaque, in-flow blocks. The page background shifts
+   from one section to the next ONLY at the chapter divider between them
+   (see CHAPTER DIVIDER below) — there is no page-wide color-interpolation
+   layer or edge-masking system; that was the source of the "colored
+   block" transition problem and has been removed entirely. */
 .section {
   position: relative;
   padding: 110px 20px 100px;
   overflow: hidden;
-  /* Top and bottom edges fade to transparent, revealing #scrollBackdrop's
-     live-interpolated color underneath — this is what makes the boundary
-     between two sections a soft cross-dissolve instead of a hard cut.
-     Disabled entirely under reduced motion (see the media query below),
-     which restores plain opaque sections with hard edges. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 90px, black calc(100% - 90px), transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, black 90px, black calc(100% - 90px), transparent 100%);
-}
-@media (prefers-reduced-motion: reduce) {
-  .section { -webkit-mask-image: none; mask-image: none; }
-  #scrollBackdrop { display: none; }
 }
 .section-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 2; }
 
@@ -581,44 +563,86 @@ input:focus-visible,
 .scrap-note--big { font-size: 1.6rem; }
 
 /* =========================================================================
-   CHAPTER DIVIDERS — scrapbook-style "part" banners between thematic groups
+   CHAPTER DIVIDERS — a short, in-flow scrapbook bridge between Parts.
+   ---------------------------------------------------------------------
+   Architecture notes (read before touching this):
+   - The divider is a normal, static, non-rotating, non-colored block.
+     It never moves or tilts as a whole — only its own small children do.
+   - It is NOT part of the generic `.reveal` system. It gets its own
+     scroll-progress calculation in script.js (updateChapterDividers),
+     which independently drives the two lines, the motif, the label, and
+     the title — never a single transform on the whole element. This is
+     deliberate: a previous version rotated/translated the entire divider
+     using the same logic as content cards, which combined with a page-
+     wide color-interpolation layer to make each divider read as its own
+     floating colored screen. Both of those have been removed.
+   - Height stays within ~150–230px on desktop, ~130–190px on mobile —
+     a pause between chapters, never a panel.
    ========================================================================= */
 .chapter-divider {
   position: relative;
-  padding: 100px 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+.chapter-divider-line {
+  flex: 1 1 auto;
+  max-width: 180px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blue-soft));
+  transform: scaleX(0);
+}
+.chapter-divider-line--left { transform-origin: left center; background: linear-gradient(90deg, transparent, var(--blue-soft)); }
+.chapter-divider-line--right { transform-origin: right center; background: linear-gradient(270deg, transparent, var(--blue-soft)); }
+
+.chapter-divider-center {
+  flex: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  overflow: hidden;
-  /* No background of its own anymore: #scrollBackdrop (fixed, behind
-     everything) shows through here, continuously color-interpolated by
-     script.js using this element's data-color-from/data-color-to, so the
-     seam between sections is a live cross-dissolve rather than a static
-     gradient block. */
-  background: transparent;
-  /* Base (pre-JS / reduced-motion) state; script.js takes over opacity and
-     transform every frame once running, tied directly to scroll position
-     rather than a one-time transition, so it can reverse smoothly if the
-     person scrolls back up. */
+  gap: 4px;
+  text-align: center;
+}
+.chapter-divider-motif {
+  font-size: 1.3rem;
+  color: var(--blue-mid);
   opacity: 0;
-  transform: rotate(-2.5deg) translateY(14px);
+  transform: translateY(6px);
 }
-/* Ribbon color always stays legible regardless of what's happening behind
-   it in the backdrop, since it has its own solid background. */
-.chapter-divider-ribbon {
-  display: inline-block;
-  background: var(--blue-pale);
+.chapter-divider-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--blue-mid);
+  opacity: 0;
+  transform: translateY(8px);
+}
+.chapter-divider-title {
+  font-size: 1.3rem;
   color: var(--blue-dark);
-  font-size: 1.5rem;
-  padding: 10px 32px;
-  border-radius: 999px;
-  box-shadow: var(--shadow-card);
-  transform: rotate(-1deg);
+  opacity: 0;
+  transform: translateY(10px);
 }
-.chapter-divider[data-divider="2"] .chapter-divider-ribbon,
-.chapter-divider[data-divider="3"] .chapter-divider-ribbon,
-.chapter-divider[data-divider="5"] .chapter-divider-ribbon { background: var(--blue-dark); color: var(--ivory); }
+/* Part 4's divider sits between two dark sections; keep its text legible
+   without giving the divider itself a background block. */
+.chapter-divider[data-divider="4"] .chapter-divider-label,
+.chapter-divider[data-divider="4"] .chapter-divider-title { color: var(--blue-mid); }
+
+@media (max-width: 640px) {
+  .chapter-divider { padding: 42px 16px; gap: 10px; }
+  .chapter-divider-line { max-width: 70px; }
+  .chapter-divider-title { font-size: 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter-divider-line { transform: scaleX(1) !important; }
+  .chapter-divider-motif, .chapter-divider-label, .chapter-divider-title {
+    opacity: 1 !important; transform: none !important;
+  }
+}
 
 /* =========================================================================
    KUROMI STICKER — a small recurring decorative character, scattered
