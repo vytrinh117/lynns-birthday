@@ -33,18 +33,18 @@ const CONFIG = {
   //    instead of an empty/fake polaroid. Add, remove, or edit freely —
   //    nothing here is invented; fill in real captions for your own story.
   MEMORY_PHOTOS: [
-    { src: "assets/images/memory-2015.jpg", date: "2015", caption: "Flashmob 8th Grade.", rotate: -4 },
-    { src: "assets/images/memory-2016.jpg", date: "2016", caption: "Lunch Break Xàm Xí full squat", rotate: 3 },
+    { src: "assets/images/memory-2015.jpg", date: "2015", caption: "Flashmob 8th Grade💃", rotate: -4 },
+    { src: "assets/images/memory-2016.jpg", date: "2016", caption: "Lunch break chụp khoe màu son The Balm Trustworthy💄", rotate: 3 },
     { src: "assets/images/memory-2017.jpg", date: "2017", caption: "Secondary School Graduation Photo Time", rotate: -3 },
     { src: "assets/images/memory-2018.jpg", date: "2018", caption: "Bobapop cùng bóng đèn", rotate: 2 },
     { date: "2019 – 2021", type: "gap", icon: "🎒", caption: "different schools, different chapters." },
     { src: "assets/images/memory-2022-1.jpg", date: "Feb 2022", caption: "New Year Gambling with The Gang", rotate: -2 },
-    { src: "assets/images/memory-2022-2.jpg", date: "Sep 2022", caption: "PheLa meet before TVy đi bay", rotate: 4 },
+    { src: "assets/images/memory-2022-2.jpg", date: "Sep 2022", caption: "PheLa meet before TVy đi bay✈️🏫", rotate: 4 },
     { src: "assets/images/memory-2022-3.jpg", date: "Sep 2022", caption: "TVy pai pai TLynn 2 năm", rotate: -3 },
     { date: "2023", type: "gap", icon: "✈", caption: "a quieter chapter ♡ different places, different routines." },
     { src: "assets/images/memory-2024.jpg", date: "2024", caption: "Comeback và đi NTPMM chung with her nò", rotate: 3 },
     { src: "assets/images/memory-2025.jpg", date: "2025", caption: "TLynn University Graduation!!!", rotate: -2 },
-    { src: "assets/images/memory-2026.jpg", date: "2026", caption: "Trip Bangkok Couple", rotate: 4 },
+    { src: "assets/images/memory-2026.jpg", date: "2026", caption: "Trip Bangkok Couple🪂", rotate: 4 },
   ],
 
   // ---- Music player ----
