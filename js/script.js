@@ -85,8 +85,8 @@ const CONFIG = {
   // ---- Concert memories (small tickets under Music Room) ----
   CONCERTS: [
     { artist: "Tùm lum ca sĩ", date: "08 Dec 2024", venue: "Có vẻ là Q.10", photo: "assets/images/concert-01.jpg", memory: "1st concert going together memory unlocked" },
-    { artist: "TBD", date: "TBD", venue: "Future unknown", photo: "assets/images/concert-02.jpg", memory: "Khi nào đi thì add hình hihi" },
-    { artist: "TBD", date: "TBD", venue: "Đi sẽ bíc", photo: "assets/images/concert-03.jpg", memory: Khi nào đi thì add hình hihi" },
+    { artist: "TBD", date: "TBD", venue: "Future unknown", photo: "assets/images/concert-02.jpg", memory: "Nào đi thì add hình hihi" },
+    { artist: "TBD", date: "TBD", venue: "Đi sẽ bíc", photo: "assets/images/concert-03.jpg", memory: "Nào đi thì add hình hihi" },
   ],
 
   // ---- Birthday wishes (revealed one by one) ----
