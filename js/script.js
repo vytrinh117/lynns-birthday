@@ -10,9 +10,9 @@ const CONFIG = {
 
   // ---- Basic info ----
   LYNN_NAME: "Lynn",
-  AGE: 25,                         // shown in the Friends section title
-  BIRTHDAY_DATE: "June 21",        // shown on the final concert ticket
-  DOG_NAME: "the poodle",          // used in a couple of dog messages below
+  AGE: 24,                         // shown in the Friends section title
+  BIRTHDAY_DATE: "September 27",        // shown on the final concert ticket
+  DOG_NAME: "Mina",          // used in a couple of dog messages below
 
   // ---- Photos ----
   // Replace these paths with your own images. Keep the same file names,
@@ -105,7 +105,7 @@ const CONFIG = {
   WRAPPED_STATISTICS: [
     { emoji: "🎧", number: "412", label: "Hours of music listened to" },
     { emoji: "🎤", number: "9,004", label: "Songs sung (mostly in the shower)" },
-    { emoji: "🎟️", number: "6", label: "Concerts attended" },
+    { emoji: "🎟️", number: "3+", label: "Concerts attended" },
     { emoji: "💎", number: "928", label: "Times Mingyu was mentioned" },
     { emoji: "🐩", number: "37", label: "Dog-related activities" },
     { emoji: "🧵", number: "14", label: "Things sewn by hand" },
@@ -956,15 +956,15 @@ function initPotato() {
   const potato = $("#potatoMascot");
   const msgEl = $("#potatoMessage");
   const sequence = [
-    "Mingyu has entered the chat.",
+    "Kimja has entered the chat.",
     "You have been Mingyu-approved.",
     "Okay, that's enough.",
   ];
   const randomExtras = [
-    "The potato waves at you.",
-    "It's giving visual (the potato agrees).",
-    "13 members, 1 potato, 0 regrets.",
-    "The potato has nothing left to say.",
+    "Kimja waves at you.",
+    "It's giving visual (Kimja agrees).",
+    "13 members, 1 Kimja, 1 TLynn.",
+    "Kimja has nothing left to say.",
   ];
   let clicks = 0;
 
