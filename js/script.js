@@ -34,17 +34,17 @@ const CONFIG = {
   //    nothing here is invented; fill in real captions for your own story.
   MEMORY_PHOTOS: [
     { src: "assets/images/memory-2015.jpg", date: "2015", caption: "Lúc này bắt đầu dùng điện thoại chụp choẹt.", rotate: -4 },
-    { src: "assets/images/memory-2014.jpg", date: "2014", caption: "[ add a caption for this year ]", rotate: 3 },
-    { src: "assets/images/memory-2015.jpg", date: "2015", caption: "[ add a caption for this year ]", rotate: -3 },
-    { src: "assets/images/memory-2016.jpg", date: "2016", caption: "[ add a caption for this year ]", rotate: 2 },
-    { date: "2017 – 2019", type: "gap", icon: "🎒", caption: "different schools, different chapters." },
-    { src: "assets/images/memory-2020.jpg", date: "2020", caption: "[ add a caption for this year ]", rotate: -2 },
-    { src: "assets/images/memory-2021.jpg", date: "2021", caption: "[ add a caption for this year ]", rotate: 4 },
-    { src: "assets/images/memory-2022.jpg", date: "2022", caption: "Apparently we thought we had everything figured out.", rotate: -3 },
+    { src: "assets/images/memory-2016.jpg", date: "2016", caption: "[ add a caption for this year ]", rotate: 3 },
+    { src: "assets/images/memory-2017.jpg", date: "2017", caption: "Secondary School Graduation Photo Time", rotate: -3 },
+    { src: "assets/images/memory-2018.jpg", date: "2018", caption: "[ add a caption for this year ]", rotate: 2 },
+    { date: "2019 – 2021", type: "gap", icon: "🎒", caption: "different schools, different chapters." },
+    { src: "assets/images/memory-2022-1.jpg", date: "Feb 2022", caption: "[ add a caption for this year ]", rotate: -2 },
+    { src: "assets/images/memory-2022-2.jpg", date: "Sep 2022", caption: "Trà sữa meet trước khi TVy đi bay", rotate: 4 },
+    { src: "assets/images/memory-2022-3.jpg", date: "Sep 2022", caption: "TVy pai pai TLynn 2 năm", rotate: -3 },
     { date: "2023", type: "gap", icon: "✈", caption: "a quieter chapter ♡ different places, different routines." },
-    { src: "assets/images/memory-2024.jpg", date: "2024", caption: "Still here. Still annoying each other.", rotate: 3 },
-    { src: "assets/images/memory-2025.jpg", date: "2025", caption: "[ add a caption for this year ]", rotate: -2 },
-    { src: "assets/images/memory-2026.jpg", date: "2026", caption: "Still making memories.", rotate: 4 },
+    { src: "assets/images/memory-2024.jpg", date: "2024", caption: "Quay về và đi NTPMM nò", rotate: 3 },
+    { src: "assets/images/memory-2025.jpg", date: "2025", caption: "TLynn University Graduation!!!", rotate: -2 },
+    { src: "assets/images/memory-2026.jpg", date: "2026", caption: "Trip Bangkok Couple", rotate: 4 },
   ],
 
   // ---- Music player ----
