@@ -1,0 +1,6 @@
+{
+  "missingSourceImageFallback": true,
+  "keyboardFocusSelection": true,
+  "touchSelection": true,
+  "noPageErrors": true
+}

@@ -1,0 +1,377 @@
+{
+  "temporary_images": "Six explicitly labeled QA-only aspect-ratio fixtures are injected into the browser; none are present in the release ZIP.",
+  "original_six_covers_present": false,
+  "widths": {
+    "1440": {
+      "viewportWidth": 1440,
+      "docWidth": 1440,
+      "shelfClientWidth": 1080,
+      "shelfScrollWidth": 1080,
+      "shelfScrollLeft": 0,
+      "noHorizontalPageOverflow": true,
+      "stars": 5,
+      "art": [
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 600,
+          "naturalHeight": 600,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 720,
+          "naturalHeight": 1080,
+          "objectFit": "contain",
+          "trackHeight": 12
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 1100,
+          "naturalHeight": 660,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 650,
+          "naturalHeight": 820,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 960,
+          "naturalHeight": 540,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 560,
+          "naturalHeight": 940,
+          "objectFit": "contain",
+          "trackHeight": 12
+        }
+      ],
+      "uncaughtErrors": []
+    },
+    "1200": {
+      "viewportWidth": 1200,
+      "docWidth": 1200,
+      "shelfClientWidth": 1080,
+      "shelfScrollWidth": 1080,
+      "shelfScrollLeft": 0,
+      "noHorizontalPageOverflow": true,
+      "stars": 5,
+      "art": [
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 600,
+          "naturalHeight": 600,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 720,
+          "naturalHeight": 1080,
+          "objectFit": "contain",
+          "trackHeight": 12
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 1100,
+          "naturalHeight": 660,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 650,
+          "naturalHeight": 820,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 960,
+          "naturalHeight": 540,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 560,
+          "naturalHeight": 940,
+          "objectFit": "contain",
+          "trackHeight": 12
+        }
+      ],
+      "uncaughtErrors": []
+    },
+    "1024": {
+      "viewportWidth": 1024,
+      "docWidth": 1024,
+      "shelfClientWidth": 984,
+      "shelfScrollWidth": 984,
+      "shelfScrollLeft": 0,
+      "noHorizontalPageOverflow": true,
+      "stars": 5,
+      "art": [
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 600,
+          "naturalHeight": 600,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 720,
+          "naturalHeight": 1080,
+          "objectFit": "contain",
+          "trackHeight": 12
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 1100,
+          "naturalHeight": 660,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 650,
+          "naturalHeight": 820,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 960,
+          "naturalHeight": 540,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 560,
+          "naturalHeight": 940,
+          "objectFit": "contain",
+          "trackHeight": 12
+        }
+      ],
+      "uncaughtErrors": []
+    },
+    "768": {
+      "viewportWidth": 768,
+      "docWidth": 768,
+      "shelfClientWidth": 728,
+      "shelfScrollWidth": 866,
+      "shelfScrollLeft": 0,
+      "noHorizontalPageOverflow": true,
+      "stars": 5,
+      "art": [
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 600,
+          "naturalHeight": 600,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 720,
+          "naturalHeight": 1080,
+          "objectFit": "contain",
+          "trackHeight": 12
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 1100,
+          "naturalHeight": 660,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 650,
+          "naturalHeight": 820,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 960,
+          "naturalHeight": 540,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 560,
+          "naturalHeight": 940,
+          "objectFit": "contain",
+          "trackHeight": 12
+        }
+      ],
+      "uncaughtErrors": []
+    },
+    "430": {
+      "viewportWidth": 430,
+      "docWidth": 430,
+      "shelfClientWidth": 398,
+      "shelfScrollWidth": 866,
+      "shelfScrollLeft": 0,
+      "noHorizontalPageOverflow": true,
+      "stars": 5,
+      "scrollAfter": 468,
+      "art": [
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 600,
+          "naturalHeight": 600,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 720,
+          "naturalHeight": 1080,
+          "objectFit": "contain",
+          "trackHeight": 12
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 1100,
+          "naturalHeight": 660,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 650,
+          "naturalHeight": 820,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 960,
+          "naturalHeight": 540,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 560,
+          "naturalHeight": 940,
+          "objectFit": "contain",
+          "trackHeight": 12
+        }
+      ],
+      "uncaughtErrors": []
+    },
+    "375": {
+      "viewportWidth": 375,
+      "docWidth": 375,
+      "shelfClientWidth": 343,
+      "shelfScrollWidth": 866,
+      "shelfScrollLeft": 0,
+      "noHorizontalPageOverflow": true,
+      "stars": 5,
+      "scrollAfter": 523,
+      "art": [
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 600,
+          "naturalHeight": 600,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 720,
+          "naturalHeight": 1080,
+          "objectFit": "contain",
+          "trackHeight": 12
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 1100,
+          "naturalHeight": 660,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 650,
+          "naturalHeight": 820,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 960,
+          "naturalHeight": 540,
+          "objectFit": "contain",
+          "trackHeight": 24
+        },
+        {
+          "artWidth": 128,
+          "artHeight": 128,
+          "naturalWidth": 560,
+          "naturalHeight": 940,
+          "objectFit": "contain",
+          "trackHeight": 12
+        }
+      ],
+      "uncaughtErrors": []
+    }
+  },
+  "animation": {
+    "flyingVinylObserved": true,
+    "firstSelected": true,
+    "titleAfterClick": "Finesse (Remix)",
+    "currentActiveStyles": "rgb(157, 184, 221) 0px 0px 0px 3px, rgba(44, 63, 102, 0.35) 0px 18px 40px -20px",
+    "secondSelected": true,
+    "secondTitle": "Happy Now",
+    "uncaughtErrors": []
+  }
+}

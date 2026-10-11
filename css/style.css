@@ -891,22 +891,35 @@ input:focus-visible,
   scrollbar-width: thin;
 }
 .vinyl-sleeve {
-  flex: none;
+  flex: 0 0 128px;
   width: 128px;
+  min-width: 0;
+  padding: 0;
+  align-self: flex-start;
   text-align: center;
   position: relative;
 }
 .vinyl-sleeve-art {
-  width: 128px;
-  height: 128px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  height: auto;
   border-radius: 10px;
   overflow: hidden;
-  background: var(--blue-mid);
+  /* Quiet letterboxing when a supplied album cover is not square. */
+  background: var(--blue-deepest);
   box-shadow: var(--shadow-card);
   transition: transform 300ms var(--ease-dreamy), box-shadow 300ms;
   position: relative;
 }
-.vinyl-sleeve-art img { width: 100%; height: 100%; object-fit: cover; }
+.vinyl-sleeve-art img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
 .vinyl-sleeve:hover .vinyl-sleeve-art, .vinyl-sleeve:focus-visible .vinyl-sleeve-art { transform: translateY(-5px) scale(1.03); }
 .vinyl-sleeve.is-active .vinyl-sleeve-art { box-shadow: 0 0 0 3px var(--blue-soft), var(--shadow-soft); }
 .vinyl-sleeve-track { font-size: 0.68rem; color: var(--blue-soft); letter-spacing: 1px; margin-top: 8px; }
