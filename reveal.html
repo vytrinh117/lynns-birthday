@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172947">
+<meta name="description" content="A little birthday delivery for Lynn.">
+<title>A little delivery for Lynn ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2c3f66;--deep:#172947;--mid:#5c7dad;--soft:#9db8dd;--pale:#cfe0f4;--ice:#eef5fc;--cream:#fbf7ef;--ivory:#fffdf8;--serif:'Fraunces',Georgia,serif;--sans:'Quicksand',Arial,sans-serif;--hand:'Caveat',cursive}
+*,*::before,*::after{box-sizing:border-box}html{min-height:100%;color-scheme:light}body{margin:0;min-height:100svh;font-family:var(--sans);color:var(--ink);background:radial-gradient(circle at 15% 15%,#314b76 0,transparent 32%),radial-gradient(circle at 85% 85%,#22395d 0,transparent 40%),var(--deep);display:grid;place-items:center;overflow-x:hidden}button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #9db8dd;outline-offset:5px}.sky{position:fixed;inset:0;overflow:hidden;pointer-events:none}.sky::before{content:'';position:absolute;inset:0;opacity:.12;background:repeating-linear-gradient(45deg,transparent 0 46px,#bbd5f4 47px,transparent 48px),repeating-linear-gradient(-45deg,transparent 0 46px,#bbd5f4 47px,transparent 48px)}.spark{position:absolute;color:#d8e7fb;font-size:clamp(12px,2vw,21px);opacity:.5;animation:float 5s ease-in-out infinite alternate}.spark:nth-child(1){top:15%;left:14%}.spark:nth-child(2){top:13%;right:12%;animation-delay:-3s}.spark:nth-child(3){bottom:18%;left:10%;animation-delay:-1s}.spark:nth-child(4){bottom:16%;right:15%;animation-delay:-4s}.spark:nth-child(5){top:47%;right:7%;animation-delay:-2s}.spark:nth-child(6){top:56%;left:6%;animation-delay:-3.5s}@keyframes float{to{transform:translateY(-11px) rotate(12deg);opacity:.9}}.page{width:min(92vw,600px);min-height:540px;margin:50px auto;position:relative;z-index:1;text-align:center;background:var(--ivory);border:1px solid rgba(207,224,244,.85);border-radius:28px;box-shadow:0 35px 95px rgba(0,0,0,.35);padding:clamp(25px,6vw,55px) clamp(18px,5vw,56px) 44px;overflow:hidden}.page::before{content:'';position:absolute;inset:12px;border:1px dashed rgba(92,125,173,.3);border-radius:21px;pointer-events:none}.kicker{position:relative;display:inline-flex;align-items:center;gap:9px;margin:0 0 14px;letter-spacing:2px;font-weight:700;text-transform:uppercase;font-size:.66rem;color:var(--mid)}.kicker::before,.kicker::after{content:'✦';font-size:12px;letter-spacing:0;color:var(--soft)}h1{font:500 clamp(2rem,6vw,3rem)/1.18 var(--serif);margin:0 0 12px;color:var(--deep)}.subtitle{font-size:1rem;line-height:1.7;margin:0 auto 22px;max-width:410px;color:var(--mid)}.mini-stamp{display:inline-block;font:600 1.38rem var(--hand);color:var(--mid);transform:rotate(-4deg);border:2px solid var(--soft);border-radius:4px;padding:2px 12px;margin:0 0 14px;letter-spacing:1px}.envelope-stage{position:relative;height:235px;display:grid;place-items:center;margin:6px auto 15px;perspective:800px}.envelope{width:260px;height:167px;position:relative;filter:drop-shadow(0 14px 17px rgba(44,63,102,.23));transition:transform .7s ease}.envelope-back{position:absolute;inset:0;border-radius:9px;background:#d0e0f4;border:1px solid #b5cae6}.letter{position:absolute;left:22px;right:22px;top:15px;height:133px;background:var(--ivory);border-radius:6px;box-shadow:0 2px 6px rgba(44,63,102,.12);z-index:1;display:grid;place-content:center;gap:5px;transition:transform .8s cubic-bezier(.22,1,.36,1) .25s}.letter span{font:600 1.23rem var(--hand);color:var(--ink)}.letter small{font:700 .6rem var(--sans);letter-spacing:1.2px;text-transform:uppercase;color:var(--mid)}.envelope-front{position:absolute;inset:0;border-radius:9px;background:linear-gradient(150deg,transparent 48.7%,#e8f0fb 49%) left/50% 100% no-repeat,linear-gradient(-150deg,transparent 48.7%,#e8f0fb 49%) right/50% 100% no-repeat,linear-gradient(22deg,#b9d1ee 0 50%,transparent 50.4%) bottom left/51% 90% no-repeat,linear-gradient(-22deg,#b9d1ee 0 50%,transparent 50.4%) bottom right/51% 90% no-repeat;background-color:transparent;z-index:3;pointer-events:none}.envelope-flap{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 63%);background:#cfdef1;transform-origin:top center;transition:transform .65s ease;z-index:4;backface-visibility:hidden;border-radius:9px;pointer-events:none}.wax-seal{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);z-index:5;width:41px;height:41px;display:grid;place-items:center;border-radius:50%;background:var(--mid);color:var(--ivory);font-size:19px;box-shadow:0 2px 8px rgba(30,47,76,.2);transition:opacity .2s}.page.opening .wax-seal{opacity:0}.page.opening .envelope-flap{transform:rotateX(180deg);z-index:0}.page.opening .letter{transform:translateY(-74px)}.page.opening .envelope{transform:translateY(15px)}.open-button,.enter-link{border:0;display:inline-block;border-radius:999px;background:var(--ink);color:white;text-decoration:none;padding:14px 26px;font-size:.92rem;font-weight:700;box-shadow:0 11px 22px rgba(44,63,102,.2);transition:transform .2s,background .2s}.open-button:hover,.enter-link:hover{background:var(--mid);transform:translateY(-2px)}.open-button[disabled]{opacity:.5;cursor:wait}.footnote{font:500 1.25rem var(--hand);color:var(--mid);margin:17px 0 0}.reveal-dialog{border:0;width:min(90vw,445px);padding:0;border-radius:24px;background:var(--ivory);color:var(--ink);box-shadow:0 35px 95px rgba(0,0,0,.36);max-height:calc(100vh - 30px);overflow:auto}.reveal-dialog::backdrop{background:rgba(11,22,40,.7);backdrop-filter:blur(5px)}.dialog-content{padding:clamp(28px,6vw,45px);text-align:center;position:relative}.dialog-close{position:absolute;right:12px;top:10px;width:36px;height:36px;border:0;background:transparent;color:var(--mid);font-size:24px;border-radius:50%}.dialog-icon{font-size:36px;color:var(--mid);margin-bottom:4px}.dialog-kicker{margin:0 0 9px;font-size:.66rem;letter-spacing:2px;color:var(--mid);font-weight:700;text-transform:uppercase}.dialog-content h2{font:500 clamp(1.65rem,5vw,2.2rem)/1.25 var(--serif);color:var(--deep);margin:0 0 12px}.dialog-content p{line-height:1.7;margin:0 auto 14px;max-width:340px}.dialog-hand{font:600 1.35rem var(--hand);color:var(--mid);margin:12px 0 21px!important}.enter-link{display:block;width:fit-content;margin:0 auto}.sub-link{display:inline-block;border:0;background:transparent;text-decoration:underline;color:var(--mid);margin-top:17px;font-size:.76rem;cursor:pointer}.envelope,.spark{will-change:transform}@media(max-width:400px){.page{min-height:500px}.envelope-stage{height:205px}.envelope{transform:scale(.86)}.page.opening .envelope{transform:scale(.86) translateY(15px)}.kicker{letter-spacing:1.3px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.page.opening .letter{transform:translateY(-74px)}.page.opening .envelope-flap{transform:rotateX(180deg)}}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><span class="spark">✦</span><span class="spark">✧</span><span class="spark">✦</span><span class="spark">✧</span><span class="spark">♡</span><span class="spark">✦</span></div>
+<main class="page" id="page">
+  <p class="kicker">One very special delivery</p>
+  <h1>Lynn, you've got mail. ♡</h1>
+  <p class="subtitle">Your extremely serious application has been reviewed. A very important letter is waiting for you.</p>
+  <div class="mini-stamp" aria-hidden="true">Approved with love ♡</div>
+  <div class="envelope-stage" aria-hidden="true">
+    <div class="envelope">
+      <div class="envelope-back"></div>
+      <div class="letter"><small>Priority mail</small><span>just for you ♡</span></div>
+      <div class="envelope-front"></div>
+      <div class="envelope-flap"></div>
+      <div class="wax-seal">♡</div>
+    </div>
+  </div>
+  <button class="open-button" id="openButton" type="button" aria-haspopup="dialog">Open your invitation ♡</button>
+  <p class="footnote">Warning: may contain excessive affection.</p>
+</main>
+<dialog class="reveal-dialog" id="revealDialog" aria-labelledby="revealTitle">
+  <div class="dialog-content">
+    <button class="dialog-close" id="closeButton" type="button" aria-label="Close the surprise">×</button>
+    <div class="dialog-icon" aria-hidden="true">✧ ♡ ✧</div>
+    <p class="dialog-kicker">Access granted · Birthday VIP</p>
+    <h2 id="revealTitle">A little world, made just for you.</h2>
+    <p>Congratulations, Lynn! You've unlocked a place full of music, memories, little jokes, and plenty of love.</p>
+    <p class="dialog-hand">Your adventure is waiting... ♡</p>
+    <a class="enter-link" href="./index.html">Enter Lynn's World ♡ →</a>
+    <button class="sub-link" id="backButton" type="button">Look at the envelope again</button>
+  </div>
+</dialog>
+<script>
+(()=>{
+  'use strict';
+  const page=document.getElementById('page');
+  const button=document.getElementById('openButton');
+  const dialog=document.getElementById('revealDialog');
+  const close=document.getElementById('closeButton');
+  const back=document.getElementById('backButton');
+  let queued=false;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  function showReveal(){dialog.showModal();dialog.querySelector('.enter-link').focus();}
+  button.addEventListener('click',()=>{
+    if(queued)return;
+    queued=true;button.disabled=true;page.classList.add('opening');
+    window.setTimeout(()=>{showReveal();button.disabled=false;queued=false;},reduced.matches?0:950);
+  });
+  function dismiss(){dialog.close();button.focus();}
+  close.addEventListener('click',dismiss);
+  back.addEventListener('click',dismiss);
+  dialog.addEventListener('click',event=>{if(event.target===dialog)dismiss();});
+})();
+</script>
+</body>
+</html>
