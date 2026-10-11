@@ -1963,7 +1963,9 @@ input:focus-visible,
 .finale-cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 24px 50px -20px rgba(23,41,71,0.5); }
 .finale-cta:active { transform: scale(0.98); }
 
-.vinyl-sleeve-accent { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: var(--sleeve-accent, var(--blue-mid)); }
+.vinyl-sleeve-accent {
+  display: none;
+}
 
 /* ---- Timeline gap years: an honest text-only note, never a fake photo ---- */
 .timeline-gap-card {
