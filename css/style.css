@@ -114,7 +114,7 @@ input:focus-visible,
 }
 
 /* =========================================================================
-   HEART HUNT BADGE
+   STAR HUNT BADGE
    ========================================================================= */
 .heart-hunt-badge {
   flex: none;
@@ -133,35 +133,45 @@ input:focus-visible,
 .heart-hunt-badge.pulse .heart-hunt-icon { animation: heartFoundPop 500ms var(--ease-dreamy); }
 
 /* =========================================================================
-   HIDDEN HEARTS (scattered across sections)
+   HIDDEN STARS (scattered across sections)
    ========================================================================= */
-.hidden-heart {
+.hidden-star {
   position: absolute;
-  font-size: 1.1rem;
-  color: rgba(92, 125, 173, 0.35);
+  font-size: 1.2rem;
+  min-width: 38px; min-height: 38px; display: inline-flex; align-items: center; justify-content: center;
+  color: rgba(58, 92, 147, 0.76);
   cursor: pointer;
   transition: transform 300ms ease, color 300ms ease;
   z-index: 5;
   line-height: 1;
 }
-.hidden-heart:hover, .hidden-heart:focus-visible {
+.hidden-star:hover, .hidden-star:focus-visible {
   color: var(--blue-mid);
   transform: scale(1.3);
   text-shadow: 0 0 10px rgba(92,125,173,0.6);
 }
-.hidden-heart.found { color: var(--blue-mid); animation: heartFoundPop 500ms var(--ease-dreamy); pointer-events: none; }
-.hidden-heart--light { color: rgba(255,255,255,0.3); }
-.hidden-heart--light:hover { color: #fff; }
+.hidden-star.found { color: var(--blue-mid); animation: heartFoundPop 500ms var(--ease-dreamy); cursor: default; }
+.hidden-star:focus-visible { outline: 2px solid var(--blue-mid); outline-offset: 2px; border-radius: 50%; }
 @keyframes heartFoundPop {
   0% { transform: scale(1); }
   50% { transform: scale(1.6); }
   100% { transform: scale(1.1); }
 }
 
-#about .hidden-heart[data-heart="1"] { bottom: -10px; right: -6px; }
-#poodle .hidden-heart[data-heart="2"] { top: 6px; right: 10px; }
-.mingyu-cards { position: relative; }
-.mingyu-cards .hidden-heart[data-heart="3"] { top: -6px; right: 8px; }
+#about .hidden-star[data-star-id="star-1"] { bottom: -10px; right: -6px; }
+#poodle .hidden-star[data-star-id="star-2"] { top: 6px; right: 10px; }
+/* Star 3: position-only override. Keep the SAME star glyph, color, size,
+   hover/focus and found state as every other .hidden-star collectible. */
+.mingyu-potato-visual .hidden-star[data-star-id="star-3"] {
+  top: -78px;
+  right: 25%;
+}
+@media (max-width: 780px) {
+  .mingyu-potato-visual .hidden-star[data-star-id="star-3"] {
+    top: -64px;
+    right: 8%;
+  }
+}
 
 /* =========================================================================
    OPENING SCREEN
@@ -715,7 +725,7 @@ input:focus-visible,
 .section--music { background: linear-gradient(160deg, var(--blue-dark) 0%, #233a63 55%, var(--blue-deepest) 100%); }
 .section--music .section-inner { color: var(--ivory); }
 
-.player-wrap { display: flex; flex-direction: column; align-items: center; gap: 40px; margin-bottom: 60px; }
+.player-wrap { position: relative; padding-top: 74px; display: flex; flex-direction: column; align-items: center; gap: 40px; margin-bottom: 60px; }
 
 .floating-note {
   position: absolute;
@@ -725,8 +735,8 @@ input:focus-visible,
   animation: floatGentle 7s ease-in-out infinite;
   pointer-events: none;
 }
-.note-a { top: -34px; left: 4%; }
-.note-b { top: -14px; right: 8%; animation-delay: 1.4s; }
+.note-a { top: 6px; left: 4%; }
+.note-b { top: 24px; right: 8%; animation-delay: 1.4s; }
 .note-c { bottom: -30px; left: 40%; animation-delay: 2.6s; font-size: 1.1rem; }
 
 /* =========================================================================
@@ -1027,9 +1037,58 @@ input:focus-visible,
   border: 10px solid transparent;
   border-top-color: #fff;
 }
-.paw-print { position: absolute; opacity: 0.5; font-size: 1.2rem; }
-.paw-1 { bottom: -6px; left: -20px; transform: rotate(-20deg); }
-.paw-2 { bottom: -28px; left: 10px; transform: rotate(10deg); }
+/* Ink-stamped walking paws: safely confined to a narrow strip OUTSIDE the Polaroids.
+   Layout placement lives on .paw-step; only its SVG moves/appears. */
+.paw-trail {
+  --paw-stamp: #7d87a1;
+  position: absolute;
+  top: 50%; left: -18px;
+  width: 78px; height: 248px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+.paw-step { position: absolute; width: 25px; height: 27px; display: block; }
+.paw-art {
+  display: block;
+  width: 100%; height: 100%;
+  fill: var(--paw-stamp);
+  opacity: .42;
+  transform-origin: center;
+  transform: rotate(var(--paw-rotate, 0deg));
+  will-change: opacity, transform;
+}
+/* Steps progress bottom -> top, alternating left/right. Entire trail fits 248px. */
+.paw-step--1  { bottom: 0px;   left: 9px;  --paw-rotate: -19deg; --paw-step: 0; }
+.paw-step--2  { bottom: 23px;  left: 39px; --paw-rotate: 16deg;  --paw-step: 1; }
+.paw-step--3  { bottom: 48px;  left: 13px; --paw-rotate: -13deg; --paw-step: 2; }
+.paw-step--4  { bottom: 72px;  left: 43px; --paw-rotate: 19deg;  --paw-step: 3; }
+.paw-step--5  { bottom: 97px;  left: 14px; --paw-rotate: -15deg; --paw-step: 4; }
+.paw-step--6  { bottom: 122px; left: 40px; --paw-rotate: 13deg;  --paw-step: 5; }
+.paw-step--7  { bottom: 148px; left: 9px;  --paw-rotate: -18deg; --paw-step: 6; }
+.paw-step--8  { bottom: 173px; left: 38px; --paw-rotate: 18deg;  --paw-step: 7; }
+.paw-step--9  { bottom: 197px; left: 13px; --paw-rotate: -12deg; --paw-step: 8; }
+.paw-step--10 { bottom: 221px; left: 41px; --paw-rotate: 15deg;  --paw-step: 9; }
+.paw-trail.is-walking .paw-art {
+  animation: pawStepInk 8s both infinite ease-in-out;
+  animation-delay: calc(var(--paw-step) * .42s);
+}
+@keyframes pawStepInk {
+  0%, 4% { opacity: 0; transform: translateY(9px) scale(.72) rotate(var(--paw-rotate)); }
+  11%, 54% { opacity: .53; transform: translateY(0) scale(1) rotate(var(--paw-rotate)); }
+  77%, 100% { opacity: 0; transform: translateY(-3px) scale(.97) rotate(var(--paw-rotate)); }
+}
+/* A single-column phone lacks room alongside a 320px Polaroid:
+   put paws in a dedicated in-flow corridor below it instead of over the image. */
+@media (max-width: 600px) {
+  .poodle-main-wrap { flex-direction: column; align-items: center; }
+  .paw-trail { position: relative; top: auto; left: auto; transform: none;
+    width: 90px; height: 248px; margin: 16px 0 0; flex: none; }
+  .poodle-grid { gap: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paw-trail .paw-art { animation: none !important; opacity: .45 !important; transform: rotate(var(--paw-rotate)) !important; will-change: auto; }
+}
 .poodle-side { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; position: relative; }
 
 /* =========================================================================
@@ -1348,7 +1407,7 @@ input:focus-visible,
 .section--memories { background: var(--ivory); }
 .memories-doodle-1 { position: absolute; top: 60px; left: 6%; opacity: 0.3; }
 .memories-doodle-2 { position: absolute; bottom: 40px; right: 8%; opacity: 0.3; color: var(--lavender-deep); }
-.polaroid-wall { position: relative; padding: 20px 0 40px; }
+.polaroid-wall { position: relative; isolation: isolate; padding: 28px 0 40px; margin-top: 22px; }
 /* Vertical year timeline: a center line that fills as you scroll, with
    polaroids alternating sides. Single-column on small screens. */
 .memory-timeline { --tl: 0; display: flex; flex-direction: column; gap: 56px; }
@@ -1431,9 +1490,9 @@ input:focus-visible,
 .wish-note.show { opacity: 1; transform: translateY(0); }
 
 /* =========================================================================
-   HEART HUNT COMPLETE + SECRET ROOM
+   STAR HUNT COMPLETION
    ========================================================================= */
-.heart-complete-overlay, .secret-room-overlay, .lightbox {
+.heart-complete-overlay, .lightbox {
   position: fixed; inset: 0; z-index: 900;
   display: flex; align-items: center; justify-content: center;
   background: rgba(23,41,71,0.55);
@@ -1453,37 +1512,14 @@ input:focus-visible,
 }
 .heart-complete-title { font-family: var(--font-serif); font-size: 1.5rem; color: var(--blue-dark); }
 .heart-complete-sub { font-size: 1.2rem; color: var(--blue-mid); margin: 10px 0 24px; }
-.secret-room-btn, .enter-btn { border: none; }
-.secret-room-btn {
-  background: var(--blue-dark); color: var(--ivory);
-  padding: 12px 26px; border-radius: 999px; font-weight: 700; font-size: 0.9rem;
-  transition: transform 250ms;
-}
-.secret-room-btn:hover { transform: translateY(-2px); }
-.heart-complete-close, .secret-room-close, .lightbox-close {
+.enter-btn { border: none; }
+.heart-complete-close, .lightbox-close {
   position: absolute; top: 12px; right: 16px;
   font-size: 1.6rem; color: var(--blue-mid); line-height: 1;
   background: none;
 }
 .lightbox-close { top: 24px; right: 24px; color: #fff; }
 
-.secret-room-card {
-  background: linear-gradient(160deg, var(--blue-deepest) 0%, #101d34 100%);
-  color: var(--blue-pale);
-  border-radius: 26px;
-  padding: 44px 30px;
-  max-width: 640px;
-  width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: var(--shadow-soft);
-}
-.secret-room-warning { text-align: center; letter-spacing: 1px; color: var(--blue-soft); font-size: 0.85rem; font-weight: 700; }
-.secret-room-title { text-align: center; color: var(--ivory); font-size: 1.8rem; margin: 8px 0 30px; }
-.secret-block { margin-bottom: 26px; }
-.secret-block h3 { font-size: 1.1rem; color: var(--ivory); margin-bottom: 8px; }
-.placeholder-text { font-size: 0.9rem; color: var(--blue-soft); font-style: italic; }
 
 .lightbox-content { display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .lightbox-caption { color: #fff; font-size: 1.3rem; text-align: center; }
@@ -1494,9 +1530,10 @@ input:focus-visible,
 .section--finale {
   background: radial-gradient(ellipse at 50% -10%, #24365c 0%, var(--blue-deepest) 55%, #0d1729 100%);
   padding-top: 130px;
+  padding-bottom: clamp(175px, 16vw, 240px);
 }
-.finale-inner { text-align: center; color: var(--ivory); }
-.finale-sky { position: absolute; inset: 0; z-index: 0; }
+.finale-inner { position: relative; z-index: 2; text-align: center; color: var(--ivory); }
+.finale-sky { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .stars--finale { opacity: 0.9; }
 .moon {
   position: absolute; top: 60px; right: 12%;
@@ -1529,22 +1566,28 @@ input:focus-visible,
   box-shadow: var(--shadow-soft);
   text-align: left;
 }
-.final-ticket-main { flex: 1; padding: 30px; }
+.final-ticket-main { flex: 1; min-width: 0; padding: 30px; }
 .final-ticket-eyebrow { font-size: 0.75rem; letter-spacing: 1.5px; color: var(--blue-mid); font-weight: 700; }
 .final-ticket-admit { font-family: var(--font-serif); font-size: 1.5rem; margin: 6px 0 18px; }
 .final-ticket-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .final-ticket-grid div span { display: block; font-size: 0.65rem; letter-spacing: 0.5px; color: var(--blue-mid); text-transform: uppercase; }
 .final-ticket-grid div strong { font-size: 0.9rem; }
 .final-ticket-stub {
-  width: 130px;
+  width: 156px;
+  flex: 0 0 156px;
+  min-width: 0;
   background: var(--blue-ice);
   border-left: 2px dashed var(--blue-soft);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
   padding: 20px 10px;
 }
 .barcode {
-  width: 90px; height: 60px;
-  background-image: repeating-linear-gradient(90deg, var(--blue-dark) 0 2px, transparent 2px 5px);
+  display: block;
+  width: 132px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  flex: none;
 }
 .ticket-valid { font-size: 1rem; color: var(--blue-mid); }
 
@@ -1559,7 +1602,7 @@ input:focus-visible,
   .kit-grid { grid-template-columns: repeat(3, 1fr); }
   .wrapped-grid { grid-template-columns: repeat(2, 1fr); }
   .final-ticket { flex-direction: column; }
-  .final-ticket-stub { width: 100%; flex-direction: row; border-left: none; border-top: 2px dashed var(--blue-soft); }
+  .final-ticket-stub { width: 100%; flex: 0 0 auto; flex-direction: column; border-left: none; border-top: 2px dashed var(--blue-soft); padding: 14px; }
 }
 
 @media (max-width: 640px) {
@@ -1946,3 +1989,31 @@ input:focus-visible,
   opacity: 0.75;
 }
 .chapter-divider--light .chapter-divider-motif { color: var(--blue-pale); }
+
+/* Integration fixes — controlled scrapbook motion and small screens */
+#seventeen .polaroid:hover, #seventeen .polaroid:focus-within { transform: translateY(-4px) rotate(1deg) scale(1); box-shadow: 0 18px 35px rgba(0,0,0,.22); }
+#seventeen .polaroid:hover img { transform: none; }
+/* star-5 was at top:72px in the heading/text area, easily obscured by the
+   animated wish cards. Move it into a predictable right-side sky pocket. */
+#wishes .hidden-star[data-star-id="star-5"] { position: absolute; top: 42%; right: 1%; left: auto; z-index: 7;
+  color: #345d91; background: rgba(255,255,255,.24); border-radius: 50%; }
+@media (max-width: 600px) {
+  #wishes .hidden-star[data-star-id="star-5"] { top: auto; bottom: 15px; right: 7px; left: auto; }
+}
+@media (max-width: 768px) {
+ .player-wrap { padding-top: 102px; }
+ .floating-note { font-size: clamp(.86rem, 2.5vw, 1.05rem); max-width: 44%; }
+ .note-a { top: 8px; left: 2%; }
+ .note-b { top: 51px; right: 2%; text-align: right; }
+ .note-c { bottom: -25px; left: 15%; }
+ .section--finale { padding-bottom: 180px; }
+}
+@media (max-width: 430px) {
+ .player-wrap { padding-top: 115px; }
+ .note-a { max-width: 60%; }
+ .note-b { max-width: 62%; top: 58px; }
+ .polaroid-wall { margin-top: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+ #seventeen .polaroid:hover, #seventeen .polaroid:focus-within { transform: none; }
+}

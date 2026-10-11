@@ -27,21 +27,21 @@ instead (see "General fallback behavior" below).
 | `seventeen-02.jpg` | SEVENTEEN photo | SEVENTEEN section, photo strip |
 | `sewing-machine.jpg` | Lynn's sewing machine | Sewing Corner |
 | `coaster.jpg` | The coaster Lynn sewed by hand | Sewing Corner |
-| `memory-2013.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2014.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2015.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2016.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2020.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2021.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2022.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2024.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2025.jpg` | Friendship memory | Our Memories timeline |
-| `memory-2026.jpg` | Friendship memory | Our Memories timeline |
+| `memory-2015.jpg` | 2015 friendship memory | Our Memories timeline |
+| `memory-2016.jpg` | 2016 friendship memory | Our Memories timeline |
+| `memory-2017.jpg` | 2017 friendship memory | Our Memories timeline |
+| `memory-2018.jpg` | 2018 friendship memory | Our Memories timeline |
+| `memory-2022-1.jpg` | February 2022 memory | Our Memories timeline |
+| `memory-2022-2.jpg` | September 2022 memory (first) | Our Memories timeline |
+| `memory-2022-3.jpg` | September 2022 memory (second) | Our Memories timeline |
+| `memory-2024.jpg` | 2024 friendship memory | Our Memories timeline |
+| `memory-2025.jpg` | 2025 friendship memory | Our Memories timeline |
+| `memory-2026.jpg` | 2026 friendship memory | Our Memories timeline |
+| `album-placeholder1.jpg` – `album-placeholder6.jpg` | Covers for the 6 custom songs | Music Room record sleeves |
 
-Note: 2017–2019 and 2023 are intentional text-only "gap" entries in the
-timeline (different schools, then a quieter year apart) — no photo needed
-for those; edit their wording directly in `CONFIG.MEMORY_PHOTOS`.
-| `album-placeholder.jpg` | Default album art | Music Room player |
+Note: 2019–2021 and 2023 are intentional text-only "gap" entries in the
+timeline; no photo is needed for those entries. Edit their wording in
+`CONFIG.MEMORY_PHOTOS`.
 | `concert-01.jpg` – `concert-03.jpg` | Concert photos | Concert Nights tickets |
 | `friends-room.jpg` | The Friends-inspired room photo/illustration | Friends section (hotspots sit on top of this image) |
 | `seventeen-ticket.png` | Survival-kit icon: ticket | SEVENTEEN Concert Survival Kit |

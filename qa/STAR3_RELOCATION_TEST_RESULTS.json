@@ -1,0 +1,400 @@
+{
+  "checks": {
+    "1440": {
+      "star": {
+        "left": 1119,
+        "top": 430.46875,
+        "right": 1159,
+        "bottom": 470.46875,
+        "cx": 1139,
+        "cy": 450.46875,
+        "w": 40,
+        "h": 40
+      },
+      "potato": {
+        "left": 949,
+        "top": 518.46875,
+        "right": 1229,
+        "bottom": 654.125,
+        "cx": 1089,
+        "cy": 586.296875,
+        "w": 280,
+        "h": 135.65625
+      },
+      "fan": {
+        "left": 949,
+        "top": 755,
+        "right": 1229,
+        "bottom": 928.96875,
+        "cx": 1089,
+        "cy": 841.984375,
+        "w": 280,
+        "h": 173.96875
+      },
+      "corner": {
+        "left": 180,
+        "top": 386.53125,
+        "right": 1260,
+        "bottom": 1208.578125,
+        "cx": 720,
+        "cy": 797.5546875,
+        "w": 1080,
+        "h": 822.046875
+      },
+      "hit": true,
+      "background": "rgba(0, 0, 0, 0)",
+      "visualWidth": "10px",
+      "visualHeight": "10px",
+      "docWidth": 1440,
+      "innerWidth": 1440,
+      "nav": "4 / 5",
+      "stars": [
+        "star-1",
+        "star-2",
+        "star-3",
+        "star-4",
+        "star-5"
+      ],
+      "barcode": false,
+      "paws": 10,
+      "noOverlapWithCard": true,
+      "noOverlapWithPotato": true,
+      "after": "5 / 5 \u2014 ALL FOUND!",
+      "modal": true,
+      "reloaded": "5 / 5 \u2014 ALL FOUND!",
+      "overlayOnReload": false,
+      "jsErrors": []
+    },
+    "1200": {
+      "star": {
+        "left": 999,
+        "top": 430.46875,
+        "right": 1039,
+        "bottom": 470.46875,
+        "cx": 1019,
+        "cy": 450.46875,
+        "w": 40,
+        "h": 40
+      },
+      "potato": {
+        "left": 829,
+        "top": 518.46875,
+        "right": 1109,
+        "bottom": 654.125,
+        "cx": 969,
+        "cy": 586.296875,
+        "w": 280,
+        "h": 135.65625
+      },
+      "fan": {
+        "left": 829,
+        "top": 755,
+        "right": 1109,
+        "bottom": 928.96875,
+        "cx": 969,
+        "cy": 841.984375,
+        "w": 280,
+        "h": 173.96875
+      },
+      "corner": {
+        "left": 60,
+        "top": 386.53125,
+        "right": 1140,
+        "bottom": 1208.578125,
+        "cx": 600,
+        "cy": 797.5546875,
+        "w": 1080,
+        "h": 822.046875
+      },
+      "hit": true,
+      "background": "rgba(0, 0, 0, 0)",
+      "visualWidth": "10px",
+      "visualHeight": "10px",
+      "docWidth": 1200,
+      "innerWidth": 1200,
+      "nav": "4 / 5",
+      "stars": [
+        "star-1",
+        "star-2",
+        "star-3",
+        "star-4",
+        "star-5"
+      ],
+      "barcode": false,
+      "paws": 10,
+      "noOverlapWithCard": true,
+      "noOverlapWithPotato": true,
+      "after": "5 / 5 \u2014 ALL FOUND!",
+      "modal": true,
+      "reloaded": "5 / 5 \u2014 ALL FOUND!",
+      "overlayOnReload": false,
+      "jsErrors": []
+    },
+    "1024": {
+      "star": {
+        "left": 863,
+        "top": 430.46875,
+        "right": 903,
+        "bottom": 470.46875,
+        "cx": 883,
+        "cy": 450.46875,
+        "w": 40,
+        "h": 40
+      },
+      "potato": {
+        "left": 693,
+        "top": 518.46875,
+        "right": 973,
+        "bottom": 654.125,
+        "cx": 833,
+        "cy": 586.296875,
+        "w": 280,
+        "h": 135.65625
+      },
+      "fan": {
+        "left": 693,
+        "top": 755,
+        "right": 973,
+        "bottom": 928.96875,
+        "cx": 833,
+        "cy": 841.984375,
+        "w": 280,
+        "h": 173.96875
+      },
+      "corner": {
+        "left": 20,
+        "top": 386.53125,
+        "right": 1004,
+        "bottom": 1208.578125,
+        "cx": 512,
+        "cy": 797.5546875,
+        "w": 984,
+        "h": 822.046875
+      },
+      "hit": true,
+      "background": "rgba(0, 0, 0, 0)",
+      "visualWidth": "10px",
+      "visualHeight": "10px",
+      "docWidth": 1024,
+      "innerWidth": 1024,
+      "nav": "4 / 5",
+      "stars": [
+        "star-1",
+        "star-2",
+        "star-3",
+        "star-4",
+        "star-5"
+      ],
+      "barcode": false,
+      "paws": 10,
+      "noOverlapWithCard": true,
+      "noOverlapWithPotato": true,
+      "after": "5 / 5 \u2014 ALL FOUND!",
+      "modal": true,
+      "reloaded": "5 / 5 \u2014 ALL FOUND!",
+      "overlayOnReload": false,
+      "jsErrors": []
+    },
+    "768": {
+      "star": {
+        "left": 437.578125,
+        "top": 430.375,
+        "right": 477.578125,
+        "bottom": 470.375,
+        "cx": 457.578125,
+        "cy": 450.375,
+        "w": 40,
+        "h": 40
+      },
+      "potato": {
+        "left": 272.59375,
+        "top": 494.375,
+        "right": 495.390625,
+        "bottom": 605.03125,
+        "cx": 383.9921875,
+        "cy": 549.703125,
+        "w": 222.796875,
+        "h": 110.65625
+      },
+      "fan": {
+        "left": 272.59375,
+        "top": 705.90625,
+        "right": 495.390625,
+        "bottom": 879.875,
+        "cx": 383.9921875,
+        "cy": 792.890625,
+        "w": 222.796875,
+        "h": 173.96875
+      },
+      "corner": {
+        "left": 20,
+        "top": -137.4375,
+        "right": 748,
+        "bottom": 1210.109375,
+        "cx": 384,
+        "cy": 536.3359375,
+        "w": 728,
+        "h": 1347.546875
+      },
+      "hit": true,
+      "background": "rgba(0, 0, 0, 0)",
+      "visualWidth": "10px",
+      "visualHeight": "10px",
+      "docWidth": 768,
+      "innerWidth": 768,
+      "nav": "4 / 5",
+      "stars": [
+        "star-1",
+        "star-2",
+        "star-3",
+        "star-4",
+        "star-5"
+      ],
+      "barcode": false,
+      "paws": 10,
+      "noOverlapWithCard": true,
+      "noOverlapWithPotato": true,
+      "after": "5 / 5 \u2014 ALL FOUND!",
+      "modal": true,
+      "reloaded": "5 / 5 \u2014 ALL FOUND!",
+      "overlayOnReload": false,
+      "jsErrors": []
+    },
+    "430": {
+      "star": {
+        "left": 268.578125,
+        "top": 430.15625,
+        "right": 308.578125,
+        "bottom": 470.15625,
+        "cx": 288.578125,
+        "cy": 450.15625,
+        "w": 40,
+        "h": 40
+      },
+      "potato": {
+        "left": 103.59375,
+        "top": 514.15625,
+        "right": 326.390625,
+        "bottom": 624.8125,
+        "cx": 214.9921875,
+        "cy": 569.484375,
+        "w": 222.796875,
+        "h": 110.65625
+      },
+      "fan": {
+        "left": 103.59375,
+        "top": 725.6875,
+        "right": 326.390625,
+        "bottom": 899.65625,
+        "cx": 214.9921875,
+        "cy": 812.671875,
+        "w": 222.796875,
+        "h": 173.96875
+      },
+      "corner": {
+        "left": 16,
+        "top": -137.65625,
+        "right": 414,
+        "bottom": 1405.125,
+        "cx": 215,
+        "cy": 633.734375,
+        "w": 398,
+        "h": 1542.78125
+      },
+      "hit": true,
+      "background": "rgba(0, 0, 0, 0)",
+      "visualWidth": "10px",
+      "visualHeight": "10px",
+      "docWidth": 430,
+      "innerWidth": 430,
+      "nav": "4 / 5",
+      "stars": [
+        "star-1",
+        "star-2",
+        "star-3",
+        "star-4",
+        "star-5"
+      ],
+      "barcode": false,
+      "paws": 10,
+      "noOverlapWithCard": true,
+      "noOverlapWithPotato": true,
+      "after": "5 / 5 \u2014 ALL FOUND!",
+      "modal": true,
+      "reloaded": "5 / 5 \u2014 ALL FOUND!",
+      "overlayOnReload": false,
+      "jsErrors": []
+    },
+    "375": {
+      "star": {
+        "left": 241.078125,
+        "top": 429.78125,
+        "right": 281.078125,
+        "bottom": 469.78125,
+        "cx": 261.078125,
+        "cy": 449.78125,
+        "w": 40,
+        "h": 40
+      },
+      "potato": {
+        "left": 76.09375,
+        "top": 513.78125,
+        "right": 298.890625,
+        "bottom": 624.4375,
+        "cx": 187.4921875,
+        "cy": 569.109375,
+        "w": 222.796875,
+        "h": 110.65625
+      },
+      "fan": {
+        "left": 76.09375,
+        "top": 725.3125,
+        "right": 298.890625,
+        "bottom": 899.28125,
+        "cx": 187.4921875,
+        "cy": 812.296875,
+        "w": 222.796875,
+        "h": 173.96875
+      },
+      "corner": {
+        "left": 16,
+        "top": -113.03125,
+        "right": 359,
+        "bottom": 1404.75,
+        "cx": 187.5,
+        "cy": 645.859375,
+        "w": 343,
+        "h": 1517.78125
+      },
+      "hit": true,
+      "background": "rgba(0, 0, 0, 0)",
+      "visualWidth": "10px",
+      "visualHeight": "10px",
+      "docWidth": 375,
+      "innerWidth": 375,
+      "nav": "4 / 5",
+      "stars": [
+        "star-1",
+        "star-2",
+        "star-3",
+        "star-4",
+        "star-5"
+      ],
+      "barcode": false,
+      "paws": 10,
+      "noOverlapWithCard": true,
+      "noOverlapWithPotato": true,
+      "after": "5 / 5 \u2014 ALL FOUND!",
+      "modal": true,
+      "reloaded": "5 / 5 \u2014 ALL FOUND!",
+      "overlayOnReload": false,
+      "jsErrors": []
+    }
+  },
+  "hover": {
+    "content": "\"\u2726\"",
+    "width": "16px",
+    "color": "rgb(209, 230, 255)"
+  },
+  "issues": []
+}

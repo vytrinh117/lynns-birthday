@@ -1,0 +1,157 @@
+{
+  "results": {
+    "1440": {
+      "hitTargetPx": [
+        44,
+        44
+      ],
+      "starCenterTopmost": true,
+      "color": "rgb(55, 93, 145)",
+      "background": "rgba(242, 248, 255, 0.96)",
+      "clearOfHeadingAndDiamond": true,
+      "overflowPx": 0,
+      "progressBefore": "4 / 5",
+      "progressAfter": "5 / 5 \u2014 ALL FOUND!",
+      "completionModal": true,
+      "savedIds": [
+        "star-1",
+        "star-2",
+        "star-4",
+        "star-5",
+        "star-3"
+      ],
+      "barcodeRetained": true,
+      "pawStepsRetained": 10,
+      "jsErrors": []
+    },
+    "1200": {
+      "hitTargetPx": [
+        44,
+        44
+      ],
+      "starCenterTopmost": true,
+      "color": "rgb(55, 93, 145)",
+      "background": "rgba(242, 248, 255, 0.96)",
+      "clearOfHeadingAndDiamond": true,
+      "overflowPx": 0,
+      "progressBefore": "4 / 5",
+      "progressAfter": "5 / 5 \u2014 ALL FOUND!",
+      "completionModal": true,
+      "savedIds": [
+        "star-1",
+        "star-2",
+        "star-4",
+        "star-5",
+        "star-3"
+      ],
+      "barcodeRetained": true,
+      "pawStepsRetained": 10,
+      "jsErrors": []
+    },
+    "1024": {
+      "hitTargetPx": [
+        44,
+        44
+      ],
+      "starCenterTopmost": true,
+      "color": "rgb(55, 93, 145)",
+      "background": "rgba(242, 248, 255, 0.96)",
+      "clearOfHeadingAndDiamond": true,
+      "overflowPx": 0,
+      "progressBefore": "4 / 5",
+      "progressAfter": "5 / 5 \u2014 ALL FOUND!",
+      "completionModal": true,
+      "savedIds": [
+        "star-1",
+        "star-2",
+        "star-4",
+        "star-5",
+        "star-3"
+      ],
+      "barcodeRetained": true,
+      "pawStepsRetained": 10,
+      "jsErrors": []
+    },
+    "768": {
+      "hitTargetPx": [
+        44,
+        44
+      ],
+      "starCenterTopmost": true,
+      "color": "rgb(55, 93, 145)",
+      "background": "rgba(242, 248, 255, 0.96)",
+      "clearOfHeadingAndDiamond": true,
+      "overflowPx": 0,
+      "progressBefore": "4 / 5",
+      "progressAfter": "5 / 5 \u2014 ALL FOUND!",
+      "completionModal": true,
+      "savedIds": [
+        "star-1",
+        "star-2",
+        "star-4",
+        "star-5",
+        "star-3"
+      ],
+      "barcodeRetained": true,
+      "pawStepsRetained": 10,
+      "jsErrors": []
+    },
+    "430": {
+      "hitTargetPx": [
+        44,
+        44
+      ],
+      "starCenterTopmost": true,
+      "color": "rgb(55, 93, 145)",
+      "background": "rgba(242, 248, 255, 0.96)",
+      "clearOfHeadingAndDiamond": true,
+      "overflowPx": 0,
+      "progressBefore": "4 / 5",
+      "progressAfter": "5 / 5 \u2014 ALL FOUND!",
+      "completionModal": true,
+      "savedIds": [
+        "star-1",
+        "star-2",
+        "star-4",
+        "star-5",
+        "star-3"
+      ],
+      "barcodeRetained": true,
+      "pawStepsRetained": 10,
+      "jsErrors": []
+    },
+    "375": {
+      "hitTargetPx": [
+        44,
+        44
+      ],
+      "starCenterTopmost": true,
+      "color": "rgb(55, 93, 145)",
+      "background": "rgba(242, 248, 255, 0.96)",
+      "clearOfHeadingAndDiamond": true,
+      "overflowPx": 0,
+      "progressBefore": "4 / 5",
+      "progressAfter": "5 / 5 \u2014 ALL FOUND!",
+      "completionModal": true,
+      "savedIds": [
+        "star-1",
+        "star-2",
+        "star-4",
+        "star-5",
+        "star-3"
+      ],
+      "barcodeRetained": true,
+      "pawStepsRetained": 10,
+      "jsErrors": []
+    }
+  },
+  "issues": [],
+  "motion": {
+    "animation": "mingyuStarTwinkle",
+    "hover": {
+      "transform": "matrix(1.09121, 0.133024, -0.133024, 1.09121, 0, 0)",
+      "boxShadow": "rgba(91, 135, 192, 0.4) 0px 2px 11px 0px",
+      "contrastInk": "rgb(37, 76, 129)"
+    }
+  }
+}

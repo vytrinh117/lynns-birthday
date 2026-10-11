@@ -899,6 +899,22 @@ function initPoodle() {
 }
 
 /* =========================================================================
+   POODLE WALKING PAWS — animate only while in view; no interaction blocking
+   ========================================================================= */
+function initPawTrail() {
+  const trail = $("#poodlePawTrail");
+  const section = $("#poodle");
+  if (!trail || !section || prefersReducedMotion) return;
+  if (!("IntersectionObserver" in window)) { trail.classList.add("is-walking"); return; }
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      trail.classList.toggle("is-walking", entry.isIntersecting);
+    }
+  }, { threshold: 0.08 });
+  observer.observe(section);
+}
+
+/* =========================================================================
    MINGYU PHOTO CAROUSEL — manual (prev/next/dots) + gentle auto-advance
    when idle. Pauses on hover/focus and after any manual interaction
    resets the idle timer, so it never fights the person using it.
@@ -1567,111 +1583,76 @@ function closeFinaleOverlay() {
 }
 
 /* =========================================================================
-   HIDDEN HEART HUNT — real, verifiable, persistent state
-   ---------------------------------------------------------------------
-   There are exactly 5 hearts in the DOM, each with a unique
-   data-heart-id ("heart-1" ... "heart-5"). Progress is stored in
-   localStorage under the key below, so it survives a page refresh.
-
-   TO RESET PROGRESS WHILE TESTING:
-   Open the browser console (F12) on the live site and run:
-       localStorage.removeItem('lynnHiddenHearts');
-   then refresh the page. This also resets the secret room lock.
+   FIVE COLLECTIBLE STARS — no hidden room or unlocks
    ========================================================================= */
-const HEART_STORAGE_KEY = "lynnHiddenHearts";
-let secretRoomUnlocked = false;
-
-function getCollectedHearts() {
+const STAR_STORAGE_KEY = "lynnHiddenStars";
+const LEGACY_HEART_KEY = "lynnHiddenHearts";
+const VALID_STARS = ["star-1", "star-2", "star-3", "star-4", "star-5"];
+function readStoredIds(key) {
   try {
-    const raw = localStorage.getItem(HEART_STORAGE_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
-    return Array.isArray(arr) ? arr : [];
-  } catch (e) {
-    return []; // localStorage unavailable (private browsing, etc.) — degrade gracefully
-  }
+    const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_) { return []; }
 }
-
-function saveCollectedHearts(arr) {
-  try { localStorage.setItem(HEART_STORAGE_KEY, JSON.stringify(arr)); } catch (e) { /* ignore */ }
+function getCollectedStars() {
+  const stored = readStoredIds(STAR_STORAGE_KEY);
+  const legacy = readStoredIds(LEGACY_HEART_KEY).map(id =>
+    /^heart-[1-5]$/.test(id) ? id.replace("heart-", "star-") : null);
+  const result = [...new Set([...stored, ...legacy].filter(id => VALID_STARS.includes(id)))];
+  try { localStorage.setItem(STAR_STORAGE_KEY, JSON.stringify(result)); } catch (_) {}
+  return result;
 }
-
-function initHeartHunt() {
-  const heartEls = $$(".hidden-heart[data-heart-id]");
-  const totalHearts = heartEls.length; // must be exactly 5
-  const countEl = $("#heartHuntCount");
+function initStarHunt() {
+  const stars = $$(".hidden-star[data-star-id]");
+  const counter = $("#heartHuntCount");
+  const icon = $("#heartHuntIcon");
   const badge = $("#heartHuntBadge");
   const overlay = $("#heartCompleteOverlay");
-
-  let collected = getCollectedHearts().filter(id =>
-    heartEls.some(h => h.dataset.heartId === id) // ignore stale/unknown ids
-  );
-
-  function updateCounterUI() {
-    countEl.textContent = collected.length >= totalHearts
-      ? `${collected.length} / ${totalHearts} — ALL FOUND!`
-      : `${collected.length} / ${totalHearts}`;
-    badge.classList.toggle("all-found", collected.length >= totalHearts);
+  const closeBtn = $("#heartCompleteClose");
+  if (!counter || !badge || !overlay || !closeBtn || !icon) return;
+  if (stars.length !== 5 || new Set(stars.map(s => s.dataset.starId)).size !== 5) {
+    console.warn("Expected exactly five unique collectible stars.");
   }
-
-  function markHeartCollectedInDOM(heart) {
-    heart.classList.add("found");
-    heart.textContent = "♥";
-    heart.setAttribute("aria-pressed", "true");
+  const collected = new Set(getCollectedStars());
+  function refresh() {
+    const complete = collected.size === VALID_STARS.length;
+    counter.textContent = `${collected.size} / 5${complete ? " — ALL FOUND!" : ""}`;
+    icon.textContent = complete ? "★" : "☆";
+    badge.classList.toggle("all-found", complete);
   }
-
-  // Restore already-collected hearts on load (e.g. after a refresh)
-  heartEls.forEach(heart => {
-    if (collected.includes(heart.dataset.heartId)) markHeartCollectedInDOM(heart);
-  });
-  updateCounterUI();
-  if (collected.length >= totalHearts) secretRoomUnlocked = true;
-
-  heartEls.forEach(heart => {
-    const id = heart.dataset.heartId;
-
+  function mark(el) {
+    el.classList.add("found");
+    el.textContent = "★";
+    el.setAttribute("aria-pressed", "true");
+  }
+  stars.forEach(star => {
+    const id = star.dataset.starId;
+    if (!VALID_STARS.includes(id)) return;
+    if (collected.has(id)) mark(star);
     const collect = () => {
-      if (collected.includes(id)) return; // already collected — do nothing, ever
-      collected.push(id);
-      saveCollectedHearts(collected);
-      markHeartCollectedInDOM(heart);
-      updateCounterUI();
-
+      if (collected.has(id)) return;
+      collected.add(id);
+      mark(star);
+      try { localStorage.setItem(STAR_STORAGE_KEY, JSON.stringify([...collected])); } catch (_) {}
+      refresh();
+      badge.classList.remove("pulse");
+      void badge.offsetWidth;
       badge.classList.add("pulse");
-      setTimeout(() => badge.classList.remove("pulse"), 500);
-
-      if (collected.length === totalHearts) {
-        secretRoomUnlocked = true;
-        setTimeout(() => { overlay.hidden = false; }, 600);
+      if (collected.size === 5) {
+        overlay.hidden = false;
+        closeBtn.focus();
       }
     };
-
-    heart.addEventListener("click", collect);
-    heart.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); collect(); } });
+    star.addEventListener("click", collect);
+    star.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); collect(); }
+    });
   });
-
-  $("#heartCompleteClose").addEventListener("click", () => { overlay.hidden = true; });
-  overlay.addEventListener("click", e => { if (e.target === overlay) overlay.hidden = true; });
-
-  $("#openSecretRoomBtn").addEventListener("click", () => {
-    overlay.hidden = true;
-    openSecretRoom();
-  });
-}
-
-/* =========================================================================
-   SECRET ROOM — only ever opens if secretRoomUnlocked is true
-   ========================================================================= */
-function openSecretRoom() {
-  if (!secretRoomUnlocked) return; // defensive gate: cannot be opened early
-  $("#secretRoomOverlay").hidden = false;
-  document.body.style.overflow = "hidden";
-}
-function initSecretRoom() {
-  const overlay = $("#secretRoomOverlay");
-  const close = () => { overlay.hidden = true; document.body.style.overflow = ""; };
-  $("#secretRoomClose").addEventListener("click", close);
+  const close = () => { overlay.hidden = true; };
+  closeBtn.addEventListener("click", close);
   overlay.addEventListener("click", e => { if (e.target === overlay) close(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !overlay.hidden) close(); });
+  refresh();
 }
 
 /* =========================================================================
@@ -1714,6 +1695,7 @@ document.addEventListener("DOMContentLoaded", () => {
   safeInit("music player", initMusicPlayer);
   safeInit("concert tickets", renderConcertTickets);
   safeInit("poodle", initPoodle);
+  safeInit("poodle walking paw trail", initPawTrail);
   safeInit("mingyu carousel", initMingyuCarousel);
   safeInit("potato", initPotato);
   safeInit("fan card tilt", initFanCardTilt);
@@ -1725,7 +1707,6 @@ document.addEventListener("DOMContentLoaded", () => {
   safeInit("wishes", renderWishes);
   safeInit("finale", initFinale);
   safeInit("finale overlay", initFinaleOverlay);
-  safeInit("heart hunt", initHeartHunt);
-  safeInit("secret room", initSecretRoom);
+  safeInit("star hunt", initStarHunt);
   safeInit("cursor", initCursor);
 });

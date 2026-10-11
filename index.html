@@ -100,7 +100,7 @@
            can never visually collide with the last nav item or the
            hamburger button at any screen width. -->
       <div class="heart-hunt-badge" id="heartHuntBadge" aria-live="polite" hidden>
-        <span class="heart-hunt-icon" id="heartHuntIcon">♡</span>
+        <span class="heart-hunt-icon" id="heartHuntIcon">☆</span>
         <span id="heartHuntCount">0 / 5</span>
       </div>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
@@ -142,8 +142,8 @@
             <p class="polaroid-caption handwritten">the birthday girl herself</p>
           </div>
           <span class="washi-tape washi-tape--about" aria-hidden="true"></span>
-          <!-- HEART HUNT TARGET #1 (subtle, disguised as a small doodle sticker) -->
-          <span class="hidden-heart" data-heart-id="heart-1" role="button" tabindex="0" aria-label="Hidden heart 1" aria-pressed="false">♡</span>
+          <!-- STAR HUNT TARGET #1 (subtle, disguised as a small doodle sticker) -->
+          <span class="hidden-star" data-star-id="star-1" role="button" tabindex="0" aria-label="Hidden star 1 of 5" aria-pressed="false">☆</span>
         </div>
 
         <div class="about-profile">
@@ -306,8 +306,19 @@
           <div class="speech-bubble" id="poodleBubble" role="status" aria-live="polite">
             Lynn, have you fed me?
           </div>
-          <span class="paw-print paw-1">🐾</span>
-          <span class="paw-print paw-2">🐾</span>
+          <!-- One walking trail: CSS positions each left/right step; JS only starts it in view. -->
+          <div class="paw-trail" id="poodlePawTrail" aria-hidden="true">
+            <span class="paw-step paw-step--1"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--2"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--3"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--4"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--5"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--6"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--7"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--8"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--9"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+            <span class="paw-step paw-step--10"><svg class="paw-art" viewBox="0 0 32 34" width="24" height="25" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true"><ellipse cx="16" cy="22" rx="9" ry="7"/><ellipse cx="6" cy="14" rx="3.3" ry="4.4" transform="rotate(-18 6 14)"/><ellipse cx="12" cy="8" rx="3.2" ry="4.5" transform="rotate(-7 12 8)"/><ellipse cx="21" cy="8" rx="3.2" ry="4.5" transform="rotate(9 21 8)"/><ellipse cx="27" cy="14" rx="3.3" ry="4.4" transform="rotate(20 27 14)"/></svg></span>
+          </div>
         </div>
 
         <div class="poodle-side" data-parallax="-0.05">
@@ -319,8 +330,8 @@
             <p class="polaroid-caption handwritten">tiny and fluffy</p>
           </div>
           <p class="scrap-note handwritten" data-motion="settle">she runs this household, actually</p>
-          <!-- HEART HUNT TARGET #2 disguised as a heart sticker near the paw prints -->
-          <span class="hidden-heart" data-heart-id="heart-2" role="button" tabindex="0" aria-label="Hidden heart 2" aria-pressed="false">♡</span>
+          <!-- STAR HUNT TARGET #2 disguised as a star sticker near the paw prints -->
+          <span class="hidden-star" data-star-id="star-2" role="button" tabindex="0" aria-label="Hidden star 2 of 5" aria-pressed="false">☆</span>
         </div>
       </div>
     </div>
@@ -385,7 +396,7 @@
                       <img src="assets/images/mingyu-01.jpg" alt="Mingyu" loading="lazy"
                            onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
                     </div>
-                    <p class="polaroid-caption handwritten">Bias của her, obviously</p>
+                    <p class="polaroid-caption handwritten">her bias, obviously</p>
                   </div>
                 </div>
                 <div class="carousel-slide">
@@ -394,7 +405,7 @@
                       <img src="assets/images/mingyu-02.jpg" alt="Mingyu" loading="lazy"
                            onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
                     </div>
-                    <p class="polaroid-caption handwritten">Lại Mingyu iu của her</p>
+                    <p class="polaroid-caption handwritten">also her bias</p>
                   </div>
                 </div>
                 <div class="carousel-slide">
@@ -403,7 +414,7 @@
                       <img src="assets/images/mingyu-03.jpg" alt="Mingyu at a concert" loading="lazy"
                            onerror="this.style.display='none'; this.parentElement.classList.add('img-missing')">
                     </div>
-                    <p class="polaroid-caption handwritten">ún cà phê cùng anh nhé Tlynn</p>
+                    <p class="polaroid-caption handwritten">stage presence unmatched</p>
                   </div>
                 </div>
                 </div>
@@ -419,12 +430,15 @@
           </div>
 
           <div class="mingyu-potato-visual">
+            <!-- Collectible star #3: a discreet background sparkle above/right of Mingyu. -->
+            <span class="hidden-star" data-star-id="star-3" role="button" tabindex="0"
+                  aria-label="Hidden star 3 of 5" aria-pressed="false">☆</span>
             <!-- Interactive potato mascot Easter egg — ONLY appears here.
                  Real image asset: assets/images/potato-mingyu.png -->
             <button class="potato-mascot" id="potatoMascot" aria-label="A little potato mascot, click it">
               <img src="assets/images/potato-mingyu.png" alt="Mingyu's potato mascot" class="mingyu-potato"
                    onerror="this.style.display='none'; this.parentElement.classList.add('potato-mascot--fallback')">
-              <span class="potato-sign handwritten">Kimja ♡</span>
+              <span class="potato-sign handwritten">Mingyu ♡</span>
             </button>
             <p class="potato-hint handwritten" data-motion="drift">psst... click the potato</p>
             <p class="potato-message" id="potatoMessage" role="status" aria-live="polite"></p>
@@ -441,9 +455,6 @@
                 <span class="fan-card-diamond">◆</span>
               </div>
 
-              <!-- HEART HUNT TARGET #3 disguised as a tiny diamond/heart sticker on the card -->
-              <span class="hidden-heart hidden-heart--light" data-heart-id="heart-3" role="button" tabindex="0"
-                    aria-label="Hidden heart 3" aria-pressed="false">♡</span>
             </div>
           </div>
         </div>
@@ -499,7 +510,7 @@
   <section id="friends" class="section section--friends">
     <div class="section-inner">
       <header class="section-head">
-        <h2 class="section-title" id="friendsTitle">The One Where Lynn Turns <span id="friendsAge">25</span></h2>
+        <h2 class="section-title" id="friendsTitle">The One Where Lynn Turns <span id="friendsAge">24</span></h2>
         <p class="section-subtitle handwritten">"Could this birthday BE any cuter?"</p>
       </header>
 
@@ -597,8 +608,8 @@
             <span class="prop prop-pin">📌</span>
             <span class="prop prop-button">🔘</span>
           </div>
-          <!-- HEART HUNT TARGET #4 disguised as a tiny stitched heart among the props -->
-          <span class="hidden-heart" data-heart-id="heart-4" role="button" tabindex="0" aria-label="Hidden heart 4" aria-pressed="false" style="position:relative; display:inline-block; top:-6px;">♡</span>
+          <!-- STAR HUNT TARGET #4 disguised as a tiny stitched star among the props -->
+          <span class="hidden-star" data-star-id="star-4" role="button" tabindex="0" aria-label="Hidden star 4 of 5" aria-pressed="false" style="position:relative; display:inline-block; top:-6px;">☆</span>
 
           <div class="sewing-todo">
             <h3 class="sewing-todo-title handwritten">Lynn's little sewing to-do list</h3>
@@ -625,7 +636,7 @@
         <p class="section-subtitle" data-motion="settle">Same chaos, different years <span class="heart">♡</span></p>
       </header>
 
-      <div class="polaroid-wall" id="polaroidWall" data-parallax="0.04"></div>
+      <div class="polaroid-wall" id="polaroidWall"></div>
     </div>
   </section>
 
@@ -666,50 +677,17 @@
       </header>
 
       <div class="wish-clouds" id="wishClouds" data-parallax="0.05"></div>
-      <!-- HEART HUNT TARGET #5 disguised as a small decorative heart in the sky -->
-      <span class="hidden-heart" data-heart-id="heart-5" role="button" tabindex="0" aria-label="Hidden heart 5" aria-pressed="false" style="position:absolute; top:60px; left:12%;">♡</span>
+      <!-- STAR HUNT TARGET #5: in an accessible decorative sky pocket, outside the text column -->
+      <span class="hidden-star" data-star-id="star-5" role="button" tabindex="0" aria-label="Hidden star 5 of 5" aria-pressed="false" >☆</span>
     </div>
   </section>
 
-  <!-- ================= 11. HIDDEN HEART HUNT COMPLETE MODAL ================= -->
+  <!-- ================= 11. STAR HUNT COMPLETE MODAL ================= -->
   <div class="heart-complete-overlay" id="heartCompleteOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="heartCompleteTitle">
     <div class="heart-complete-card">
-      <p id="heartCompleteTitle" class="heart-complete-title">You found them all <span class="heart">♡</span></p>
-      <p class="heart-complete-sub handwritten">Okay... you've unlocked something.</p>
-      <button class="secret-room-btn" id="openSecretRoomBtn">Open Secret Room</button>
+      <p id="heartCompleteTitle" class="heart-complete-title">You found all five stars ★</p>
+      <p class="heart-complete-sub handwritten">Star hunt complete! You really found every one.</p>
       <button class="heart-complete-close" id="heartCompleteClose" aria-label="Close">×</button>
-    </div>
-  </div>
-
-  <!-- ================= 12. SECRET ROOM ================= -->
-  <div class="secret-room-overlay" id="secretRoomOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="secretRoomTitle">
-    <div class="secret-room-card">
-      <button class="secret-room-close" id="secretRoomClose" aria-label="Close secret room">×</button>
-      <p class="secret-room-warning">⚠ You found Lynn's secret room</p>
-      <h2 id="secretRoomTitle" class="secret-room-title">Access granted <span class="heart">♡</span></h2>
-
-      <div class="secret-room-body">
-        <div class="secret-block">
-          <h3>10 reasons you're my favorite person</h3>
-          <p class="placeholder-text">[ Add your 10 reasons here — one per line in script.js ]</p>
-        </div>
-        <div class="secret-block">
-          <h3>Things I will never admit to you</h3>
-          <p class="placeholder-text">[ Add your confessions here ]</p>
-        </div>
-        <div class="secret-block">
-          <h3>Funny inside jokes</h3>
-          <p class="placeholder-text">[ Add your inside jokes here ]</p>
-        </div>
-        <div class="secret-block">
-          <h3>Embarrassing photos</h3>
-          <div class="photo-frame photo-frame--secret img-missing"></div>
-        </div>
-        <div class="secret-block">
-          <h3>A personal message</h3>
-          <p class="placeholder-text">[ Write your personal message to Lynn here ]</p>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -744,7 +722,7 @@
           </div>
         </div>
         <div class="final-ticket-stub">
-          <div class="barcode" aria-hidden="true"></div>
+          <img class="barcode" src="assets/images/barcode-27092002.png" width="166" height="100" alt="Barcode 27092002">
           <p class="handwritten ticket-valid">Valid forever.</p>
         </div>
       </div>
