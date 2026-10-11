@@ -103,12 +103,12 @@ const CONFIG = {
   // ---- Lynn Wrapped statistics ----
   // Mix real and playful numbers — this section is meant to be funny.
   WRAPPED_STATISTICS: [
-    { emoji: "🎧", number: "412", label: "Hours of music listened to" },
-    { emoji: "🎤", number: "9,004", label: "Songs sung (mostly in the shower)" },
-    { emoji: "🎟️", number: "3+", label: "Concerts attended" },
-    { emoji: "💎", number: "928", label: "Times Mingyu was mentioned" },
-    { emoji: "🐩", number: "37", label: "Dog-related activities" },
-    { emoji: "🧵", number: "14", label: "Things sewn by hand" },
+    { emoji: "🎧", number: "270902", label: "Hours of music listened to" },
+    { emoji: "🎤", number: "2002", label: "Songs sung" },
+    { emoji: "🎟️", number: "10+", label: "Concerts attended (Just a guess)" },
+    { emoji: "💎", number: "6497", label: "Times Mingyu was mentioned" },
+    { emoji: "🐩", number: "31818", label: "Mina-related activities" },
+    { emoji: "🧵", number: "150925", label: "Things sewn by hand" },
     { emoji: "☕", number: "∞", label: "Friends episodes rewatched" },
     { emoji: "🫠", number: "404", label: "Emotional stability: Not Found" },
   ],
@@ -117,11 +117,11 @@ const CONFIG = {
   // Edit the "message" and "photo" for each object. "photo" can be left
   // as-is if you don't have one yet — a placeholder shows automatically.
   FRIENDS_ROOM_CONTENT: {
-    tv:     { title: "The TV",          message: "Our comfort shows: reruns, background noise, and never actually finishing anything.", photo: "" },
-    photo:  { title: "The Photo Frame", message: "Our favorite moments: the ones we still bring up for no reason.", photo: "" },
-    couch:  { title: "The Couch",       message: "Our memories: every ordinary afternoon that somehow became a core one.", photo: "" },
-    cup:    { title: "The Coffee Cup",  message: "Things I love about you: your laugh, your loyalty, and your very specific opinions about Mingyu.", photo: "" },
-    door:   { title: "The Door",        message: "Another surprise: there's always something waiting on the other side, isn't there?", photo: "" },
+    tv:     { title: "The TV",          message: "Birthday date 2025 cùng TLynn", photo: "" },
+    photo:  { title: "The Photo Frame", message: "Hình chụp photobooth zí nhau", photo: "" },
+    couch:  { title: "The Couch",       message: "Đi bar Q.1", photo: "" },
+    cup:    { title: "The Coffee Cup",  message: "Coffee date cùng nhau", photo: "" },
+    door:   { title: "The Door",        message: "Đi Thái Lan chụp hình chung ", photo: "" },
   },
 };
 
