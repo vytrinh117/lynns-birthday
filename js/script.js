@@ -91,13 +91,13 @@ const CONFIG = {
 
   // ---- Birthday wishes (revealed one by one) ----
   BIRTHDAY_MESSAGES: [
-    "I hope you keep finding songs that make you want to sing 🎤✩⋆｡˚.★💿",
-    "I hope there are always concerts worth the thousand steps walking 𐦂𖨆𐀪𖠋",
-    "I hope your camera roll keeps filling with beautiful memories˙✧˖°📸⋆｡ ˚",
+    "I hope you keep finding songs that make you want to sing ‧₊˚♪ 𝄞₊ ♫ ˚⊹",
+    "I hope there are always concerts worth the thousand steps walking 𖠘",
+    "I hope your camera roll keeps filling with beautiful memories˙✧˖°[°◉]⋆｡ ˚",
     "I hope you keep finding happiness in anything that makes ordinary days feel special.☘︎ ݁˖",
-    "I hope you always have something to look forward to⋆.˚🦋༘⋆",
-    "I hope you keep crafting beautiful things with your own hands🎨",
-    "And I hope you never stop being you˚˖𓍢ִ໋🌷͙֒✧˚.🎀༘⋆",
+    "I hope you always have something to look forward toᯓ★",
+    "I hope you keep crafting beautiful things with your own hands-ˋˏ✃",
+    "And I hope you never stop being you⋆ ˚｡⋆୨♡୧⋆ ˚｡⋆",
   ],
 
   // ---- Lynn Wrapped statistics ----
