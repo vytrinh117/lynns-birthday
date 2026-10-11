@@ -917,7 +917,7 @@ input:focus-visible,
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
 }
 .vinyl-sleeve:hover .vinyl-sleeve-art, .vinyl-sleeve:focus-visible .vinyl-sleeve-art { transform: translateY(-5px) scale(1.03); }
