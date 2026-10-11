@@ -117,7 +117,7 @@ const CONFIG = {
   // Edit the "message" and "photo" for each object. "photo" can be left
   // as-is if you don't have one yet — a placeholder shows automatically.
   FRIENDS_ROOM_CONTENT: {
-    tv:     { title: "The TV",          message: "Birthday date 2025 cùng TLynn", photo: "assets/images/friends-tv.jpg" },
+    tv:     { title: "The Cake Fridge",          message: "Birthday date 2025 cùng TLynn", photo: "assets/images/friends-tv.jpg" },
     photo:  { title: "The Photo Frame", message: "Hình chụp photobooth zí nhau", photo: "assets/images/friends-photo.jpg" },
     couch:  { title: "The Couch",       message: "Đi bar Q.1", photo: "assets/images/friends-couch.jpg" },
     cup:    { title: "The Coffee Cup",  message: "Coffee date cùng nhau", photo: "assets/images/friends-coffee.jpg" },
